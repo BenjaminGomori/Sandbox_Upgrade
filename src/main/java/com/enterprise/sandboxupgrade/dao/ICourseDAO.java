@@ -1,7 +1,10 @@
 package com.enterprise.sandboxupgrade.dao;
+
 import com.enterprise.sandboxupgrade.dto.Course;
+
+import java.util.List;
 
 public interface ICourseDAO {
     Course fetch(int courseId);
-    Iterable<Course> fetchAll() throws Exception;
+    List<Course> fetchAll() throws Exception;
 }

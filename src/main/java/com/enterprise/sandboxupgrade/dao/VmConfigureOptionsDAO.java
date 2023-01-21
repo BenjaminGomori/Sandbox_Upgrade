@@ -1,6 +1,7 @@
 package com.enterprise.sandboxupgrade.dao;
 
 import com.enterprise.sandboxupgrade.dto.Semester;
+import com.enterprise.sandboxupgrade.dto.VmConfigureOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -8,19 +9,17 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("SemesterDAO")
+@Repository("VmConfigureOptionsDAO")
 @Profile({"dev", "default"})
-public class SemesterSQLDAO implements ISemesterDAO {
+public class VmConfigureOptionsDAO implements IVmConfigureOptionsDAO {
 
     @Autowired
-    SemesterRepository SemesterRepository;
+    VmConfigureRepository VmConfigureRepository;
 
     @Override
-    public List<Semester> fetchAll() {
-        List<Semester> target = new ArrayList<>();
-        SemesterRepository.findAll().forEach(target::add);
+    public List<VmConfigureOption> fetchAll() {
+        List<VmConfigureOption> target = new ArrayList<>();
+        VmConfigureRepository.findAll().forEach(target::add);
         return target;
     }
 }
-
-

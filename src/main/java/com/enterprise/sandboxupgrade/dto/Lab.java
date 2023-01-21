@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "labs")
 public @Data
-class Lab {
+class Lab extends PublicLab{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int labID;
@@ -30,8 +30,4 @@ class Lab {
     @JoinColumn(name="courseID", nullable=false)
     private Course course;
 
-    @Override
-    public String toString() {
-        return  "Number: "+this.number  + "; Desc: "+this.description  + ";  Course: " + this.course;
-    }
 }

@@ -15,7 +15,6 @@
                 integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
                 crossorigin="anonymous"></script>
 
-
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/split-grid.js}"></script>
@@ -25,45 +24,96 @@
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/css/wmks-all.css}">
         <link rel="stylesheet" th:href="@{/css/split.css}">
+        <link rel="stylesheet" th:href="@{/css/capstone.css}">
     </head>
 
     <body>
 
-    <div class="grid" style="height:100vh; margin:0rem 3rem; ">
-        <div id="wmksContainer" style="width:100%; padding:2rem 0rem; text-align:center; background-color: #ffffff; transform: scale(1);">
-            <!--        <div id="wmksContainer">-->
-            <h2 style="font-size: 3rem;">Virtual Machine</h2>
 
-            <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
-                <option th:each="vm : ${listVMs}" th:value="${vm.getPublicNumber()}" th:text="${vm.name}"></option>
-            </select>
-            <script>
-                var wmks = WMKS.createWMKS("wmksContainer",{})
-                    .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
-                        if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                            console.log("connection state change : connected");}
-                    });
-                wmks.connect("wss://10.127.71.133:443/ticket/7bf3a948369ef417");
-                // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee");
-                // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket
-            </script>
-            <!--    </div>-->
-        </div>
-        <div class="gutter-col gutter-col-1" style="background-color: lightgray"></div>
-        <div style=" width:100%; padding:2rem 0rem; text-align:center; background-color: #ffffff">
-            <!--        <h2>Lab Content</h2>-->
-            <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_labs">
-                <option th:each="lab : ${listLabs}" th:value="${lab.getNumber()}" th:text="'Lab - '+ ${lab.getNumber()}"></option>
-            </select>
 
-            <div>
-                <!--            <div th:class="${lab.getNumber()}" style="display:  none">-->
-                <div style="display: none; position: relative" th:each="lab : ${listLabs}" th:class="lab_ + ${lab.getNumber()}">
-                    <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.getTitle()}"></h2>
-                    <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
-                    </hr>
-                    <p style="font-size: 1.5rem;padding: 2rem;" th:text="${lab.getDescription()}"></p>
+
+
+
+    <div class="main_grid">
+        <div class="courses">
+            <div class="course_menu">
+                <p style="color:darkred" th:each="course : ${listCourse}" th:value="${course.id}" th:text="${course.number} +' - ' + ${course.name}"></p>
+
+            </div>
+            <div class="collapser">
+                <div class="collapser_triangle_image_right">
+                    <img th:src="@{/images/collapse.png}" alt="">
                 </div>
+                <div class="collapser_triangle_image_left no_display">
+                    <img th:src="@{/images/un_collapse.png}" alt="">
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- this grid class is from the split library -->
+        <div class="grid" style="height:100vh; margin:0">
+            <div id="wmksContainer" style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
+                <!--        <div id="wmksContainer">-->
+                <h2 style="display: inline-block; font-size: 3rem;">Virtual Machine</h2>
+
+                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
+                    <option th:each="vm : ${listVMs}" th:value="${vm.getPublicNumber()}" th:text="${vm.name}"></option>
+                </select>
+
+
+                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vm_configuration">
+                    <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}" th:text="${vmOptions.getOption()}"></option>
+                </select>
+
+                <script>
+                    var wmks = WMKS.createWMKS("wmksContainer",{})
+                        .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
+                            if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
+                                console.log("connection state change : connected");}
+                        });
+                    wmks.connect("wss://10.127.71.133:443/ticket/5360c5020ccfb9d2");
+                    // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee"); 		"	"	"
+                    // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket
+                </script>
+                <!--    </div>-->
+
+
+            </div>
+            <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
+            <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
+
+
+<!--                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_labs">-->
+<!--                    <option th:each="lab : ${listLabs}" th:value="${lab.getNumber()}" th:text="'Lab - '+ ${lab.getNumber()}"></option>-->
+<!--                </select>-->
+<!--                <div>-->
+<!--                    <div style="display: none; position: relative" th:each="lab : ${listLabs}" th:class="lab_ + ${lab.getNumber()}">-->
+<!--                        <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
+<!--                        &lt;!&ndash;                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>&ndash;&gt;-->
+<!--                        </hr>-->
+<!--                        <p style="font-size: 1.5rem;padding: 2rem;" th:text="${lab.getDescription()}"></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+                <div class="course_labs no_display" th:each="course : ${listCourse}" th:value="${course.id}"}>
+                    <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_labs">
+                        <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}" th:text="'Lab - '+ ${lab.number}"></option>
+                    </select>
+                    <div style="height:inherit;overflow-y:scroll">
+                        <div style="height:inherit; display: none; position: relative;" th:each="lab : ${course.publicLabs}" th:class="lab_ + ${lab.number}">
+                            <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.title}"></h2>
+                            <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
+                            </hr>
+                            <p style="font-size: 1.5rem; height:inherit;" th:text="${lab.description}"></p>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
     </div>
@@ -87,6 +137,12 @@
         })
     </script>
 
+<!--    <script type="text/javascript" th:inline="javascript">-->
+<!--        /*<![CDATA[*/-->
+<!--        let coursesJS = [[${listCourse}]];-->
+<!--        /*]]>*/-->
+<!--    </script>-->
+
     <script>
         window.onload = (event) => {
             const webmks = document.querySelector('#mainCanvas');
@@ -107,45 +163,211 @@
     };
     </script>
 
+
+
     <script>
-        const labs = document.querySelector('#dropDownList_labs');
+        const labsListJS = document.querySelectorAll('#dropDownList_labs');
         let lab_title = null;
         let lab = null;
         let chosen = '';
+        let main_grid = document.querySelector('.main_grid');
+        let courses = document.querySelector('.courses');
+        let course_menu = document.querySelector('.course_menu');
+        let collapser = document.querySelector('.collapser');
+        let collapser_triangle_image_right = document.querySelector('.collapser_triangle_image_right');
+        let collapser_triangle_image_left = document.querySelector('.collapser_triangle_image_left');
+        let courseLabs = document.querySelectorAll('.course_labs');
 
-        window.onload = (event) => {
-            chosen = labs.options[labs.selectedIndex].value;
-            chosen = '.lab_' + chosen;
-            console.log(chosen);
-            lab = document.querySelector(chosen);
-            lab.setAttribute('style', 'display:block');
-            lab_title = lab.querySelector('.lab_header')
-            lab_title.after(labs);
-            // labs.setAttribute('style', 'margin: 0');
-            labs.setAttribute('style', 'position: relative !important;');
-            labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-            // labs.setAttribute('style', 'top: 50%;');
-            // labs.setAttribute('style', 'transform: translateY(-55%)');
-            // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-            labs.setAttribute('style', 'background-color: #78d8fa');
-        }
+        // source: https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#javascript-inlining
+        // let coursesJS = /*[[${listCourse}]]*/ null;
 
-        labs.onchange = (event) => {
-            lab.setAttribute('style', 'display:none');
-            chosen = '.lab_' + labs.options[labs.selectedIndex].value;
-            lab = null;
-            lab = document.querySelector(chosen);
-            lab.setAttribute('style', 'display:block');
-            lab_title = lab.querySelector('.lab_header')
-            lab_title.after(labs);
-            // labs.setAttribute('style', 'margin: 0');
-            labs.setAttribute('style', 'position: relative!important;');
-            labs.setAttribute('style', 'top: -0.25rem !important;');//TODO not working
-            // labs.setAttribute('style', 'top: 50%;');
-            // labs.setAttribute('style', 'transform: translateY(-55%)');
-            // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-            labs.setAttribute('style', 'background-color: #78d8fa');
-        };
+        // console.log(courseJS);
+
+
+            window.onload = (event) => {
+                                                    // for (const labs of labsListJS.values()) {
+                                                    //     chosen = labs.options[labs.selectedIndex].value;
+                                                    //     chosen = '.lab_' + chosen;
+                                                    //     console.log(chosen);
+                                                    //     lab = document.querySelector(chosen);
+                                                    //     lab.setAttribute('style', 'display:block');
+                                                    //     lab_title = lab.querySelector('.lab_header');
+                                                    //     lab_title.after(labs);
+                                                    //     // labs.setAttribute('style', 'margin: 0');
+                                                    //     labs.setAttribute('style', 'position: relative !important;');
+                                                    //     labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+                                                    //     // labs.setAttribute('style', 'top: 50%;');
+                                                    //     // labs.setAttribute('style', 'transform: translateY(-55%)');
+                                                    //     // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                                                    //     labs.setAttribute('style', 'background-color: #78d8fa');
+                                                    // }
+                                                    // // main_grid = document.querySelector('.main_grid');
+                                                    // // courses = document.querySelector('.courses');
+                                                    // // collapser = document.querySelector('.collapser');
+                if (courseLabs.length > 0) {
+                    courseLabs = courseLabs.item(0);
+                    courseLabs.classList.toggle('no_display');
+
+
+                    chosen = courseLabs.querySelector('select').options[courseLabs.querySelector('select').selectedIndex].value;
+                    chosen = '.lab_' + chosen;
+                    console.log(chosen);
+                    lab = courseLabs.querySelector(chosen);
+                    lab.setAttribute('style', 'display:block; height:inherit');
+                    lab_title = lab.querySelector('.lab_header');
+                    labs = courseLabs.querySelector('select')
+                    lab_title.after(labs);
+                    // labs.setAttribute('style', 'margin: 0');
+                    labs.setAttribute('style', 'position: relative !important;');
+                    labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+                    // labs.setAttribute('style', 'top: 50%;');
+                    // labs.setAttribute('style', 'transform: translateY(-55%)');
+                    // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                    labs.setAttribute('style', 'background-color: #78d8fa');
+                }
+
+        //         labsListJS.forEach(
+        //             function (labs, currentIndex, listObj) {
+        //                 console.log(labs);
+        //                 console.log(labs.options);
+        //                 console.log(labs.options[labs.selectedIndex]);
+        //                 if(labs.options[labs.selectedIndex]) {
+        //                     chosen = labs.options[labs.selectedIndex].value;
+        //                     chosen = '.lab_' + chosen;
+        //                     console.log(chosen);
+        //                     lab = document.querySelector(chosen);
+        //                     lab.setAttribute('style', 'display:block');
+        //                     lab_title = lab.querySelector('.lab_header');
+        //                     lab_title.after(labs);
+        //                     // labs.setAttribute('style', 'margin: 0');
+        //                     labs.setAttribute('style', 'position: relative !important;');
+        //                     labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+        //                     // labs.setAttribute('style', 'top: 50%;');
+        //                     // labs.setAttribute('style', 'transform: translateY(-55%)');
+        //                     // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+        //                     labs.setAttribute('style', 'background-color: #78d8fa');
+        //                 }
+        //             },""
+        // );
+
+        // main_grid = document.querySelector('.main_grid');
+                // courses = document.querySelector('.courses');
+                // collapser = document.querySelector('.collapser');
+
+
+
+
+
+            }
+
+
+        labsListJS.forEach(
+            function (labs, currentIndex, listObj) {
+                labs.onchange = (event) => {
+                    // chosen = labs.options[labs.selectedIndex].value;
+                    // chosen = '.lab_' + chosen;
+                    // console.log(chosen);
+                    // lab = document.querySelector(chosen);
+                    // lab.setAttribute('style', 'display:block');
+                    // lab_title = lab.querySelector('.lab_header');
+                    // lab_title.after(labs);
+                    // // labs.setAttribute('style', 'margin: 0');
+                    // labs.setAttribute('style', 'position: relative !important;');
+                    // labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+                    // // labs.setAttribute('style', 'top: 50%;');
+                    // // labs.setAttribute('style', 'transform: translateY(-55%)');
+                    // // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                    // labs.setAttribute('style', 'background-color: #78d8fa');
+
+
+                    lab.setAttribute('style', 'display:none');
+                    chosen = '.lab_' + labs.options[labs.selectedIndex].value;
+                    lab = null;
+                    lab = document.querySelector(chosen);
+                    lab.setAttribute('style', 'display:block; height:inherit;');
+                    lab_title = lab.querySelector('.lab_header')
+                    lab_title.after(labs);
+                    // labs.setAttribute('style', 'margin: 0');
+                    labs.setAttribute('style', 'position: relative!important;');
+                    labs.setAttribute('style', 'top: -0.25rem !important;');//TODO not working
+                    // labs.setAttribute('style', 'top: 50%;');
+                    // labs.setAttribute('style', 'transform: translateY(-55%)');
+                    // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                    labs.setAttribute('style', 'background-color: #78d8fa');
+            }},""
+        );
+
+                                            // for (const labs of labsListJS.values()) {
+                                            //     labs.onchange = (event) => {
+                                            //         chosen = labs.options[labs.selectedIndex].value;
+                                            //         chosen = '.lab_' + chosen;
+                                            //         console.log(chosen);
+                                            //         lab = document.querySelector(chosen);
+                                            //         lab.setAttribute('style', 'display:block');
+                                            //         lab_title = lab.querySelector('.lab_header');
+                                            //         lab_title.after(labs);
+                                            //         // labs.setAttribute('style', 'margin: 0');
+                                            //         labs.setAttribute('style', 'position: relative !important;');
+                                            //         labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+                                            //         // labs.setAttribute('style', 'top: 50%;');
+                                            //         // labs.setAttribute('style', 'transform: translateY(-55%)');
+                                            //         // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                                            //         labs.setAttribute('style', 'background-color: #78d8fa');
+                                            //
+                                            //
+                                            //         lab.setAttribute('style', 'display:none');
+                                            //         chosen = '.lab_' + labs.options[labs.selectedIndex].value;
+                                            //         lab = null;
+                                            //         lab = document.querySelector(chosen);
+                                            //         lab.setAttribute('style', 'display:block');
+                                            //         lab_title = lab.querySelector('.lab_header')
+                                            //         lab_title.after(labs);
+                                            //         // labs.setAttribute('style', 'margin: 0');
+                                            //         labs.setAttribute('style', 'position: relative!important;');
+                                            //         labs.setAttribute('style', 'top: -0.25rem !important;');//TODO not working
+                                            //         // labs.setAttribute('style', 'top: 50%;');
+                                            //         // labs.setAttribute('style', 'transform: translateY(-55%)');
+                                            //         // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                                            //         labs.setAttribute('style', 'background-color: #78d8fa');
+                                            //     };
+                                            // }
+
+
+        // document.querySelectorAll('.course_labs').forEach(
+        //     function (course_labs, currentIndex, listObj) {
+        //         if(!course_labs.classList.contains('no_display')){
+        //             lab = course_labs.querySelector(chosen);
+        //             lab.setAttribute('style', 'display:block');
+        //             lab_title = lab.querySelector('.lab_header');
+        //             lab_title.after(labs);
+        //             // labs.setAttribute('style', 'margin: 0');
+        //             labs.setAttribute('style', 'position: relative !important;');
+        //             labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+        //             // labs.setAttribute('style', 'top: 50%;');
+        //             // labs.setAttribute('style', 'transform: translateY(-55%)');
+        //             // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+        //             labs.setAttribute('style', 'background-color: #78d8fa');
+        //         }
+        //     },""
+        // );
+
+
+
+
+
+
+
+            collapser.onclick = (event) => {
+                main_grid.classList.toggle('main_grid');
+                main_grid.classList.toggle('main_grid_collapsed');
+                courses.classList.toggle('courses');
+                courses.classList.toggle('courses_collapsed');
+                course_menu.classList.toggle('no_display');
+                collapser_triangle_image_right.classList.toggle('no_display');
+                collapser_triangle_image_left.classList.toggle('no_display');
+
+            }
+
     </script>
 
     </body>

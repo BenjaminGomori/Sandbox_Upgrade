@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "vms")
 public @Data
-class VM {
+class VM extends PublicVM{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int vmID;
@@ -23,21 +23,20 @@ class VM {
 //    @Column(name = "osID")
 //    private int osID;
 
-//    @Column(name = "courseID ")
-//    private String courseID;
-
-//    @Column(name = "studentID")
-//    private int studentID;
-//
-//    @Column(name = "instructorID")
-//    private int instructorID;
-
     @ManyToOne
     @JoinColumn(name="courseID", nullable=false)
     private Course course;
 
+    @ManyToOne
+    @JoinColumn(name="studentID", nullable=false)
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name="instructorID", nullable=false)
+    private Instructor instructor;
+
     @Override
     public String toString() {
-        return  "Name: "+this.Name  + "; VMWareNumber: " + this.VMWareNumber + "; PublicNumber: " +this.PublicNumber+"; Course: " + this.course;
+        return "";
     }
 }

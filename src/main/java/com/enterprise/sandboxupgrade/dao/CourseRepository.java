@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository("CourseRepository")
 public interface CourseRepository extends CrudRepository<Course, Integer> {
-
 }

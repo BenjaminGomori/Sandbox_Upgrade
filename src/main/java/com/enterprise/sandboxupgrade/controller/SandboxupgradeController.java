@@ -1,13 +1,9 @@
 package com.enterprise.sandboxupgrade.controller;
-import com.enterprise.sandboxupgrade.service.ICourseService;
-import com.enterprise.sandboxupgrade.service.ILabService;
-import com.enterprise.sandboxupgrade.service.ISemesterService;
-import com.enterprise.sandboxupgrade.service.IVmService;
+import com.enterprise.sandboxupgrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 
 @Controller
 public class SandboxupgradeController {
@@ -19,7 +15,13 @@ public class SandboxupgradeController {
     @Autowired
     IVmService vmService;
     @Autowired
+    IVmConfigurationService VmConfigurationService;
+    @Autowired
     ILabService labService;
+    @Autowired
+    IOrchestratorService orchestratorService;
+
+    private boolean isStarted = false;
 
 //    public
 //    VirtualMachineTicket acquireTicket(final ManagedObjectReference vmMoRef, String ticketType)
@@ -34,12 +36,32 @@ public class SandboxupgradeController {
      * @throws Exception
      */
     @GetMapping("/")
-    public String viewCapstonePage(Model model) throws Exception {
-        model.addAttribute("listCourse", courseService.fetchAll());
+    public String viewMainPage(Model model) throws Exception {
+        getStarted();
+//        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
 //        model.addAttribute("listSemester", semesterService.fetchAll());
         model.addAttribute("listVMs", vmService.fetchAll());
+        model.addAttribute("listVMconfigureOptions", VmConfigurationService.fetchAll());
         model.addAttribute("listLabs", labService.fetchAll());
         return "index";
+    }
+
+    @GetMapping("/courses")
+    public String viewCoursesPage(Model model) throws Exception {
+        getStarted();
+//        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+//        model.addAttribute("listSemester", semesterService.fetchAll());
+        model.addAttribute("listVMs", vmService.fetchAll());
+        model.addAttribute("listVMconfigureOptions", VmConfigurationService.fetchAll());
+        model.addAttribute("listLabs", labService.fetchAll());
+        return "index";
+    }
+
+    private void getStarted() throws Exception{
+        if(!isStarted) orchestratorService.getStarted();
+        isStarted = true;
     }
 
 //    public VirtualMachineTicket acquireTicket(final ManagedObjectReference vmMoRef, String ticketType)

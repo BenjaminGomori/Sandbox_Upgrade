@@ -47,7 +47,7 @@
 .trackpad-wrapper  .ui-dialog-titlebar-close .ui-icon,
 .trackpad-wrapper  .ui-dialog-titlebar .ui-dialog-title,
 .touch-sprite {
-   background-image: url('../img/touch_sprite.png');
+   background-image: url('../images/touch_sprite.png');
 }
 
 /* Replace jquery ui title bar close icon. */

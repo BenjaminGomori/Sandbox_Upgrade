@@ -21,7 +21,7 @@ public class CourseDAOStub implements ICourseDAO {
     }
 
     @Override
-    public Iterable<Course> fetchAll() {
+    public List<Course> fetchAll() {
         List<Course> returnCourses = new ArrayList(courses.values());
         return returnCourses;
     }

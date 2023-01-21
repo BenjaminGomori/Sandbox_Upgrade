@@ -1,4 +1,5 @@
 package com.enterprise.sandboxupgrade.dto;
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,10 +8,13 @@ import java.util.List;
 @Entity
 @Table(name = "Courses")
 public @Data
-class Course {
+class Course extends PublicCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int courseID;
+
+    @Column(name = "uniquename")
+    private String uniqueName;
 
     @Column(name = "name")
     private String name;
@@ -21,12 +25,12 @@ class Course {
     @Column(name = "section")
     private String section;
 
-
     @Column(name = "description")
     private String description;
 
-    @Column(name = "yearID")
-    private String year;
+    @ManyToOne
+    @JoinColumn(name="yearID", nullable=false)
+    private Year year;
 
     @ManyToOne
     @JoinColumn(name="semesterID", nullable=false)
@@ -38,8 +42,24 @@ class Course {
     @OneToMany(mappedBy = "course")
     private List<Lab> labs;
 
+    @ManyToMany
+    @JoinTable(
+            name = "coursestudent",
+            joinColumns = @JoinColumn(name = "courseID"),
+            inverseJoinColumns = @JoinColumn(name = "studentID")
+    )
+    private List<Student> students;
 
-    @Override public String toString() {
-        return this.name +' '+ this.number + this.section;
+    @ManyToMany
+    @JoinTable(
+            name = "courseinstructor",
+            joinColumns = @JoinColumn(name = "courseID"),
+            inverseJoinColumns = @JoinColumn(name = "instructorID")
+    )
+    private List<Instructor> instructors;
+
+    @Override
+    public String toString() {
+        return "";
     }
 }

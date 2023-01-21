@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -14,7 +15,7 @@ public class SemesterDAOStub implements ISemesterDAO {
     Map<Integer, Semester> semesters = new HashMap<>();
 
     @Override
-    public Iterable<Semester> fetchAll() {
+    public List<Semester> fetchAll() {
         return null;
     }
 }

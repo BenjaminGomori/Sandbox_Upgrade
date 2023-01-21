@@ -1,7 +1,9 @@
 package com.enterprise.sandboxupgrade.dao;
+
 import com.enterprise.sandboxupgrade.dto.Lab;
-import com.enterprise.sandboxupgrade.dto.VM;
+
+import java.util.List;
 
 public interface ILabDAO {
-    Iterable<Lab> fetchAll() throws Exception;
+    List<Lab> fetchAll() throws Exception;
 }

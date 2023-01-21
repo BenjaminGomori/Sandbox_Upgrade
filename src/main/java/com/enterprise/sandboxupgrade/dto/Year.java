@@ -2,20 +2,22 @@ package com.enterprise.sandboxupgrade.dto;
 
 import lombok.Data;
 import javax.persistence.*;
+
 import java.util.List;
 
 @Entity
-@Table(name = "Semesters")
+@Table(name = "years")
 public @Data
-class Semester {
+class Year {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int semesterID;
+    private int yearID;
 
-    @Column(name = "semester")
-    private String semester;
+    @Column(name = "year")
+    private int number;
 
-    @OneToMany(mappedBy = "semester")
+    @OneToMany(mappedBy = "year")
     private List<Course> courses;
 
     @Override

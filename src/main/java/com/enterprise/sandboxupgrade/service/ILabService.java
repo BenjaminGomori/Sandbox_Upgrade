@@ -1,7 +1,8 @@
 package com.enterprise.sandboxupgrade.service;
-
 import com.enterprise.sandboxupgrade.dto.Lab;
 
+import java.util.List;
+
 public interface ILabService {
-    Iterable<Lab> fetchAll() throws Exception;
+    List<Lab> fetchAll() throws Exception;
 }
