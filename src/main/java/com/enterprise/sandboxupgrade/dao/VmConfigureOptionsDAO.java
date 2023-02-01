@@ -1,7 +1,6 @@
 package com.enterprise.sandboxupgrade.dao;
 
-import com.enterprise.sandboxupgrade.dto.Semester;
-import com.enterprise.sandboxupgrade.dto.VmConfigureOption;
+import com.enterprise.sandboxupgrade.entity.VmConfigureOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -14,12 +13,12 @@ import java.util.List;
 public class VmConfigureOptionsDAO implements IVmConfigureOptionsDAO {
 
     @Autowired
-    VmConfigureRepository VmConfigureRepository;
+    VmConfigureRepository vmConfigureRepository;
 
     @Override
     public List<VmConfigureOption> fetchAll() {
         List<VmConfigureOption> target = new ArrayList<>();
-        VmConfigureRepository.findAll().forEach(target::add);
+        vmConfigureRepository.findAll().forEach(target::add);
         return target;
     }
 }

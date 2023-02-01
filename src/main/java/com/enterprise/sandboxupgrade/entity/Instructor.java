@@ -1,38 +1,39 @@
-package com.enterprise.sandboxupgrade.dto;
+package com.enterprise.sandboxupgrade.entity;
 
 import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "students")
+@Table(name = "instructors")
 public @Data
-class Student{
+class Instructor{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int studentID;
+    private int instructorID;
 
     @Column(name = "firstname")
-    private String firstname;
+    String firstname;
 
     @Column(name = "lastname")
-    private String lastName;
+    String lastName;
 
+//    @Column(nullable = false, unique = true, length = 90, name = "email")
     @Column(name = "email")
-    private String email;
+    String email;
 
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "instructor")
     private List<VM> vms;
 
     @ManyToMany
     @JoinTable(
-            name = "coursestudent",
-            joinColumns = @JoinColumn(name = "studentID"),
+            name = "courseinstructor",
+            joinColumns = @JoinColumn(name = "instructorID"),
             inverseJoinColumns = @JoinColumn(name = "courseID")
     )
     private List<Course> courses;

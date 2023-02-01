@@ -1,6 +1,6 @@
 package com.enterprise.sandboxupgrade.dao;
 
-import com.enterprise.sandboxupgrade.dto.Semester;
+import com.enterprise.sandboxupgrade.entity.Semester;
 
 import java.util.List;
 

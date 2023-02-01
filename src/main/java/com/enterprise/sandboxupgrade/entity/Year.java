@@ -1,7 +1,7 @@
-package com.enterprise.sandboxupgrade.dto;
+package com.enterprise.sandboxupgrade.entity;
 
 import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import java.util.List;
 @Table(name = "years")
 public @Data
 class Year {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int yearID;

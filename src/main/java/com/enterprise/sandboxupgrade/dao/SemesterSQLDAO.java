@@ -1,6 +1,6 @@
 package com.enterprise.sandboxupgrade.dao;
 
-import com.enterprise.sandboxupgrade.dto.Semester;
+import com.enterprise.sandboxupgrade.entity.Semester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -13,12 +13,12 @@ import java.util.List;
 public class SemesterSQLDAO implements ISemesterDAO {
 
     @Autowired
-    SemesterRepository SemesterRepository;
+    SemesterRepository semesterRepository;
 
     @Override
     public List<Semester> fetchAll() {
         List<Semester> target = new ArrayList<>();
-        SemesterRepository.findAll().forEach(target::add);
+        semesterRepository.findAll().forEach(target::add);
         return target;
     }
 }

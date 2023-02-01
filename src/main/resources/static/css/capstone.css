@@ -54,17 +54,17 @@ body {
 
  }
 
-.course_menu p {
-    text-decoration: underline;
-    font-weight: bold;
-    margin:0;
-    margin-bottom: 1rem;
-}
+/*.course_menu p {*/
+/*    text-decoration: underline;*/
+/*    font-weight: bold;*/
+/*    margin:0;*/
+/*    margin-bottom: 1rem;*/
+/*}*/
 
-.course_menu p:hover {
-    cursor: pointer;
-    opacity:0.5;
-}
+/*.course_menu p:hover {*/
+/*    cursor: pointer;*/
+/*    opacity:0.5;*/
+/*}*/
 
 .collapser {
     width: 100%;
@@ -118,4 +118,26 @@ img {
 
 .course_labs {
     height: 100%;
+}
+
+.course{
+    text-decoration: underline;
+    font-weight: bold;
+    margin:0;
+    margin-bottom: 1rem;
+}
+
+.course:hover{
+    cursor: pointer;
+    opacity:0.5;
+}
+
+.isSelected{
+    cursor: default;
+    opacity:.5;
+}
+
+.isSelected:hover{
+    cursor: default;
+    opacity:.5;
 }

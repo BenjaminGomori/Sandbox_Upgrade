@@ -1,6 +1,6 @@
 package com.enterprise.sandboxupgrade.dao;
 
-import com.enterprise.sandboxupgrade.dto.Course;
+import com.enterprise.sandboxupgrade.entity.Course;
 
 import java.util.List;
 

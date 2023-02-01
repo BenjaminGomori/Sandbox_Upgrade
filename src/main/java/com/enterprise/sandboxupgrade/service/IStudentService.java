@@ -1,5 +1,5 @@
 package com.enterprise.sandboxupgrade.service;
-import com.enterprise.sandboxupgrade.dto.Student;
+import com.enterprise.sandboxupgrade.entity.Student;
 
 import java.util.List;
 

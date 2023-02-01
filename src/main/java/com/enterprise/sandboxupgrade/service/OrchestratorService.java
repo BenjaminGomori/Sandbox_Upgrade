@@ -1,5 +1,5 @@
 package com.enterprise.sandboxupgrade.service;
-import com.enterprise.sandboxupgrade.dto.*;
+import com.enterprise.sandboxupgrade.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,8 @@ public class OrchestratorService implements IOrchestratorService {
 
     // not sharable (with user) - original data
     private List<Course> courses;
+    private Map<Integer, Course> coursesMappedByID;
+
     private List<Instructor> instructors;
     private List<Student> students;
 
@@ -38,11 +40,19 @@ public class OrchestratorService implements IOrchestratorService {
         fetchAllStudentsFromDB();
         // Will be provided to frontend
         createUserPublicCoursesAndVMsMap();
+        populateCourseByIdMap();
     }
 
     private void fetchAllCoursesFromDB() throws Exception {
         courses = new ArrayList<>();
         courses = courseService.fetchAll();
+    }
+
+    private void populateCourseByIdMap() throws Exception {
+        coursesMappedByID = new HashMap<Integer, Course>();
+        for(Course course : courses){
+            coursesMappedByID.put(course.getCourseID(), course);
+        }
     }
 
     private void fetchAllInstructorsFromDB() throws Exception {
@@ -86,10 +96,24 @@ public class OrchestratorService implements IOrchestratorService {
                     publicLab.description = lab.getDescription();
                     publicLab.image = lab.getImage();
                     publicLab.link = lab.getLink();
+                    publicLab.dueDate = lab.getDueDate();
+                    publicLab.publicCourse = publicCourse;
                     publicCourse.publicLabs.add(publicLab);
                 }
 
+                publicCourse.publicVms = new ArrayList<PublicVM>();
+                for(VM vm : c.getVMs()) {
+                    PublicVM PublicVM = new PublicVM();
+                    PublicVM.publicNumber = vm.getPublicNumber();
+                    PublicVM.name = vm.getName();
+                    PublicVM.vmID = vm.getVmID();
+                    PublicVM.VMWareNumber = vm.getVMWareNumber();
+                    publicCourse.publicVms.add(PublicVM);
+                }
+
                 userPublicCourses.add(publicCourse);
+
+
             };
             PublicUser publicStudent = new PublicUser();
             publicStudent.lastName = s.getLastName();
@@ -131,5 +155,10 @@ public class OrchestratorService implements IOrchestratorService {
     @Override
     public List<PublicVM> getUserVMs(String userId){
         return null;
+    }
+
+    @Override
+    public void assignLabCourse(Lab lab, int courseId){
+        lab.setCourse(coursesMappedByID.get(courseId));
     }
 }

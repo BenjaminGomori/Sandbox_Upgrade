@@ -1,6 +1,6 @@
 package com.enterprise.sandboxupgrade.dao;
 
-import com.enterprise.sandboxupgrade.dto.VmConfigureOption;
+import com.enterprise.sandboxupgrade.entity.VmConfigureOption;
 
 import java.util.List;
 

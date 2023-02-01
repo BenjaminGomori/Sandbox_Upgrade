@@ -1,7 +1,7 @@
-package com.enterprise.sandboxupgrade.dto;
+package com.enterprise.sandboxupgrade.entity;
 
 import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "vmconfigureoptions")

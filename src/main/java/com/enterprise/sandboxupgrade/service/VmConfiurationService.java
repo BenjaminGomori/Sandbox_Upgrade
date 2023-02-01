@@ -1,7 +1,7 @@
 package com.enterprise.sandboxupgrade.service;
 
 import com.enterprise.sandboxupgrade.dao.IVmConfigureOptionsDAO;
-import com.enterprise.sandboxupgrade.dto.VmConfigureOption;
+import com.enterprise.sandboxupgrade.entity.VmConfigureOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

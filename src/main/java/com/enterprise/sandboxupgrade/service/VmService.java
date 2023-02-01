@@ -1,7 +1,7 @@
 package com.enterprise.sandboxupgrade.service;
 
 import com.enterprise.sandboxupgrade.dao.IVmDAO;
-import com.enterprise.sandboxupgrade.dto.VM;
+import com.enterprise.sandboxupgrade.entity.VM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

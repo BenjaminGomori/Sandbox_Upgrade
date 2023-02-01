@@ -1,7 +1,7 @@
 package com.enterprise.sandboxupgrade.service;
 
 import com.enterprise.sandboxupgrade.dao.IInstructorDAO;
-import com.enterprise.sandboxupgrade.dto.Instructor;
+import com.enterprise.sandboxupgrade.entity.Instructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

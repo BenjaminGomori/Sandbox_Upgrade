@@ -1,6 +1,6 @@
 package com.enterprise.sandboxupgrade.dao;
 
-import com.enterprise.sandboxupgrade.dto.Semester;
+import com.enterprise.sandboxupgrade.entity.Semester;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.enterprise.sandboxupgrade.service;
 
 import com.enterprise.sandboxupgrade.dao.ILabDAO;
-import com.enterprise.sandboxupgrade.dto.Lab;
+import com.enterprise.sandboxupgrade.entity.Lab;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +27,10 @@ public class LabService implements ILabService {
             this.labs = labDAO.fetchAll();
         }
         return labs;
+    }
+
+    @Override
+    public Lab save(Lab lab) throws Exception {
+        return labDAO.save(lab);
     }
 }

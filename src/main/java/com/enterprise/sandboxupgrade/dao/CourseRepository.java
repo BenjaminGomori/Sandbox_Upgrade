@@ -1,8 +1,8 @@
 package com.enterprise.sandboxupgrade.dao;
-import com.enterprise.sandboxupgrade.dto.Course;
-import org.springframework.data.repository.CrudRepository;
+import com.enterprise.sandboxupgrade.entity.Course;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("CourseRepository")
-public interface CourseRepository extends CrudRepository<Course, Integer> {
+@Repository
+public interface CourseRepository extends JpaRepository<Course, Integer> {
 }

@@ -1,12 +1,15 @@
-package com.enterprise.sandboxupgrade.dto;
+package com.enterprise.sandboxupgrade.entity;
 
 import lombok.Data;
-import javax.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "labs")
 public @Data
-class Lab extends PublicLab{
+class Lab{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int labID;
@@ -25,6 +28,10 @@ class Lab extends PublicLab{
 
     @Column(name = "image")
     private String image;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "duedate")
+    private Date dueDate;
 
     @ManyToOne
     @JoinColumn(name="courseID", nullable=false)

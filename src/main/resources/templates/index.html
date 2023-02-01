@@ -1,122 +1,124 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
         <title>Sandbox Upgrade!</title>
         <link rel="shortcut icon" href="#">
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-                crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-                crossorigin="anonymous"></script>
+<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
+<!--                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
+<!--                crossorigin="anonymous"></script>-->
+<!--        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"-->
+<!--                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"-->
+<!--                crossorigin="anonymous"></script>-->
+<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"-->
+<!--                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"-->
+<!--                crossorigin="anonymous"></script>-->
+
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/popper.min.js}"></script>
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootsrap.min.js}"></script>
+
+
 
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/split-grid.js}"></script>
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/wmks.min.js}"></script>
 
-        <link rel="stylesheet" th:href="@{/css/jquery-ui.css}">
-        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{/css/wmks-all.css}">
-        <link rel="stylesheet" th:href="@{/css/split.css}">
-        <link rel="stylesheet" th:href="@{/css/capstone.css}">
+        <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/wmks-all.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/split.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
     </head>
 
     <body>
+        <div class="main_grid">
+            <div class="courses">
 
-
-
-
-
-
-    <div class="main_grid">
-        <div class="courses">
-            <div class="course_menu">
-                <p style="color:darkred" th:each="course : ${listCourse}" th:value="${course.id}" th:text="${course.number} +' - ' + ${course.name}"></p>
-
-            </div>
-            <div class="collapser">
-                <div class="collapser_triangle_image_right">
-                    <img th:src="@{/images/collapse.png}" alt="">
+                <div class="course_menu">
+                    <h2>Courses</h2>
+                    <p class="course" style="color:darkred" th:each="course : ${listCourse}" th:data="${course.id}" th:value="${course.id}" th:classappend="course_+${course.id}" th:text="${course.number} +' - ' + ${course.name}"></p>
                 </div>
-                <div class="collapser_triangle_image_left no_display">
-                    <img th:src="@{/images/un_collapse.png}" alt="">
-                </div>
-            </div>
-        </div>
 
-
-
-        <!-- this grid class is from the split library -->
-        <div class="grid" style="height:100vh; margin:0">
-            <div id="wmksContainer" style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
-                <!--        <div id="wmksContainer">-->
-                <h2 style="display: inline-block; font-size: 3rem;">Virtual Machine</h2>
-
-                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
-                    <option th:each="vm : ${listVMs}" th:value="${vm.getPublicNumber()}" th:text="${vm.name}"></option>
-                </select>
-
-
-                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vm_configuration">
-                    <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}" th:text="${vmOptions.getOption()}"></option>
-                </select>
-
-                <script>
-                    var wmks = WMKS.createWMKS("wmksContainer",{})
-                        .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
-                            if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                                console.log("connection state change : connected");}
-                        });
-                    wmks.connect("wss://10.127.71.133:443/ticket/5360c5020ccfb9d2");
-                    // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee"); 		"	"	"
-                    // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket
-                </script>
-                <!--    </div>-->
-
-
-            </div>
-            <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
-            <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
-
-
-<!--                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_labs">-->
-<!--                    <option th:each="lab : ${listLabs}" th:value="${lab.getNumber()}" th:text="'Lab - '+ ${lab.getNumber()}"></option>-->
-<!--                </select>-->
-<!--                <div>-->
-<!--                    <div style="display: none; position: relative" th:each="lab : ${listLabs}" th:class="lab_ + ${lab.getNumber()}">-->
-<!--                        <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
-<!--                        &lt;!&ndash;                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>&ndash;&gt;-->
-<!--                        </hr>-->
-<!--                        <p style="font-size: 1.5rem;padding: 2rem;" th:text="${lab.getDescription()}"></p>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-
-                <div class="course_labs no_display" th:each="course : ${listCourse}" th:value="${course.id}"}>
-                    <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_labs">
-                        <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}" th:text="'Lab - '+ ${lab.number}"></option>
-                    </select>
-                    <div style="height:inherit;overflow-y:scroll">
-                        <div style="height:inherit; display: none; position: relative;" th:each="lab : ${course.publicLabs}" th:class="lab_ + ${lab.number}">
-                            <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.title}"></h2>
-                            <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
-                            </hr>
-                            <p style="font-size: 1.5rem; height:inherit;" th:text="${lab.description}"></p>
-                        </div>
+                <div class="collapser">
+                    <div class="collapser_triangle_image_right">
+                        <img th:src="@{/images/collapse.png}" alt="">
+                    </div>
+                    <div class="collapser_triangle_image_left no_display">
+                        <img th:src="@{/images/un_collapse.png}" alt="">
                     </div>
                 </div>
 
+            </div>
 
 
+
+            <!-- this grid class is from the split library -->
+            <div class="grid" style="height:100vh; margin:0">
+                <div id="wmksContainer" style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
+
+                    <h2 style="display: inline-block; font-size: 3rem;">Virtual Machine</h2>
+                    <div class="no_display" th:each="course : ${listCourse}" th:classappend="course_+${course.id} +_vms">
+                        <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
+                            <option th:each="vm : ${course.publicVms}" th:value="${vm.publicNumber}" th:text="${vm.name}"></option>
+                        </select>
+                    </div>
+
+                    <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vm_configuration">
+                        <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}" th:text="${vmOptions.getOption()}"></option>
+                    </select>
+
+                    <script>
+                        var wmks = WMKS.createWMKS("wmksContainer",{})
+                            .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
+                                if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
+                                    console.log("connection state change : connected");}
+                            });
+                        wmks.connect("wss://10.127.71.133:443/ticket/5360c5020ccfb9d2");
+                        // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee"); 		"	"	"
+                        // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket
+                    </script>
+                </div>
+
+                <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
+
+                <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
+
+                    <div class="course_labs no_display" th:classappend="course_labs_ + ${course.id}" th:each="course : ${listCourse}" th:value="${course.id}"}>
+                        <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_labs">
+                            <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}" th:text="'Lab - '+ ${lab.number}"></option>
+                        </select>
+                        <div style="height:inherit;overflow-y:auto">
+                            <div class="no_display" style="height:inherit; position: relative;" th:each="lab : ${course.publicLabs}" th:classappend="lab_ + ${lab.number}">
+                                <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.title}"></h2>
+                                <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
+                                </hr>
+<!--                                <div class="embed-responsive embed-responsive-16by9" style="width:100%;">-->
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    </br>
+                                    </br>
+<!--                                    <iframe style="width: 75%; height: 42%; object-fit: contain;" class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>-->
+                                    <iframe class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>
+                                </div>
+                                <div>
+                                    </br>
+                                    </br>
+                                    <img th:src="@{${'/photos/'+lab.image}}" style="width: 75%; object-fit: contain;"/>
+                                    </br>
+                                    </br>
+                                </div>
+
+                                <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;" th:text="${lab.description}"></p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
 
     <script>
         // <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js">
@@ -160,13 +162,13 @@
             webmks.style.left= "null !important";
             webmks.style.height= "null !important";
             webmks.style.width= "100% !important";
-    };
+        };
     </script>
 
 
 
     <script>
-        const labsListJS = document.querySelectorAll('#dropDownList_labs');
+        const labsListsJS = document.querySelectorAll('#dropDownList_labs');
         let lab_title = null;
         let lab = null;
         let chosen = '';
@@ -176,7 +178,20 @@
         let collapser = document.querySelector('.collapser');
         let collapser_triangle_image_right = document.querySelector('.collapser_triangle_image_right');
         let collapser_triangle_image_left = document.querySelector('.collapser_triangle_image_left');
-        let courseLabs = document.querySelectorAll('.course_labs');
+        // let courseLabs = document.querySelectorAll('.course_labs');
+        let courseLabs = null;
+
+
+
+
+        let selectedCourseVms = null;
+
+
+
+
+        // Courses menu section
+        const course_menu_list = document.querySelectorAll('.course');
+        let selected_course = null;
 
         // source: https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#javascript-inlining
         // let coursesJS = /*[[${listCourse}]]*/ null;
@@ -185,7 +200,7 @@
 
 
             window.onload = (event) => {
-                                                    // for (const labs of labsListJS.values()) {
+                                                    // for (const labs of labsListsJS.values()) {
                                                     //     chosen = labs.options[labs.selectedIndex].value;
                                                     //     chosen = '.lab_' + chosen;
                                                     //     console.log(chosen);
@@ -204,29 +219,141 @@
                                                     // // main_grid = document.querySelector('.main_grid');
                                                     // // courses = document.querySelector('.courses');
                                                     // // collapser = document.querySelector('.collapser');
-                if (courseLabs.length > 0) {
-                    courseLabs = courseLabs.item(0);
+
+
+                // if (courseLabs.length > 0) {
+                //     courseLabs = courseLabs.item(0);
+                //     courseLabs.classList.toggle('no_display');
+                //
+                //
+                //     chosen = courseLabs.querySelector('select').options[courseLabs.querySelector('select').selectedIndex].value;
+                //     chosen = '.lab_' + chosen;
+                //     console.log(chosen);
+                //     lab = courseLabs.querySelector(chosen);
+                //     lab.setAttribute('style', 'display:block; height:inherit');
+                //     lab_title = lab.querySelector('.lab_header');
+                //     labs = courseLabs.querySelector('select')
+                //     lab_title.after(labs);
+                //     // labs.setAttribute('style', 'margin: 0');
+                //     labs.setAttribute('style', 'position: relative !important;');
+                //     labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+                //     // labs.setAttribute('style', 'top: 50%;');
+                //     // labs.setAttribute('style', 'transform: translateY(-55%)');
+                //     // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                //     labs.setAttribute('style', 'background-color: #78d8fa');
+                // }
+
+
+                //Determining that first course in list is considered selected (its VMs and Labs should be displayed)
+                if(course_menu_list.length > 0) {
+                    selected_course = course_menu_list.item(0);
+                    selected_course.classList.add('isSelected');
+                    let courseId = selected_course.getAttribute('value')
+                    let selector = '.course_labs_' +  courseId;
+                    courseLabs = document.querySelector(selector);
+                    selector ='.course_' +  courseId + '_vms';
+                    selectedCourseVms = document.querySelector(selector);
+                }
+
+                // Display selected course VMs (the select element)
+                if(selectedCourseVms){
+                    selectedCourseVms.classList.toggle('no_display');
+                }
+
+                // Display selected course Labs
+                if (courseLabs) {
+                    // Display selected course Labs section
                     courseLabs.classList.toggle('no_display');
 
-
+                    // Display selected lab description and header
                     chosen = courseLabs.querySelector('select').options[courseLabs.querySelector('select').selectedIndex].value;
                     chosen = '.lab_' + chosen;
                     console.log(chosen);
                     lab = courseLabs.querySelector(chosen);
-                    lab.setAttribute('style', 'display:block; height:inherit');
+                    // lab.setAttribute('style', 'display:block; height:inherit');
+                    lab.classList.toggle('no_display');
+                    lab.setAttribute('style', 'height:inherit');
+
+
                     lab_title = lab.querySelector('.lab_header');
-                    labs = courseLabs.querySelector('select')
+                    labs = courseLabs.querySelector('select');
                     lab_title.after(labs);
-                    // labs.setAttribute('style', 'margin: 0');
-                    labs.setAttribute('style', 'position: relative !important;');
-                    labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-                    // labs.setAttribute('style', 'top: 50%;');
-                    // labs.setAttribute('style', 'transform: translateY(-55%)');
-                    // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-                    labs.setAttribute('style', 'background-color: #78d8fa');
+                    //                         // labs.setAttribute('style', 'margin: 0');
+                    // labs.setAttribute('style', 'position: relative !important;');
+                    // labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+                    //                         // labs.setAttribute('style', 'top: 50%;');
+                    //                         // labs.setAttribute('style', 'transform: translateY(-55%)');
+                    //                         // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                    // labs.setAttribute('style', 'background-color: #78d8fa');
                 }
 
-        //         labsListJS.forEach(
+
+                // Add a function to each course - to display it's vms and labs
+                course_menu_list.forEach(
+                    function (course, currentIndex, listObj) {
+                        course.onclick = (event) => {
+                            selected_course.classList.toggle('isSelected');
+                            selected_course = course;
+                            selected_course.classList.toggle('isSelected');
+
+                            //update course_labs section
+                            courseLabs.classList.toggle('no_display');
+                            let selector = '.course_labs_' +  course.getAttribute('value');
+                            console.log(selector);
+                            console.log(course);
+                            courseLabs = document.querySelector(selector);
+                            courseLabs.classList.toggle('no_display');
+                            // courseLabs.
+
+                            let chosen_lab = courseLabs.querySelector('select').options[courseLabs.querySelector('select').selectedIndex].value;
+                            chosen_lab = '.lab_' + chosen_lab;
+                            console.log(chosen_lab);
+                            lab = courseLabs.querySelector(chosen_lab);
+
+                            if(lab.classList.contains('no_display')){
+                                lab.classList.toggle('no_display');
+                                lab.setAttribute('style', 'height:inherit');
+                                lab_title = lab.querySelector('.lab_header');
+                                labs = courseLabs.querySelector('select');
+                                lab_title.after(labs);
+                            }
+
+
+                            //                         // labs.setAttribute('style', 'margin: 0');
+                            // labs.setAttribute('style', 'position: relative !important;');
+                            // labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
+                            //                         // labs.setAttribute('style', 'top: 50%;');
+                            //                         // labs.setAttribute('style', 'transform: translateY(-55%)');
+                            //                         // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
+                            // labs.setAttribute('style', 'background-color: #78d8fa');
+
+
+                            //show the new selected course's vms, and no_display the previous's ones...
+                            // hides previously selected course vms
+                            selectedCourseVms.classList.toggle('no_display');
+                            selector = '.course_' +  course.getAttribute('value')+ '_vms';
+                            selectedCourseVms = document.querySelector(selector);
+                            // displays newly selected course vms
+                            selectedCourseVms.classList.toggle('no_display');
+                        }},""
+                );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //         labsListsJS.forEach(
         //             function (labs, currentIndex, listObj) {
         //                 console.log(labs);
         //                 console.log(labs.options);
@@ -261,7 +388,7 @@
             }
 
 
-        labsListJS.forEach(
+        labsListsJS.forEach(
             function (labs, currentIndex, listObj) {
                 labs.onchange = (event) => {
                     // chosen = labs.options[labs.selectedIndex].value;
@@ -280,11 +407,16 @@
                     // labs.setAttribute('style', 'background-color: #78d8fa');
 
 
-                    lab.setAttribute('style', 'display:none');
+                    // lab.setAttribute('style', 'display:none');
+                    lab.classList.toggle('no_display');
+
                     chosen = '.lab_' + labs.options[labs.selectedIndex].value;
                     lab = null;
                     lab = document.querySelector(chosen);
-                    lab.setAttribute('style', 'display:block; height:inherit;');
+                    // lab.setAttribute('style', 'display:block; height:inherit;');
+                    lab.classList.toggle('no_display');
+                    lab.setAttribute('style', 'height:inherit;');
+
                     lab_title = lab.querySelector('.lab_header')
                     lab_title.after(labs);
                     // labs.setAttribute('style', 'margin: 0');
@@ -296,64 +428,6 @@
                     labs.setAttribute('style', 'background-color: #78d8fa');
             }},""
         );
-
-                                            // for (const labs of labsListJS.values()) {
-                                            //     labs.onchange = (event) => {
-                                            //         chosen = labs.options[labs.selectedIndex].value;
-                                            //         chosen = '.lab_' + chosen;
-                                            //         console.log(chosen);
-                                            //         lab = document.querySelector(chosen);
-                                            //         lab.setAttribute('style', 'display:block');
-                                            //         lab_title = lab.querySelector('.lab_header');
-                                            //         lab_title.after(labs);
-                                            //         // labs.setAttribute('style', 'margin: 0');
-                                            //         labs.setAttribute('style', 'position: relative !important;');
-                                            //         labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-                                            //         // labs.setAttribute('style', 'top: 50%;');
-                                            //         // labs.setAttribute('style', 'transform: translateY(-55%)');
-                                            //         // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-                                            //         labs.setAttribute('style', 'background-color: #78d8fa');
-                                            //
-                                            //
-                                            //         lab.setAttribute('style', 'display:none');
-                                            //         chosen = '.lab_' + labs.options[labs.selectedIndex].value;
-                                            //         lab = null;
-                                            //         lab = document.querySelector(chosen);
-                                            //         lab.setAttribute('style', 'display:block');
-                                            //         lab_title = lab.querySelector('.lab_header')
-                                            //         lab_title.after(labs);
-                                            //         // labs.setAttribute('style', 'margin: 0');
-                                            //         labs.setAttribute('style', 'position: relative!important;');
-                                            //         labs.setAttribute('style', 'top: -0.25rem !important;');//TODO not working
-                                            //         // labs.setAttribute('style', 'top: 50%;');
-                                            //         // labs.setAttribute('style', 'transform: translateY(-55%)');
-                                            //         // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-                                            //         labs.setAttribute('style', 'background-color: #78d8fa');
-                                            //     };
-                                            // }
-
-
-        // document.querySelectorAll('.course_labs').forEach(
-        //     function (course_labs, currentIndex, listObj) {
-        //         if(!course_labs.classList.contains('no_display')){
-        //             lab = course_labs.querySelector(chosen);
-        //             lab.setAttribute('style', 'display:block');
-        //             lab_title = lab.querySelector('.lab_header');
-        //             lab_title.after(labs);
-        //             // labs.setAttribute('style', 'margin: 0');
-        //             labs.setAttribute('style', 'position: relative !important;');
-        //             labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-        //             // labs.setAttribute('style', 'top: 50%;');
-        //             // labs.setAttribute('style', 'transform: translateY(-55%)');
-        //             // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-        //             labs.setAttribute('style', 'background-color: #78d8fa');
-        //         }
-        //     },""
-        // );
-
-
-
-
 
 
 
@@ -372,91 +446,3 @@
 
     </body>
 </html>
-            <!--        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>-->
-<!--        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.popper.min.js}"></script>-->
-<!--        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.min.js}"></script>-->
-
-
-
-        <!--        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-<!--        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-
-<!--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
-<!--                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
-<!--                crossorigin="anonymous"></script>-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"-->
-<!--                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"-->
-<!--                crossorigin="anonymous"></script>-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"-->
-<!--                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"-->
-<!--                crossorigin="anonymous"></script>-->
-<!--        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-<!--        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
-<!--        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-
-
-<!--    <div id="wmksContainer">-->
-<!--    &lt;!&ndash;        <div id="wmksContainer">&ndash;&gt;-->
-<!--            <h2>VM</h2>-->
-<!--            &lt;!&ndash;<link rel="stylesheet" type="text/css" href="wmks-all.css" />&ndash;&gt;-->
-<!--            &lt;!&ndash;<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>&ndash;&gt;-->
-<!--            &lt;!&ndash;<script type="text/javascript" src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>&ndash;&gt;-->
-<!--            &lt;!&ndash;<script type="text/javascript" src="wmks.min.js"></script>&ndash;&gt;-->
-<!--    &lt;!&ndash;        <link rel="stylesheet" th:href="@{/css/wmks-all.css}">&ndash;&gt;-->
-<!--    &lt;!&ndash;        <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>&ndash;&gt;-->
-<!--    &lt;!&ndash;        <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>&ndash;&gt;-->
-<!--    &lt;!&ndash;        <script type="text/javascript" th:inline="javascript" th:src="@{/js/wmks.min.js}"></script>&ndash;&gt;-->
-<!--    &lt;!&ndash;        <div id="wmksContainer" style="background-color: deepskyblue;position:absolute;width:100%;height:100%"></div>&ndash;&gt;-->
-<!--            <script>-->
-<!--                var wmks = WMKS.createWMKS("wmksContainer",{})-->
-<!--                    .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){-->
-<!--                        if(data.state == WMKS.CONST.ConnectionState.CONNECTED){-->
-<!--                            console.log("connection state change : connected");}-->
-<!--                    });-->
-<!--                wmks.connect("wss://10.127.71.133:443/ticket/750005a03a4c0cbb");-->
-<!--                // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee");-->
-<!--                // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket-->
-<!--            </script>-->
-<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
-<!--        </div>-->
-
-
-
-
-
-
-
-
-<!--        <div class="dropdown">-->
-<!--            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                VM-->
-<!--            </button>-->
-<!--            <div th:each="vm : ${listVMs}" class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--                <a class="dropdown-item" th:text="${vm}" href="#"></a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <table>-->
-<!--            <tbody id="list-rows" >-->
-<!--                <tr th:each="course : ${listCourse}">-->
-<!--                    <td th:text="${course}"></td>-->
-
-
-
-
-<!--&lt;!&ndash;                    <td th:text="${course.semester}"></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td th:text="${course.address} + ', ' + ${event.city} + ', ' + ${event.state} + ', ' + ${event.country}"></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td th:text="${event.date}"></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td th:text="${event.description}"></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <a th:href="@{/edit/{id}(id=${event.id})}" class="btn btn-primary">Edit</a> |&ndash;&gt;-->
-<!--&lt;!&ndash;                        <a th:href="@{/delete/{id}(id=${event.id})}" class="btn btn-danger">Delete</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
-
-<!--                </tr>-->
-
-<!--                <tr th:each="vm : ${listVMs}">-->
-<!--                    <td th:text="${vm}"></td>-->
-<!--                </tr>t-->
-<!--            </tbody>-->

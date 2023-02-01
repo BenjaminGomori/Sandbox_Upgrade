@@ -1,6 +1,4 @@
-package com.enterprise.sandboxupgrade.dto;
-
-import javax.persistence.Column;
+package com.enterprise.sandboxupgrade.entity;
 
 public class PublicUser{
     public String firstname;

@@ -1,10 +1,13 @@
-package com.enterprise.sandboxupgrade.dto;
+package com.enterprise.sandboxupgrade.entity;
 
-import javax.persistence.Column;
+import lombok.Data;
+
+import jakarta.persistence.*;
 import java.util.List;
 
-public class PublicCourse {
-    @Column
+public @Data
+class PublicCourse {
+    @Column(name = "id")
     public int id;
     @Column
     public String uniqueName;
@@ -24,6 +27,10 @@ public class PublicCourse {
     @Column
     //@OneToMany(mappedBy = "course")
     public List<PublicLab> publicLabs;
+
+    @Column
+    //@OneToMany(mappedBy = "course")
+    public List<PublicVM> publicVms;
 
 //    @Override
     public String toString() {

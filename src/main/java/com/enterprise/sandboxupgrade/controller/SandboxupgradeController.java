@@ -1,10 +1,19 @@
 package com.enterprise.sandboxupgrade.controller;
+import com.enterprise.sandboxupgrade.entity.*;
 import com.enterprise.sandboxupgrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
+
+
+//Based on content from UC's Enterprise Development course
 @Controller
 public class SandboxupgradeController {
 
@@ -22,6 +31,13 @@ public class SandboxupgradeController {
     IOrchestratorService orchestratorService;
 
     private boolean isStarted = false;
+
+
+    @Autowired
+    IStudentService studentService;
+
+    @Autowired
+    IInstructorService instructorService;
 
 //    public
 //    VirtualMachineTicket acquireTicket(final ManagedObjectReference vmMoRef, String ticketType)
@@ -63,6 +79,74 @@ public class SandboxupgradeController {
         if(!isStarted) orchestratorService.getStarted();
         isStarted = true;
     }
+
+
+    @GetMapping("/create-lab")
+    public String createLab(Model model) throws Exception {
+        getStarted();
+        Lab lab = new Lab();
+        model.addAttribute("lab", lab);
+        model.addAttribute("course", new PublicCourse());
+        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+        return "create-lab";
+    }
+
+    @PostMapping("/saveLab")
+//    public String saveLab(@ModelAttribute("lab") Lab lab, @RequestParam("imageFile") MultipartFile imageFile,
+//                          @RequestParam("videoFile") MultipartFile videoFile)
+    public String saveLab(@RequestParam("imageFile") MultipartFile imageFile,
+                          @RequestParam("videoFile") MultipartFile videoFile,
+                          @ModelAttribute("course") PublicCourse course,
+                          @ModelAttribute("lab") Lab lab)
+            throws Exception {
+        getStarted();
+        //From UC's Enterprise Development course by Prof. Jones
+        //Storing file on server, (and String path in database)
+        Path currentPath = Paths.get(".");
+        Path absolutePath = currentPath.toAbsolutePath();
+        byte[] bytes = imageFile.getBytes();
+        Path path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
+        Files.write(path, bytes);
+        lab.setImage(path.toString());
+        lab.setDueDate(new Date());
+//        lab.setCourse(new Course());
+
+        // same for video
+        bytes = videoFile.getBytes();
+        path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
+        Files.write(path, bytes);
+        lab.setLink(path.toString());
+
+        // todo 1. correct courseID so submitted by user
+        // todo 2. correct Due-date so submitted by user
+        if(course.id <= 0){
+            orchestratorService.assignLabCourse(lab, 4);
+        } else {
+            orchestratorService.assignLabCourse(lab, course.id);
+        }
+        labService.save(lab);
+        return "redirect:/";
+    }
+
+
+
+
+    @GetMapping("/login")
+    public String login(Model model) throws Exception {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String postLogin(Model model) throws Exception {
+        return "index";
+    }
+
+
+    //    @PostMapping("/save")
+//    public String save(@ModelAttribute("event") Event event) throws Exception {
+//        eventService.save(event);
+//        return "redirect:/";
+//    }
 
 //    public VirtualMachineTicket acquireTicket(final ManagedObjectReference vmMoRef, String ticketType)
 //            throws Exception {
