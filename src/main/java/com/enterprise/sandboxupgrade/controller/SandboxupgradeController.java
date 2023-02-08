@@ -111,6 +111,7 @@ public class SandboxupgradeController {
         byte[] bytes = imageFile.getBytes();
         Path path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
         Files.write(path, bytes);
+        path = Paths.get(imageFile.getOriginalFilename());
         lab.setImage(path.toString());
         lab.setDueDate(new Date());
 //        lab.setCourse(new Course());
@@ -119,6 +120,7 @@ public class SandboxupgradeController {
         bytes = videoFile.getBytes();
         path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
         Files.write(path, bytes);
+        path = Paths.get(videoFile.getOriginalFilename());
         lab.setLink(path.toString());
 
         // todo 1. correct courseID so submitted by user
