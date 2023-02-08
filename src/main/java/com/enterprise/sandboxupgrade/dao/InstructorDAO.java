@@ -21,6 +21,11 @@ public class InstructorDAO implements IInstructorDAO {
         instructorRepository.findAll().forEach(target::add);
         return target;
     }
+
+//    @Override
+//    public Instructor findByUsername(String instructorName) {
+////        return instructorRepository.findByName(instructorName);
+//    }
 }
 
 

@@ -14,15 +14,12 @@ class Instructor{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int instructorID;
 
-    @Column(name = "firstname")
-    String firstname;
-
-    @Column(name = "lastname")
-    String lastName;
+    @Column(name = "fullname")
+    String fullName;
 
 //    @Column(nullable = false, unique = true, length = 90, name = "email")
-    @Column(name = "email")
-    String email;
+    @Column(name = "username")
+    String username;
 
     @Column(name = "password")
     private String password;
@@ -30,7 +27,7 @@ class Instructor{
     @OneToMany(mappedBy = "instructor")
     private List<VM> vms;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "courseinstructor",
             joinColumns = @JoinColumn(name = "instructorID"),
@@ -38,8 +35,16 @@ class Instructor{
     )
     private List<Course> courses;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "instructorrole",
+            joinColumns = @JoinColumn(name = "instructorid"),
+            inverseJoinColumns = @JoinColumn(name = "roleid")
+    )
+    private List<Role> roles;
+
     @Override
     public String toString() {
-        return "Firstname: " + firstname +"Lastname: " + lastName + " ;" + "Email: " + email;
+        return "Name: " + fullName + " ;" + "Username: " + username;
     }
 }

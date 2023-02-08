@@ -1,11 +1,10 @@
 package com.enterprise.sandboxupgrade.entity;
 
 public class PublicUser{
-    public String firstname;
-    public String lastName;
-    public String email;
+    public String name;
+    public String username;
 
 @Override
 public String toString() {
-    return "Firstname: " + firstname +"Lastname: " + lastName + " ;" + "Email: " + email;
+    return "Name: " + name + "; " + "Username: " + username;
 }}

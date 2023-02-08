@@ -24,7 +24,17 @@
 
   </head>
   <body>
-    <!--based on examples from https://getbootstrap.com/docs/4.0/components/forms/-->
+
+  <div class="sticky-top" th:switch="${usertype}">
+      <div th:case="'student'">
+          <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
+      </div>
+      <div th:case="'instructor'">
+          <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>
+      </div>
+  </div>
+
+  <!--based on examples from https://getbootstrap.com/docs/4.0/components/forms/-->
     <div class="container">
       <div class="justify-content-center">
         <div>

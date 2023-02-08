@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <meta charset="UTF-8">
         <title>Sandbox Upgrade!</title>
@@ -27,14 +27,33 @@
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/wmks.min.js}"></script>
 
         <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" type="text/css">
-        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+<!--        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">-->
+
+        <link rel="stylesheet" th:href="@{/css/login/all.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/login/bootstrap.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/login/bootstrap.bundle.min.js.css}" type="text/css">
+
+
         <link rel="stylesheet" th:href="@{/css/wmks-all.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/css/split.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
     </head>
 
     <body>
-        <div class="main_grid">
+<!--    <div sec:authorize="hasRole('INSTRUCTOR')">-->
+<!--        <nav th:replace="~{fragments/topnav :: navbar}"></nav>-->
+<!--    </div>-->
+
+<div class="sticky-top" th:switch="${usertype}">
+    <div th:case="'student'">
+        <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
+    </div>
+    <div th:case="'instructor'">
+        <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>
+    </div>
+</div>
+
+    <div class="main_grid">
             <div class="courses">
 
                 <div class="course_menu">
@@ -76,8 +95,8 @@
                                 if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
                                     console.log("connection state change : connected");}
                             });
-                        wmks.connect("wss://10.127.71.133:443/ticket/5360c5020ccfb9d2");
-                        // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee"); 		"	"	"
+                        wmks.connect("wss://10.127.71.133:443/ticket/7d29f9564bf1c76a");
+                        // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee");	" 		"	"	"
                         // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket
                     </script>
                 </div>
@@ -87,7 +106,8 @@
                 <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
 
                     <div class="course_labs no_display" th:classappend="course_labs_ + ${course.id}" th:each="course : ${listCourse}" th:value="${course.id}"}>
-                        <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_labs">
+                        <select style="background-color: #78d8fa;" claa
+                                ss="dropdown" id="dropDownList_labs">
                             <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}" th:text="'Lab - '+ ${lab.number}"></option>
                         </select>
                         <div style="height:inherit;overflow-y:auto">

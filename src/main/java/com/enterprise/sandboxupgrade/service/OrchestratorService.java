@@ -14,6 +14,10 @@ public class OrchestratorService implements IOrchestratorService {
     IInstructorService instructorService;
     @Autowired
     IStudentService studentService;
+    @Autowired
+    IRoleService roleService;
+
+    private String userType;
 
     // not sharable (with user) - original data
     private List<Course> courses;
@@ -21,6 +25,9 @@ public class OrchestratorService implements IOrchestratorService {
 
     private List<Instructor> instructors;
     private List<Student> students;
+
+    private List<Role> roles;
+
 
     // is sharable - altered data
     private Map<PublicUser, List<PublicCourse>> publicInstructorCourseMap;
@@ -32,6 +39,9 @@ public class OrchestratorService implements IOrchestratorService {
     // String - User Email only (the nested map will be shared and has Public user as key which includes name && email)
     private Map<String, PublicUser> searchStudentCourseMap;
 
+    private Map<String, Student> emailStudentMap;
+    private Map<String, Instructor> emailInstructorMap;
+
     @Override
     public void getStarted() throws Exception {
         // Get all courses
@@ -41,6 +51,13 @@ public class OrchestratorService implements IOrchestratorService {
         // Will be provided to frontend
         createUserPublicCoursesAndVMsMap();
         populateCourseByIdMap();
+
+        fetchAllRoles();
+    }
+
+    private void fetchAllRoles() throws Exception {
+        roles = new ArrayList<>();
+        roles = roleService.fetchAll();
     }
 
     private void fetchAllCoursesFromDB() throws Exception {
@@ -74,6 +91,8 @@ public class OrchestratorService implements IOrchestratorService {
 
 
         searchStudentCourseMap = new HashMap<String, PublicUser>();
+        emailStudentMap = new HashMap<String, Student>();
+        emailInstructorMap = new HashMap<String, Instructor>();
 
         for(Student s : students){
             List<Course> courses= s.getCourses();
@@ -116,21 +135,19 @@ public class OrchestratorService implements IOrchestratorService {
 
             };
             PublicUser publicStudent = new PublicUser();
-            publicStudent.lastName = s.getLastName();
-            publicStudent.firstname = s.getFirstname();
-            publicStudent.email = s.getEmail();
+            publicStudent.name = s.getName();
+            publicStudent.username = s.getUsername();
 
             publicStudentCourseMap.put(publicStudent,userPublicCourses);
-            searchStudentCourseMap.put(s.getEmail(),publicStudent);
+            searchStudentCourseMap.put(s.getUsername(),publicStudent);
+            emailStudentMap.put(s.getUsername(),s);
         };
 
-//        instructors.forEach(i->{
-//            i.getCourses().forEach(c->{
-//                userPublicCourses.add(c);
-//            });
-//            publicInstructorCourseMap.put(i,userPublicCourses);
-//            userPublicCourses.clear();
-//        });
+
+        //todo should this move location?
+        for(Instructor ins : instructors){
+            emailInstructorMap.put(ins.getUsername(),ins);
+        };
     }
 
     private PublicCourse castToPublicCourse(Course course){
@@ -160,5 +177,42 @@ public class OrchestratorService implements IOrchestratorService {
     @Override
     public void assignLabCourse(Lab lab, int courseId){
         lab.setCourse(coursesMappedByID.get(courseId));
+    }
+
+    @Override
+    public Student findStudentByUsername(String email){
+        if(this.emailStudentMap.containsKey(email)){
+            Student student = emailStudentMap.get(email);
+            userType = "student";
+            return student;
+        }
+        return null ;
+    }
+
+    @Override
+    public Instructor findInstructorByUsername(String username) {
+        Instructor instructor = null;
+        if(this.emailInstructorMap.containsKey(username)){
+            instructor = emailInstructorMap.get(username);
+            userType = "instructor";
+        }
+        return instructor ;
+    }
+
+//    @Override
+//    public void setUserType(String username) {
+//        if(this.emailInstructorMap.containsKey(username)){
+//            userType =  "instructor";
+//        }
+//        else if(this.emailStudentMap.containsKey(username)){
+//            userType = "student";
+//        }  else{
+//            userType = "";
+//        }
+//    }
+
+    @Override
+    public String getUserType(String username) {
+        return userType;
     }
 }

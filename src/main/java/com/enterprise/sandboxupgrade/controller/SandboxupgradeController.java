@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
-
 //Based on content from UC's Enterprise Development course
 @Controller
 public class SandboxupgradeController {
@@ -32,7 +31,6 @@ public class SandboxupgradeController {
 
     private boolean isStarted = false;
 
-
     @Autowired
     IStudentService studentService;
 
@@ -51,7 +49,8 @@ public class SandboxupgradeController {
      * @return capstone/vm page.
      * @throws Exception
      */
-    @GetMapping("/")
+//    @GetMapping(value={"","/","/index","/index.html","/home","/home.html"})
+    @GetMapping(value={"","/","/index","/index.html"})
     public String viewMainPage(Model model) throws Exception {
         getStarted();
 //        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
@@ -60,9 +59,13 @@ public class SandboxupgradeController {
         model.addAttribute("listVMs", vmService.fetchAll());
         model.addAttribute("listVMconfigureOptions", VmConfigurationService.fetchAll());
         model.addAttribute("listLabs", labService.fetchAll());
+
+        model.addAttribute("usertype", orchestratorService.getUserType("jonesm@mail.uc.edu"));
+//        model.addAttribute("usertype", "instructor");
         return "index";
     }
 
+    //todo What is this for?
     @GetMapping("/courses")
     public String viewCoursesPage(Model model) throws Exception {
         getStarted();
@@ -80,7 +83,6 @@ public class SandboxupgradeController {
         isStarted = true;
     }
 
-
     @GetMapping("/create-lab")
     public String createLab(Model model) throws Exception {
         getStarted();
@@ -88,6 +90,8 @@ public class SandboxupgradeController {
         model.addAttribute("lab", lab);
         model.addAttribute("course", new PublicCourse());
         model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+        model.addAttribute("usertype", orchestratorService.getUserType("jonesm@mail.uc.edu"));
+
         return "create-lab";
     }
 
@@ -133,11 +137,13 @@ public class SandboxupgradeController {
 
     @GetMapping("/login")
     public String login(Model model) throws Exception {
+        getStarted();
         return "login";
     }
 
     @PostMapping("/login")
     public String postLogin(Model model) throws Exception {
+        getStarted();
         return "index";
     }
 

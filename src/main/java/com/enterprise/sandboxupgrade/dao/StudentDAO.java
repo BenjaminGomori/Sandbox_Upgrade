@@ -21,5 +21,11 @@ public class StudentDAO implements IStudentDAO {
         studentRepository.findAll().forEach(target::add);
         return target;
     }
+
+//    @Override
+//    public Student findByUsername(String username) {
+//        Student stdudent = studentRepository.findByUsernamw(username);
+//        return stdudent;
+//    }
 }
 

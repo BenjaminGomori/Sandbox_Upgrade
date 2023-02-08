@@ -4,6 +4,7 @@ import lombok.Data;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -14,15 +15,13 @@ class Student{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int studentID;
 
-    @Column(name = "firstname")
-    private String firstname;
-
-    @Column(name = "lastname")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
 
     //    @Column(nullable = false, unique = true, length = 90, name = "email")
-    @Column(name = "email")
-    private String email;
+    //username = email -> security pck uses username field
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -30,7 +29,7 @@ class Student{
     @OneToMany(mappedBy = "student")
     private List<VM> vms;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "coursestudent",
             joinColumns = @JoinColumn(name = "studentID"),
@@ -38,8 +37,16 @@ class Student{
     )
     private List<Course> courses;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "studentrole",
+            joinColumns = @JoinColumn(name = "studentid"),
+            inverseJoinColumns = @JoinColumn(name = "roleid")
+    )
+    private List<Role> roles;
+
     @Override
     public String toString() {
-        return "Firstname: " + firstname +"Lastname: " + lastName + " ;" + "Email: " + email;
+        return "Name: " + name + " ;" + "username: " + username;
     }
 }
