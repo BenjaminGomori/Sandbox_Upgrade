@@ -43,6 +43,7 @@ public class SecSecurityConfig {
                         .requestMatchers("/photos/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/videos/**").permitAll()
+                        .requestMatchers("/powerStartVM","/powerOffVM","/getConsoleTicket").permitAll()
 //                    .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/","/index","/index.html").hasAnyAuthority("STUDENT","INSTRUCTOR")
                         .requestMatchers("/createLab").hasAuthority("INSTRUCTOR")

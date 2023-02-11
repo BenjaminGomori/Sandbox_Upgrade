@@ -28,6 +28,8 @@ public class SandboxupgradeController {
     ILabService labService;
     @Autowired
     IOrchestratorService orchestratorService;
+    @Autowired
+    VMWareService vmWareService;
 
     private boolean isStarted = false;
 
@@ -147,6 +149,27 @@ public class SandboxupgradeController {
     public String postLogin(Model model) throws Exception {
         getStarted();
         return "index";
+    }
+
+    @GetMapping("/powerOffVM")
+    public String powerOffVM(Model model) throws Exception {
+        getStarted();
+        vmWareService.powerOffVM("vm-14");
+        return "redirect:/";
+    }
+
+    @GetMapping("/powerStartVM")
+    public String powerStartVM(Model model) throws Exception {
+        getStarted();
+        vmWareService.powerOnVM("vm-14");
+        return "redirect:/";
+    }
+
+    @GetMapping("/getConsoleTicket")
+    public String getConsoleTicket(Model model) throws Exception {
+        getStarted();
+        vmWareService.generateTicket("vm-14");
+        return "redirect:/";
     }
 
 
