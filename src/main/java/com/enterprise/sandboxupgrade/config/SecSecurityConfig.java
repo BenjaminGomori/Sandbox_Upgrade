@@ -46,7 +46,7 @@ public class SecSecurityConfig {
                         .requestMatchers("/powerStartVM","/powerOffVM","/getConsoleTicket").permitAll()
 //                    .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/","/index","/index.html").hasAnyAuthority("STUDENT","INSTRUCTOR")
-                        .requestMatchers("/createLab").hasAuthority("INSTRUCTOR")
+                        .requestMatchers("/create-lab").hasAuthority("INSTRUCTOR")
 //                        .requestMatchers("/saveLab").hasAuthority("instructor")
 //                        .requestMatchers("/**", "index", "/create-lab","saveLab").hasRole("STUDENT")
 //                        .anyRequest().authenticated()
