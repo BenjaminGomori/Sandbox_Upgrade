@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head>
-        <meta charset="UTF-8">
-        <title>Sandbox Upgrade!</title>
-        <link rel="shortcut icon" href="#">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Sandbox Upgrade!</title>
+    <link rel="shortcut icon" href="#">
 
-<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
-<!--                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
-<!--                crossorigin="anonymous"></script>-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"-->
-<!--                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"-->
-<!--                crossorigin="anonymous"></script>-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"-->
-<!--                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"-->
-<!--                crossorigin="anonymous"></script>-->
+    <!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
+    <!--                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
+    <!--                crossorigin="anonymous"></script>-->
+    <!--        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"-->
+    <!--                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"-->
+    <!--                crossorigin="anonymous"></script>-->
+    <!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"-->
+    <!--                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"-->
+    <!--                crossorigin="anonymous"></script>-->
 
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/popper.min.js}"></script>
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootsrap.min.js}"></script>
-
-
-
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/split-grid.js}"></script>
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/wmks.min.js}"></script>
-
-        <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" type="text/css">
-<!--        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">-->
-
-        <link rel="stylesheet" th:href="@{/css/login/all.min.css}" type="text/css">
-        <link rel="stylesheet" th:href="@{/css/login/bootstrap.min.css}" type="text/css">
-        <link rel="stylesheet" th:href="@{/css/login/bootstrap.bundle.min.js.css}" type="text/css">
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/popper.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootsrap.min.js}"></script>
 
 
-        <link rel="stylesheet" th:href="@{/css/wmks-all.css}" type="text/css">
-        <link rel="stylesheet" th:href="@{/css/split.css}" type="text/css">
-        <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
-    </head>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/split-grid.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/wmks.min.js}"></script>
 
-    <body>
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" type="text/css">
+    <!--        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">-->
+
+    <link rel="stylesheet" th:href="@{/css/login/all.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/login/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/login/bootstrap.bundle.min.js.css}" type="text/css">
+
+
+    <link rel="stylesheet" th:href="@{/css/wmks-all.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/split.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
+</head>
+
+<body>
 <!--    <div sec:authorize="hasRole('INSTRUCTOR')">-->
 <!--        <nav th:replace="~{fragments/topnav :: navbar}"></nav>-->
 <!--    </div>-->
@@ -53,43 +53,47 @@
     </div>
 </div>
 
-    <div class="main_grid">
-            <div class="courses">
+<div class="main_grid">
+    <div class="courses">
 
-                <div class="course_menu">
-                    <h2>Courses</h2>
-                    <p class="course" style="color:darkred" th:each="course : ${listCourse}" th:data="${course.id}" th:value="${course.id}" th:classappend="course_+${course.id}" th:text="${course.number} +' - ' + ${course.name}"></p>
-                </div>
+        <div class="course_menu">
+            <h2>Courses</h2>
+            <p class="course" style="color:darkred" th:each="course : ${listCourse}" th:data="${course.id}"
+               th:value="${course.id}" th:classappend="course_+${course.id}"
+               th:text="${course.number} +' - ' + ${course.name}"></p>
+        </div>
 
-                <div class="collapser">
-                    <div class="collapser_triangle_image_right">
-                        <img th:src="@{/images/collapse.png}" alt="">
-                    </div>
-                    <div class="collapser_triangle_image_left no_display">
-                        <img th:src="@{/images/un_collapse.png}" alt="">
-                    </div>
-                </div>
+        <div class="collapser">
+            <div class="collapser_triangle_image_right">
+                <img th:src="@{/images/collapse.png}" alt="">
+            </div>
+            <div class="collapser_triangle_image_left no_display">
+                <img th:src="@{/images/un_collapse.png}" alt="">
+            </div>
+        </div>
 
+    </div>
+
+
+    <!-- this grid class is from the split library -->
+    <div class="grid" style="height:100vh; margin:0">
+        <div id="wmksContainer"
+             style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
+
+            <h2 style="display: inline-block; font-size: 3rem;">Virtual Machine</h2>
+            <div class="no_display" th:each="course : ${listCourse}" th:classappend="course_+${course.id} +_vms">
+                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
+                    <option th:each="vm : ${course.publicVms}" th:value="${vm.publicNumber}"
+                            th:text="${vm.name}"></option>
+                </select>
             </div>
 
+            <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vm_configuration">
+                <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}"
+                        th:text="${vmOptions.getOption()}"></option>
+            </select>
 
-
-            <!-- this grid class is from the split library -->
-            <div class="grid" style="height:100vh; margin:0">
-                <div id="wmksContainer" style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
-
-                    <h2 style="display: inline-block; font-size: 3rem;">Virtual Machine</h2>
-                    <div class="no_display" th:each="course : ${listCourse}" th:classappend="course_+${course.id} +_vms">
-                        <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
-                            <option th:each="vm : ${course.publicVms}" th:value="${vm.publicNumber}" th:text="${vm.name}"></option>
-                        </select>
-                    </div>
-
-                    <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vm_configuration">
-                        <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}" th:text="${vmOptions.getOption()}"></option>
-                    </select>
-
-                    <script>
+            <script>
                         var wmks = WMKS.createWMKS("wmksContainer",{})
                             .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                                 if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
@@ -98,49 +102,56 @@
                         wmks.connect("wss://10.127.71.133:443/ticket/7d29f9564bf1c76a");
                         // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee");	" 		"	"	"
                         // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket
-                    </script>
-                </div>
 
-                <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
-
-                <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
-
-                    <div class="course_labs no_display" th:classappend="course_labs_ + ${course.id}" th:each="course : ${listCourse}" th:value="${course.id}"}>
-                        <select style="background-color: #78d8fa;" claa
-                                ss="dropdown" id="dropDownList_labs">
-                            <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}" th:text="'Lab - '+ ${lab.number}"></option>
-                        </select>
-                        <div style="height:inherit;overflow-y:auto">
-                            <div class="no_display" style="height:inherit; position: relative;" th:each="lab : ${course.publicLabs}" th:classappend="lab_ + ${lab.number}">
-                                <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.title}"></h2>
-                                <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
-                                </hr>
-<!--                                <div class="embed-responsive embed-responsive-16by9" style="width:100%;">-->
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    </br>
-                                    </br>
-<!--                                    <iframe style="width: 75%; height: 42%; object-fit: contain;" class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>-->
-                                    <iframe class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>
-                                </div>
-                                <div>
-                                    </br>
-                                    </br>
-                                    <img th:src="@{${'/photos/'+lab.image}}" style="width: 75%; object-fit: contain;"/>
-                                    </br>
-                                    </br>
-                                </div>
-
-                                <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;" th:text="${lab.description}"></p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+            </script>
         </div>
 
-    <script>
+        <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
+
+        <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
+
+            <div class="course_labs no_display" th:classappend="course_labs_ + ${course.id}"
+                 th:each="course : ${listCourse}" th:value="${course.id}" }>
+                <select style="background-color: #78d8fa;" claa
+                        ss="dropdown" id="dropDownList_labs">
+                    <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}"
+                            th:text="'Lab - '+ ${lab.number}"></option>
+                </select>
+                <div style="height:inherit;overflow-y:auto">
+                    <div class="no_display" style="height:inherit; position: relative;"
+                         th:each="lab : ${course.publicLabs}" th:classappend="lab_ + ${lab.number}">
+                        <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem"
+                            th:text="${lab.title}"></h2>
+                        <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
+                        </hr>
+                        <!--                                <div class="embed-responsive embed-responsive-16by9" style="width:100%;">-->
+                        <div class="embed-responsive embed-responsive-16by9">
+                            </br>
+                            </br>
+                            <!--                                    <iframe style="width: 75%; height: 42%; object-fit: contain;" class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>-->
+                            <iframe class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}"
+                                    allowfullscreen></iframe>
+                        </div>
+                        <div>
+                            </br>
+                            </br>
+                            <img th:src="@{${'/photos/'+lab.image}}" style="width: 75%; object-fit: contain;"/>
+                            </br>
+                            </br>
+                        </div>
+
+                        <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"
+                           th:text="${lab.description}"></p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
         // <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js">
         // const GUTTER_SIZE = 30;
         // const gutterStyle = dimension => ({
@@ -157,7 +168,8 @@
                 element: document.querySelector('.gutter-col-1'),
             }],
         })
-    </script>
+
+</script>
 
 <!--    <script type="text/javascript" th:inline="javascript">-->
 <!--        /*<![CDATA[*/-->
@@ -165,7 +177,7 @@
 <!--        /*]]>*/-->
 <!--    </script>-->
 
-    <script>
+<script>
         window.onload = (event) => {
             const webmks = document.querySelector('#mainCanvas');
             webmks.style.position= "static";
@@ -183,11 +195,11 @@
             webmks.style.height= "null !important";
             webmks.style.width= "100% !important";
         };
-    </script>
+
+</script>
 
 
-
-    <script>
+<script>
         const labsListsJS = document.querySelectorAll('#dropDownList_labs');
         let lab_title = null;
         let lab = null;
@@ -462,7 +474,8 @@
 
             }
 
-    </script>
 
-    </body>
+</script>
+<div th:replace="fragments/footerUI :: footer"></div>
+</body>
 </html>
