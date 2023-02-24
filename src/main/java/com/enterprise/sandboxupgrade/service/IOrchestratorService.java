@@ -10,6 +10,5 @@ public interface IOrchestratorService {
     public void assignLabCourse(Lab lab, int courseId);
     public Student findStudentByUsername(String username);
     public Instructor findInstructorByUsername(String username);
-//    void setUserType(String username);
     public String getUserType(String username);
 }

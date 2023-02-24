@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 public class VmConfiurationService implements IVmConfigurationService {
 
     @Autowired
     IVmConfigureOptionsDAO VmConfigureOptionsDAO;
-    List<VmConfigureOption> vmConfigureOptions;
+    Iterable<VmConfigureOption> vmConfigureOptions;
 
     public VmConfiurationService(IVmConfigureOptionsDAO VmConfigureOptionsDAO){
         this.VmConfigureOptionsDAO = VmConfigureOptionsDAO;
@@ -22,7 +23,7 @@ public class VmConfiurationService implements IVmConfigurationService {
 
     @Override
     public Iterable<VmConfigureOption> fetchAll() throws Exception {
-        if(vmConfigureOptions.size() == 0){
+        if( StreamSupport.stream(vmConfigureOptions.spliterator(), false).count()==0);{
             vmConfigureOptions = this.VmConfigureOptionsDAO.fetchAll();
         }
         return vmConfigureOptions;

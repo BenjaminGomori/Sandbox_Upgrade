@@ -33,27 +33,4 @@ public class CourseService implements ICourseService {
         }
         return courses;
     }
-
-//    @Override
-//    public List<LabelValue> generateEventsSearchableData() throws Exception {
-//        List<LabelValue> eventsSearchableData = new LinkedList<>();
-//        for (Course event : fetchAll()) {
-//            LabelValue labelValue = new LabelValue();
-//            labelValue.setValue(event.getId());
-//            labelValue.setLabel(event.getName() + ", " + event.getDescription());
-//            eventsSearchableData.add(labelValue);
-//        }
-//        return eventsSearchableData;
-//    }
-//
-//    @Override
-//    public List<Course> searchEvents(String searchText) throws Exception {
-//        List<Course> eventList = new LinkedList<>();
-//        for (Course event : fetchAll()) {
-//            if (event.getName().contains(searchText) || event.getDescription().contains(searchText)) {
-//                eventList.add(event);
-//            }
-//        }
-//        return eventList;
-//    }
 }

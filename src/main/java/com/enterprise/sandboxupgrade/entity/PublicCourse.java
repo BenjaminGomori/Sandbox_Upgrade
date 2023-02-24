@@ -32,7 +32,7 @@ class PublicCourse {
     //@OneToMany(mappedBy = "course")
     public List<PublicVM> publicVms;
 
-//    @Override
+    @Override
     public String toString() {
         return this.number + " - " + this.name;
     }

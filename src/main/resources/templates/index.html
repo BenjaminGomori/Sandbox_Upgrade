@@ -3,24 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Sandbox Upgrade!</title>
-        <link rel="shortcut icon" href="#">
+<!--        <link rel="shortcut icon" href="#">-->
 
-<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
-<!--                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
-<!--                crossorigin="anonymous"></script>-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"-->
-<!--                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"-->
-<!--                crossorigin="anonymous"></script>-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"-->
-<!--                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"-->
-<!--                crossorigin="anonymous"></script>-->
-
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<!--        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>-->
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/popper.min.js}"></script>
-        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootsrap.min.js}"></script>
-
-
-
+<!--        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootsrap.min.js}"></script>-->
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>
         <script type="text/javascript" th:inline="javascript" th:src="@{/js/split-grid.js}"></script>
@@ -32,8 +19,6 @@
         <link rel="stylesheet" th:href="@{/css/login/all.min.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/css/login/bootstrap.min.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/css/login/bootstrap.bundle.min.js.css}" type="text/css">
-
-
         <link rel="stylesheet" th:href="@{/css/wmks-all.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/css/split.css}" type="text/css">
         <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
@@ -44,23 +29,21 @@
 <!--        <nav th:replace="~{fragments/topnav :: navbar}"></nav>-->
 <!--    </div>-->
 
-<div class="sticky-top" th:switch="${usertype}">
-    <div th:case="'student'">
-        <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
-    </div>
-    <div th:case="'instructor'">
-        <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>
-    </div>
-</div>
+        <div class="sticky-top" th:switch="${usertype}">
+            <div th:case="'student'">
+                <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
+            </div>
+            <div th:case="'instructor'">
+                <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>
+            </div>
+        </div>
 
-    <div class="main_grid">
+        <div class="main_grid">
             <div class="courses">
-
                 <div class="course_menu">
                     <h2>Courses</h2>
                     <p class="course" style="color:darkred" th:each="course : ${listCourse}" th:data="${course.id}" th:value="${course.id}" th:classappend="course_+${course.id}" th:text="${course.number} +' - ' + ${course.name}"></p>
                 </div>
-
                 <div class="collapser">
                     <div class="collapser_triangle_image_right">
                         <img th:src="@{/images/collapse.png}" alt="">
@@ -69,10 +52,7 @@
                         <img th:src="@{/images/un_collapse.png}" alt="">
                     </div>
                 </div>
-
             </div>
-
-
 
             <!-- this grid class is from the split library -->
             <div class="grid" style="height:100vh; margin:0">
@@ -89,16 +69,16 @@
                         <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}" th:text="${vmOptions.getOption()}"></option>
                     </select>
 
-                    <script>
-                        var wmks = WMKS.createWMKS("wmksContainer",{})
-                            .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
-                                if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                                    console.log("connection state change : connected");}
-                            });
-                        wmks.connect("wss://10.127.71.133:443/ticket/7d29f9564bf1c76a");
-                        // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee");	" 		"	"	"
-                        // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket
-                    </script>
+<!--                    <script>-->
+<!--                        var wmks = WMKS.createWMKS("wmksContainer",{})-->
+<!--                            .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){-->
+<!--                                if(data.state == WMKS.CONST.ConnectionState.CONNECTED){-->
+<!--                                    console.log("connection state change : connected");}-->
+<!--                            });-->
+<!--                        wmks.connect("wss://10.127.71.133:443/ticket/7d29f9564bf1c76a");-->
+<!--                        // wmks.connect("wss://10.127.71.53:443/ticket/7c3a0b989cedc8ee");	" 		"	"	"-->
+<!--                        // https://10.127.71.53/mob/?moid=vm%2d718&method=acquireTicket-->
+<!--                    </script>-->
                 </div>
 
                 <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
@@ -140,30 +120,72 @@
             </div>
         </div>
 
-    <script>
-        // <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js">
-        // const GUTTER_SIZE = 30;
-        // const gutterStyle = dimension => ({
-        //     'flex-basis': `${GUTTER_SIZE}px`,
-        // });
-        //
-        // const elementStyle = (dimension, size) => ({
-        //     'flex-basis': `calc(${size}% - ${GUTTER_SIZE}px)`,
-        // })
+<!--    <script>-->
+<!--        // <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js">-->
+<!--        // const GUTTER_SIZE = 30;-->
+<!--        // const gutterStyle = dimension => ({-->
+<!--        //     'flex-basis': `${GUTTER_SIZE}px`,-->
+<!--        // });-->
+<!--        //-->
+<!--        // const elementStyle = (dimension, size) => ({-->
+<!--        //     'flex-basis': `calc(${size}% - ${GUTTER_SIZE}px)`,-->
+<!--        // })-->
 
-        Split({
-            columnGutters: [{
-                track: 1,
-                element: document.querySelector('.gutter-col-1'),
-            }],
-        })
-    </script>
+<!--        Split({-->
+<!--            columnGutters: [{-->
+<!--                track: 1,-->
+<!--                element: document.querySelector('.gutter-col-1'),-->
+<!--            }],-->
+<!--        })-->
+<!--    </script>-->
 
 <!--    <script type="text/javascript" th:inline="javascript">-->
 <!--        /*<![CDATA[*/-->
-<!--        let coursesJS = [[${listCourse}]];-->
+<!--        let ev  = /*[[${listCourse}]]*/ [];-->
+<!--        console.log(ev)-->
+
+<!--        //console VM-->
+<!--        var wmks = WMKS.createWMKS("wmksContainer",{})-->
+<!--            .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){-->
+<!--                if(data.state == WMKS.CONST.ConnectionState.CONNECTED){-->
+<!--                    console.log("connection state change : connected");}-->
+<!--            });-->
+<!--        wmks.connect("wss://10.127.71.133:443/ticket/7d29f9564bf1c76a");-->
+
+<!--        -->
+<!--        //Split library-->
+<!--        Split({-->
+<!--            columnGutters: [{-->
+<!--                track: 1,-->
+<!--                element: document.querySelector('.gutter-col-1'),-->
+<!--            }],-->
+<!--        })-->
+
+
+
 <!--        /*]]>*/-->
 <!--    </script>-->
+
+
+
+<!--<script>-->
+<!--    var coursesJS = [];-->
+<!--</script>-->
+<!--<script>-->
+
+<!--<div th:each="c : ${listCourse}">-->
+<!--    coursesJS.push({'id':c.id, 'uniqueName':c.uniqueName, 'name':c.name});-->
+
+<!--</div>-->
+<!--</script>-->
+
+
+<!--<script th:inline="javascript">-->
+<!--    console.log(coursesJS); // do whatever you want with dataLayer...-->
+<!--</script>-->
+
+
+
 
     <script>
         window.onload = (event) => {
@@ -187,7 +209,35 @@
 
 
 
-    <script>
+
+
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    let ev  = /*[[${listCourse}]]*/ [];
+    console.log(ev)
+
+    //console VM
+    var wmks = WMKS.createWMKS("wmksContainer",{})
+        .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
+            if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
+                console.log("connection state change : connected");}
+        });
+    wmks.connect("wss://10.127.71.133:443/ticket/7d29f9564bf1c76a");
+
+
+    //Split library
+    Split({
+        columnGutters: [{
+            track: 1,
+            element: document.querySelector('.gutter-col-1'),
+        }],
+    })
+
+
+
+    /*]]>*/
+
         const labsListsJS = document.querySelectorAll('#dropDownList_labs');
         let lab_title = null;
         let lab = null;
@@ -215,55 +265,11 @@
 
         // source: https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#javascript-inlining
         // let coursesJS = /*[[${listCourse}]]*/ null;
-
+        //
         // console.log(courseJS);
 
 
             window.onload = (event) => {
-                                                    // for (const labs of labsListsJS.values()) {
-                                                    //     chosen = labs.options[labs.selectedIndex].value;
-                                                    //     chosen = '.lab_' + chosen;
-                                                    //     console.log(chosen);
-                                                    //     lab = document.querySelector(chosen);
-                                                    //     lab.setAttribute('style', 'display:block');
-                                                    //     lab_title = lab.querySelector('.lab_header');
-                                                    //     lab_title.after(labs);
-                                                    //     // labs.setAttribute('style', 'margin: 0');
-                                                    //     labs.setAttribute('style', 'position: relative !important;');
-                                                    //     labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-                                                    //     // labs.setAttribute('style', 'top: 50%;');
-                                                    //     // labs.setAttribute('style', 'transform: translateY(-55%)');
-                                                    //     // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-                                                    //     labs.setAttribute('style', 'background-color: #78d8fa');
-                                                    // }
-                                                    // // main_grid = document.querySelector('.main_grid');
-                                                    // // courses = document.querySelector('.courses');
-                                                    // // collapser = document.querySelector('.collapser');
-
-
-                // if (courseLabs.length > 0) {
-                //     courseLabs = courseLabs.item(0);
-                //     courseLabs.classList.toggle('no_display');
-                //
-                //
-                //     chosen = courseLabs.querySelector('select').options[courseLabs.querySelector('select').selectedIndex].value;
-                //     chosen = '.lab_' + chosen;
-                //     console.log(chosen);
-                //     lab = courseLabs.querySelector(chosen);
-                //     lab.setAttribute('style', 'display:block; height:inherit');
-                //     lab_title = lab.querySelector('.lab_header');
-                //     labs = courseLabs.querySelector('select')
-                //     lab_title.after(labs);
-                //     // labs.setAttribute('style', 'margin: 0');
-                //     labs.setAttribute('style', 'position: relative !important;');
-                //     labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-                //     // labs.setAttribute('style', 'top: 50%;');
-                //     // labs.setAttribute('style', 'transform: translateY(-55%)');
-                //     // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-                //     labs.setAttribute('style', 'background-color: #78d8fa');
-                // }
-
-
                 //Determining that first course in list is considered selected (its VMs and Labs should be displayed)
                 if(course_menu_list.length > 0) {
                     selected_course = course_menu_list.item(0);
@@ -357,76 +363,12 @@
                             selectedCourseVms.classList.toggle('no_display');
                         }},""
                 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //         labsListsJS.forEach(
-        //             function (labs, currentIndex, listObj) {
-        //                 console.log(labs);
-        //                 console.log(labs.options);
-        //                 console.log(labs.options[labs.selectedIndex]);
-        //                 if(labs.options[labs.selectedIndex]) {
-        //                     chosen = labs.options[labs.selectedIndex].value;
-        //                     chosen = '.lab_' + chosen;
-        //                     console.log(chosen);
-        //                     lab = document.querySelector(chosen);
-        //                     lab.setAttribute('style', 'display:block');
-        //                     lab_title = lab.querySelector('.lab_header');
-        //                     lab_title.after(labs);
-        //                     // labs.setAttribute('style', 'margin: 0');
-        //                     labs.setAttribute('style', 'position: relative !important;');
-        //                     labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-        //                     // labs.setAttribute('style', 'top: 50%;');
-        //                     // labs.setAttribute('style', 'transform: translateY(-55%)');
-        //                     // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-        //                     labs.setAttribute('style', 'background-color: #78d8fa');
-        //                 }
-        //             },""
-        // );
-
-        // main_grid = document.querySelector('.main_grid');
-                // courses = document.querySelector('.courses');
-                // collapser = document.querySelector('.collapser');
-
-
-
-
-
             }
 
 
         labsListsJS.forEach(
             function (labs, currentIndex, listObj) {
                 labs.onchange = (event) => {
-                    // chosen = labs.options[labs.selectedIndex].value;
-                    // chosen = '.lab_' + chosen;
-                    // console.log(chosen);
-                    // lab = document.querySelector(chosen);
-                    // lab.setAttribute('style', 'display:block');
-                    // lab_title = lab.querySelector('.lab_header');
-                    // lab_title.after(labs);
-                    // // labs.setAttribute('style', 'margin: 0');
-                    // labs.setAttribute('style', 'position: relative !important;');
-                    // labs.setAttribute('style', 'top: -0.25rem !important;'); //TODO not working
-                    // // labs.setAttribute('style', 'top: 50%;');
-                    // // labs.setAttribute('style', 'transform: translateY(-55%)');
-                    // // labs.setAttribute('style', '-ms-transform: translateY(-55%)');
-                    // labs.setAttribute('style', 'background-color: #78d8fa');
-
-
                     // lab.setAttribute('style', 'display:none');
                     lab.classList.toggle('no_display');
 
@@ -450,7 +392,6 @@
         );
 
 
-
             collapser.onclick = (event) => {
                 main_grid.classList.toggle('main_grid');
                 main_grid.classList.toggle('main_grid_collapsed');
@@ -462,6 +403,7 @@
 
             }
 
+    /*]]>*/
     </script>
 
     </body>

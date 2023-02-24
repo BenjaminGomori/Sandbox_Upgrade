@@ -44,8 +44,11 @@ public class SecSecurityConfig {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/videos/**").permitAll()
                         .requestMatchers("/powerStartVM","/powerOffVM","/getConsoleTicket").permitAll()
-//                    .requestMatchers("/","/index","/index.html").permitAll()
+
+//                        .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/","/index","/index.html").hasAnyAuthority("STUDENT","INSTRUCTOR")
+
+//                    .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/create-lab").hasAuthority("INSTRUCTOR")
 //                        .requestMatchers("/saveLab").hasAuthority("instructor")
 //                        .requestMatchers("/**", "index", "/create-lab","saveLab").hasRole("STUDENT")
@@ -62,7 +65,7 @@ public class SecSecurityConfig {
                                         .failureUrl("/login?error=true")
                                         .and()
                                         .logout()
-                                        .logoutSuccessUrl("/login.html")
+                                        .logoutSuccessUrl("/login2.html")
 //                                        .logoutUrl("/perform_logout")
                                         .deleteCookies("JSESSIONID");
 

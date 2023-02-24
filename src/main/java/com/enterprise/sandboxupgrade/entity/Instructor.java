@@ -1,5 +1,8 @@
 package com.enterprise.sandboxupgrade.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import jakarta.persistence.*;
 
@@ -12,36 +15,39 @@ class Instructor{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int instructorID;
+    public int instructorID;
 
     @Column(name = "fullname")
-    String fullName;
+    public String fullName;
 
 //    @Column(nullable = false, unique = true, length = 90, name = "email")
     @Column(name = "username")
-    String username;
+    public String username;
 
     @Column(name = "password")
-    private String password;
+    public String password;
 
-    @OneToMany(mappedBy = "instructor")
-    private List<VM> vms;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "instructor")
+    @JsonManagedReference
+    public List<VM> vms;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinTable(
             name = "courseinstructor",
             joinColumns = @JoinColumn(name = "instructorID"),
             inverseJoinColumns = @JoinColumn(name = "courseID")
     )
-    private List<Course> courses;
+    public List<Course> courses;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinTable(
             name = "instructorrole",
             joinColumns = @JoinColumn(name = "instructorid"),
             inverseJoinColumns = @JoinColumn(name = "roleid")
     )
-    private List<Role> roles;
+    public List<Role> roles;
 
     @Override
     public String toString() {

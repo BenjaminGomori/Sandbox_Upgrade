@@ -173,6 +173,16 @@ public class SandboxupgradeController {
     }
 
 
+//    @GetMapping("/new-design")
+//    public String getNewDesign(Model model) throws Exception {
+//        getStarted();
+//        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+////        model.addAttribute("listSemester", semesterService.fetchAll());
+//        model.addAttribute("listVMs", vmService.fetchAll());
+//
+//        return "index";
+//    }
+
     //    @PostMapping("/save")
 //    public String save(@ModelAttribute("event") Event event) throws Exception {
 //        eventService.save(event);

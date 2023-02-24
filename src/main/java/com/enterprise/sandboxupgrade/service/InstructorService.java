@@ -28,10 +28,5 @@ public class InstructorService implements IInstructorService {
         }
         return instructors;
     }
-
-//    @Override
-//    public Instructor findByInstructorName(String instructorName) {
-//            return instructorDAO.findByUsername(instructorName);
-//    }
 }
 
