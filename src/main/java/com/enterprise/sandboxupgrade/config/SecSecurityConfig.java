@@ -38,15 +38,20 @@ public class SecSecurityConfig {
                 .disable()
                 .authorizeHttpRequests((requests) -> requests
 //                        .requestMatchers("/resources/**").permitAll()
+
+                        .requestMatchers("/C:/Users/yehud/IdeaProjects/capstone/Sandbox_Upgrade/src/main/resources/static/photos/**").permitAll()
+                        .requestMatchers("/C:/Users/yehud/IdeaProjects/capstone/Sandbox_Upgrade/src/main/resources/static/videos/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/photos/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/videos/**").permitAll()
+                        .requestMatchers("/n3","/new-design").permitAll()
                         .requestMatchers("/powerStartVM","/powerOffVM","/getConsoleTicket").permitAll()
 
 //                        .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/","/index","/index.html").hasAnyAuthority("STUDENT","INSTRUCTOR")
+                        .requestMatchers("/new-design").hasAnyAuthority("STUDENT","INSTRUCTOR")
 
 //                    .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/create-lab").hasAuthority("INSTRUCTOR")
@@ -60,7 +65,7 @@ public class SecSecurityConfig {
                                         .loginPage("/login")
                                         .permitAll()
                                         .loginProcessingUrl("/login")
-                                        .defaultSuccessUrl("/", true)
+                                        .defaultSuccessUrl("/new-design", true)
 //                                        .successHandler(authSuccessHandler)
                                         .failureUrl("/login?error=true")
                                         .and()

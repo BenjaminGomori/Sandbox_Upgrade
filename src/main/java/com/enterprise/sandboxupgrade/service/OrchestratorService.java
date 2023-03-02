@@ -17,7 +17,8 @@ public class OrchestratorService implements IOrchestratorService {
     @Autowired
     IRoleService roleService;
 
-    private String userType;
+    private String userType = "";
+    private String userEmail = "";
 
     // not sharable (with user) - original data
     private List<Course> courses;
@@ -110,6 +111,7 @@ public class OrchestratorService implements IOrchestratorService {
                 publicCourse.publicLabs = new ArrayList<PublicLab>();
                 for(Lab lab : c.getLabs()) {
                     PublicLab publicLab = new PublicLab();
+                    publicLab.id = lab.getLabID();
                     publicLab.number = lab.getNumber();
                     publicLab.title = lab.getTitle();
                     publicLab.description = lab.getDescription();
@@ -123,6 +125,7 @@ public class OrchestratorService implements IOrchestratorService {
                 publicCourse.publicVms = new ArrayList<PublicVM>();
                 for(VM vm : c.getVMs()) {
                     PublicVM PublicVM = new PublicVM();
+                    PublicVM.VMWareName = vm.getVMWareName();
                     PublicVM.publicNumber = vm.getPublicNumber();
                     PublicVM.name = vm.getName();
                     PublicVM.vmID = vm.getVmID();
@@ -160,11 +163,11 @@ public class OrchestratorService implements IOrchestratorService {
     }
 
     @Override
-    public List<PublicCourse> getUserCourses(String userId){
+    public List<PublicCourse> getUserCourses(){
 
         // is student logged in
-        if(searchStudentCourseMap.containsKey(userId)){
-            return publicStudentCourseMap.get(searchStudentCourseMap.get(userId));
+        if(searchStudentCourseMap.containsKey(userEmail)){
+            return publicStudentCourseMap.get(searchStudentCourseMap.get(userEmail));
         }
         return null ;
     }
@@ -184,6 +187,7 @@ public class OrchestratorService implements IOrchestratorService {
         if(this.emailStudentMap.containsKey(email)){
             Student student = emailStudentMap.get(email);
             userType = "student";
+            userEmail = email;
             return student;
         }
         return null ;
@@ -194,6 +198,7 @@ public class OrchestratorService implements IOrchestratorService {
         Instructor instructor = null;
         if(this.emailInstructorMap.containsKey(username)){
             instructor = emailInstructorMap.get(username);
+            userEmail = username;
             userType = "instructor";
         }
         return instructor ;
@@ -212,7 +217,12 @@ public class OrchestratorService implements IOrchestratorService {
 //    }
 
     @Override
-    public String getUserType(String username) {
+    public String getUserType() {
         return userType;
+    }
+
+    @Override
+    public String getUserEmail() {
+        return userEmail;
     }
 }

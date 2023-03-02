@@ -11,6 +11,8 @@ public class PublicVM {
     public int VMWareNumber;
     @Column
     public int publicNumber;
+    @Column
+    public String VMWareName;
 
     @Override
     public String toString() {

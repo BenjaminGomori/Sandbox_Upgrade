@@ -9,6 +9,8 @@ import java.util.Date;
 
 public @Data
  class PublicLab {
+    @Column(name = "id")
+    public int id;
     @Column(name = "number")
     public int number;
     @Column(name = "title")

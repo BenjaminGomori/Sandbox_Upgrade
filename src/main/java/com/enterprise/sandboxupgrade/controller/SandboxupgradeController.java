@@ -56,14 +56,16 @@ public class SandboxupgradeController {
     public String viewMainPage(Model model) throws Exception {
         getStarted();
 //        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
-        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses());
 //        model.addAttribute("listSemester", semesterService.fetchAll());
         model.addAttribute("listVMs", vmService.fetchAll());
         model.addAttribute("listVMconfigureOptions", VmConfigurationService.fetchAll());
         model.addAttribute("listLabs", labService.fetchAll());
 
-        model.addAttribute("usertype", orchestratorService.getUserType("jonesm@mail.uc.edu"));
-//        model.addAttribute("usertype", "instructor");
+
+//        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+
+        model.addAttribute("usertype", orchestratorService.getUserType());
         return "index";
     }
 
@@ -72,7 +74,7 @@ public class SandboxupgradeController {
     public String viewCoursesPage(Model model) throws Exception {
         getStarted();
 //        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
-        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses());
 //        model.addAttribute("listSemester", semesterService.fetchAll());
         model.addAttribute("listVMs", vmService.fetchAll());
         model.addAttribute("listVMconfigureOptions", VmConfigurationService.fetchAll());
@@ -91,8 +93,8 @@ public class SandboxupgradeController {
         Lab lab = new Lab();
         model.addAttribute("lab", lab);
         model.addAttribute("course", new PublicCourse());
-        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
-        model.addAttribute("usertype", orchestratorService.getUserType("jonesm@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses());
+        model.addAttribute("usertype", orchestratorService.getUserType());
 
         return "create-lab";
     }
@@ -113,7 +115,7 @@ public class SandboxupgradeController {
         byte[] bytes = imageFile.getBytes();
         Path path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
         Files.write(path, bytes);
-        path = Paths.get(imageFile.getOriginalFilename());
+        path = Paths.get("photos/"+imageFile.getOriginalFilename());
         lab.setImage(path.toString());
         lab.setDueDate(new Date());
 //        lab.setCourse(new Course());
@@ -122,7 +124,7 @@ public class SandboxupgradeController {
         bytes = videoFile.getBytes();
         path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
         Files.write(path, bytes);
-        path = Paths.get(videoFile.getOriginalFilename());
+        path = Paths.get("videos/"+imageFile.getOriginalFilename());
         lab.setLink(path.toString());
 
         // todo 1. correct courseID so submitted by user
@@ -154,22 +156,39 @@ public class SandboxupgradeController {
     @GetMapping("/powerOffVM")
     public String powerOffVM(Model model) throws Exception {
         getStarted();
-        vmWareService.powerOffVM("vm-14");
+        vmWareService.powerOffVM("vm-38");
         return "redirect:/";
     }
 
     @GetMapping("/powerStartVM")
     public String powerStartVM(Model model) throws Exception {
         getStarted();
-        vmWareService.powerOnVM("vm-14");
+        vmWareService.powerOnVM("vm-38");
         return "redirect:/";
     }
 
     @GetMapping("/getConsoleTicket")
     public String getConsoleTicket(Model model) throws Exception {
         getStarted();
-        vmWareService.generateTicket("vm-14");
+        String ticket = vmWareService.generateTicket("vm-38");
         return "redirect:/";
+    }
+
+    @GetMapping("/new-design")
+    public String newDesign(Model model) throws Exception {
+        getStarted();
+        model.addAttribute("listCourse", orchestratorService.getUserCourses());
+        model.addAttribute("usertype", orchestratorService.getUserType());
+        model.addAttribute("userEmail", orchestratorService.getUserEmail());
+
+        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+        return "new-design";
+    }
+
+    @GetMapping("/n3")
+    public String n3(Model model) throws Exception {
+        getStarted();
+        return "n3";
     }
 
 

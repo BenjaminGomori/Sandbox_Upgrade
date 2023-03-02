@@ -21,6 +21,9 @@ class VM extends PublicVM{
     @Column(name = "Publicnumber")
     public int PublicNumber;
 
+    @Column(name = "VMWrename")
+    public String VMWareName;
+
 //    @Column(name = "osID")
 //    private int osID;
 

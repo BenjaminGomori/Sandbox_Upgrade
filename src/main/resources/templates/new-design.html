@@ -1,8 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+
+    <!-- from:
+        https://www.codeply.com/p/J7fUOhLOy9
+        https://www.codeply.com/p/WGCqYEiPBg -->
+
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="#">
+    <title>New Design</title>
+    <!--        <link rel="shortcut icon" href="#">-->
+    <!--        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>-->
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/popper.min.js}"></script>
+    <!--        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootsrap.min.js}"></script>-->
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/split-grid.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/wmks.min.js}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -13,79 +26,508 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
             integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
             crossorigin="anonymous"></script>
-
-    <!--    <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>-->
-    <!--    <script type="text/javascript" th:inline="javascript" th:src="@{/js/popper.min.js}"></script>-->
-    <!--    <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootsrap.min.js}"></script>-->
-    <title>New Design</title>
-    <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
-
-
-
-    <!--      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" th:href="@{/css/new-design/bootstrap.min.css}" type="text/css">-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+
+
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" type="text/css">
+    <!--        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">-->
+
+    <link rel="stylesheet" th:href="@{/css/login/all.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/login/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/login/bootstrap.bundle.min.js.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/wmks-all.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/split.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
 </head>
+
 <body>
-    <div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+    <div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false" style="background-color: rgb(248 247 247);">
         <div class="offcanvas-header">
-            <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas">Menu</h6>
+            <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas"></h6>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body px-0">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-truncate">
-                        <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
+                    <a href="#" class=" nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+<!--                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">-->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-book" viewBox="0 0 16 16">
+                            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+                        </svg>
+                        <i class="bi bi-book"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Courses</span>
                     </a>
-                </li>
-                <li>
-                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link text-truncate">
-                        <i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-truncate">
-                        <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">Orders</span></a>
+                    <ul class="dropdown-menu text-small shadow courses-menu" aria-labelledby="dropdown" >
+<!--                    <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">-->
+                        <li th:each="course : ${listCourse}"><a class="dropdown-item course-link" href="#" th:classappend="${course.id}" th:text="${course.number} + ' - ' + ${course.name}"></a></li>
+                    </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fs-5 bi-bootstrap"></i><span class="ms-1 d-none d-sm-inline">Bootstrap</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-easel2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 0a.5.5 0 0 1 .447.276L8.81 1h4.69A1.5 1.5 0 0 1 15 2.5V11h.5a.5.5 0 0 1 0 1h-2.86l.845 3.379a.5.5 0 0 1-.97.242L12.11 14H3.89l-.405 1.621a.5.5 0 0 1-.97-.242L3.36 12H.5a.5.5 0 0 1 0-1H1V2.5A1.5 1.5 0 0 1 2.5 1h4.691l.362-.724A.5.5 0 0 1 8 0ZM2 11h12V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5V11Zm9.61 1H4.39l-.25 1h7.72l-.25-1Z"/>
+                        </svg>
+                        <i class="bi bi-easel2"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Labs</span> </a>
+                    <ul class="dropdown-menu text-small shadow labs-menu" aria-labelledby="dropdown">
+                        <li  th:each="lab : ${listCourse[0].publicLabs}"><a class="dropdown-item" href="#" th:classappend="${lab.id}" th:text="${lab.number} + ' - ' + ${{lab.title}}"></a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-display" viewBox="0 0 16 16">
+                            <path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 0 0-.254.302A1.46 1.46 0 0 0 1 4.01V10c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.758.758 0 0 0 .254-.302 1.464 1.464 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.757.757 0 0 0-.302-.254A1.46 1.46 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145z"/>
+                        </svg>
+                        <i class="bi bi-display"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">VMs</span>
                     </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <ul class="dropdown-menu text-small shadow vm-menu" aria-labelledby="dropdown">
+                        <li  th:each="vm : ${listCourse[0].publicVms}"><a class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${{vm.name}}"></a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-truncate">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar" viewBox="0 0 16 16">
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                        </svg>
+                        <i class="bi bi-calendar"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Calendar</span></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                        <i class="bi bi-person-circle"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">User</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdown">
+                        <li><a class="dropdown-item" href="#" th:text="${userEmail}"></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="#">Sign out</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#" class="nav-link text-truncate">
-                        <i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">Products</span></a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-truncate">
-                        <i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">Customers</span> </a>
-                </li>
+
+<!--                <li>-->
+<!--                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">-->
+<!--                        <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>-->
+<!--                    <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">-->
+<!--                        <li class="w-100">-->
+<!--                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </li>-->
             </ul>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col min-vh-100 p-4">
-                <!-- toggler -->
-                <button class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-                    <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
-                </button>
-                <h3>Sample Content...</h3>
-                <p>Sriracha biodiesel taxidermy organic post-ironic, Intelligentsia salvia mustache 90's code editing brunch. Butcher polaroid VHS art party, hashtag Brooklyn deep v PBR narwhal sustainable mixtape swag wolf squid tote bag. Tote bag cronut semiotics, raw denim deep v taxidermy messenger bag. Tofu YOLO Etsy, direct trade ethical Odd Future jean shorts paleo. Forage Shoreditch tousled aesthetic irony, street art organic Bushwick artisan cliche semiotics ugh synth chillwave meditation. Shabby chic lomo plaid vinyl chambray Vice. Vice sustainable cardigan, Williamsburg master cleanse hella DIY 90's blog.</p>
-                <p>Ethical Kickstarter PBR asymmetrical lo-fi. Dreamcatcher street art Carles, stumptown gluten-free Kickstarter artisan Wes Anderson wolf pug. Godard sustainable you probably haven't heard of them, vegan farm-to-table Williamsburg slow-carb readymade disrupt deep v. Meggings seitan Wes Anderson semiotics, cliche American Apparel whatever. Helvetica cray plaid, vegan brunch Banksy leggings +1 direct trade. Wayfarers codeply PBR selfies. Banh mi McSweeney's Shoreditch selfies, forage fingerstache food truck occupy YOLO Pitchfork fixie iPhone fanny pack art party Portland.</p> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-            </div>
+<!--    <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <div class="col min-vh-100 p-4">-->
+<!--                &lt;!&ndash; toggler &ndash;&gt;-->
+<!--                <button class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">-->
+<!--                        <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>-->
+<!--                    </svg>-->
+<!--                    <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>-->
+<!--                </button>-->
+<!--                <h3>Sample Content...</h3>-->
+<!--                <p>Sriracha biodiesel taxidermy organic post-ironic, Intelligentsia salvia mustache 90's code editing brunch. Butcher polaroid VHS art party, hashtag Brooklyn deep v PBR narwhal sustainable mixtape swag wolf squid tote bag. Tote bag cronut semiotics, raw denim deep v taxidermy messenger bag. Tofu YOLO Etsy, direct trade ethical Odd Future jean shorts paleo. Forage Shoreditch tousled aesthetic irony, street art organic Bushwick artisan cliche semiotics ugh synth chillwave meditation. Shabby chic lomo plaid vinyl chambray Vice. Vice sustainable cardigan, Williamsburg master cleanse hella DIY 90's blog.</p>-->
+<!--                <p>Ethical Kickstarter PBR asymmetrical lo-fi. Dreamcatcher street art Carles, stumptown gluten-free Kickstarter artisan Wes Anderson wolf pug. Godard sustainable you probably haven't heard of them, vegan farm-to-table Williamsburg slow-carb readymade disrupt deep v. Meggings seitan Wes Anderson semiotics, cliche American Apparel whatever. Helvetica cray plaid, vegan brunch Banksy leggings +1 direct trade. Wayfarers codeply PBR selfies. Banh mi McSweeney's Shoreditch selfies, forage fingerstache food truck occupy YOLO Pitchfork fixie iPhone fanny pack art party Portland.</p> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="sticky-top" th:switch="${usertype}" style="position: absolute; width:100vw;">
+        <div th:case="'student'">
+            <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
+        </div>
+        <div th:case="'instructor'">
+            <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>
         </div>
     </div>
+
+    <!-- Section: Split screen -->
+    <!-- from https://mdbootstrap.com/learn/mdb-foundations/mdb-ui-kit/split-screen/-->
+    <section class="">
+        <div class="container-fluid px-0">
+            <button class="btn float-start" style="line-height: .8; padding:5px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+                <span style="display:block; margin:0px; margin-top:80px;">Menu</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+                    <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>
+                </svg>
+                <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+            </button>
+            <div class="row g-0 vh-100">
+                <!-- First column -->
+                <div class="col-lg-6 h-100" style="position:relative; text-align: center; background-color: #b7b8bd; padding: 0px 2px">
+
+                    <!-- from: https://codepen.io/lukezak/pen/rVZMgv (full screen toggle) -->
+                    <div class="container panel-vm pdg-top-70 panel-default h-100" style="text-align: center; background-color: #ffffff;">
+                        <div class="panel-heading">
+                            <ul class="list-inline panel-actions">
+                                <li>
+                                    <h3 style="display: inline-block" class="panel-title">Virtual Machine</h3>
+                                    <div class="align-right upwards-2r">
+                                        <a href="#" id="vm-fullscreen" role="button" title="Toggle fullscreen">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand svg-expand" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-contract svg-contract no_display" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zM15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707z"/>
+                                            </svg>
+                                            <i id="VMFullScreenTogler" class="bi bi-arrows-angle-expand"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div id="wmksContainer"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Second column -->
+                <div class="col-lg-6 h-100 " style="text-align: center;  background-color: #b7b8bd; padding: 0px 5px">
+
+                    <!-- from: https://codepen.io/lukezak/pen/rVZMgv (full screen toggle) -->
+                    <div class="container panel-lab pdg-top-70 panel-default h-100" style="background-color: #ffffff;">
+                        <div class="panel-heading">
+                            <ul class="list-inline panel-actions">
+                                <li>
+                                    <h3 style="display: inline-block" class="panel-title">Lab</h3>
+                                    <div class="align-right upwards-2r">
+                                        <a href="#" id="lab-fullscreen" role="button" title="Toggle fullscreen">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand svg-expand" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-contract svg-contract no_display" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zM15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707z"/>
+                                            </svg>
+                                            <i id="labFullScreenTogler" class="bi bi-arrows-angle-expand"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Lab content -->
+                        <h2 id="lab-header" style="display: inline-block; font-size: 3rem; margin-right: 1rem"></h2>
+                        </hr>
+                        <div id="lab-video-container" class="embed-responsive embed-responsive-16by9 no_display">
+                            </br>
+                            </br>
+                            <iframe id="lab-video" style="min-height: 0px; max-height: 300px; min-width:0px;  max-width: 300px;" class="embed-responsive-item" allowfullscreen></iframe>
+                        </div>
+                        <div id="lab-image-container" class="no_display">
+                            </br>
+                            </br>
+                            <img id="lab-image" style="min-height: 0px; object-fit: contain; max-height: 300px;min-width:0px;max-width: 300px;"/>
+                            </br>
+                            </br>
+                        </div>
+
+                        <p id="lab-desc" style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"></p>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript" th:inline="javascript">
+        //model data from backend
+        const courseList = [[${listCourse}]]
+        const ticket = [[${ticket}]];
+
+        // if no console ticket don't attemt to create the VM
+        if(ticket){
+            //console VM
+            var wmks = WMKS.createWMKS("wmksContainer",{})
+                .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
+                    if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
+                        console.log("connection state change : connected");}
+                });
+            wmks.connect(ticket);
+        }
+
+        window.onload = (event) => {
+            // if VM is displayed
+            if(ticket) {
+                //position vm properly inside div
+                const webmks = document.querySelector('#mainCanvas');
+                // webmks.style.position= "static";
+                // webmks.style.position= "relative";
+                // webmks.style.position= "display:inline-block";
+                // webmks.style.padding= "0px !important";
+                // webmks.style.margin= "0px !important";
+                webmks.setAttribute('style', 'position:relative !important');
+                webmks.setAttribute('style', 'display:inline-block !important');
+                webmks.setAttribute('style', 'padding:0px !important');
+                webmks.setAttribute('style', 'margin:0px !important');
+                webmks.setAttribute('style', 'transform:null !important');
+                webmks.setAttribute('style', 'width:null !important')
+                webmks.setAttribute('style', 'height:null !important')
+                webmks.setAttribute('style', 'top:null')
+                webmks.setAttribute('style', 'left:null')
+                webmks.setAttribute('style', 'position:null')
+                // webmks.setAttribute('style', 'max-width:85% !important');
+                // webmks.setAttribute('style', 'width:85% !important');
+                webmks.setAttribute('style', 'max-height:85% !important');
+                // webmks.style.top= "null !important";
+                // webmks.style.left= "null !important";
+                // webmks.style.height= "null !important";
+                // webmks.style.width= "85% !important";
+                // // webmks.style.maxHeight= "85% !important";
+                // webmks.style.maxWidth= "85% !important";
+                // webmks.style.transform = "scale(1) !important";
+            }
+
+            console.log([[${listCourse}]]);
+
+            // menus
+            const cMenu = document.querySelector(".courses-menu");
+            const lMenu = document.querySelector(".labs-menu");
+            const vmMenu = document.querySelector(".vm-menu");
+            // lab elements
+            const labHeader = document.querySelector("#lab-header");
+            const labVideo = document.querySelector("#lab-video");
+            const labImgContainer = document.querySelector("#lab-image-container");
+            const labVideoContainer = document.querySelector("#lab-video-container");
+            const labImg = document.querySelector("#lab-image");
+            const labDesc = document.querySelector("#lab-desc");
+
+            //set first element of each menu as active (when page first loads)
+            let activeClassElement = cMenu.firstElementChild.querySelector("a");
+            let activeLabElement = lMenu.firstElementChild.querySelector("a");
+            let activeVMElement = vmMenu.firstElementChild.querySelector("a");
+
+            activeClassElement.classList.add("active");
+            activeLabElement.classList.add("active");
+            activeVMElement.classList.add("active");
+
+            //populate lab section with active lab data
+            let activeCourseJS = courseList[0];
+            let activeLabJS = courseList[0]["publicLabs"][0];
+            let activeVmJS = courseList[0]["publicVms"][0];
+            labHeader.textContent = activeLabJS["title"];
+            labDesc.textContent = activeLabJS["description"];
+            // TODO bring this back...
+            if(activeLabJS["image"])  {
+                labImg.setAttribute('src', activeLabJS["image"]);
+                labImgContainer.classList.remove('no_display')
+            }
+            if(activeLabJS["link"])  {
+                labVideo.setAttribute('src', activeLabJS["link"]);
+                labVideoContainer.classList.remove('labVideo')
+            }
+
+            //Add Toggle VM fullscreen functionality
+            const VMToggleFullScreen = document.querySelector("#vm-fullscreen");
+            const VMPanel = document.querySelector(".panel-vm");
+            const VMsvgEx = VMPanel.querySelector(".svg-expand");
+            const VMsvgCon = VMPanel.querySelector(".svg-contract");
+            const VMI = document.querySelector("#VMFullScreenTogler");
+            const topNavBar = document.querySelector(".sticky-top");
+
+            VMToggleFullScreen.addEventListener('click', (e) => {
+                e.preventDefault();
+                VMsvgEx.classList.toggle('no_display');
+                VMsvgCon.classList.toggle('no_display');
+                VMI.classList.toggle('bi-arrows-angle-expand');
+                VMI.classList.toggle('bi-arrows-angle-contract');
+                VMPanel.classList.toggle('panel-fullscreen');
+                VMPanel.classList.toggle('pdg-top-70');
+                topNavBar.classList.toggle('no_display');
+            });
+
+            //Add Toggle Lab fullscreen functionality
+            const labToggleFullScreen = document.querySelector("#lab-fullscreen");
+            const labPanel = document.querySelector(".panel-lab");
+            const labSvgEx = labPanel.querySelector(".svg-expand");
+            const labSvgCon = labPanel.querySelector(".svg-contract");
+            const labI = document.querySelector("#labFullScreenTogler");
+
+            labToggleFullScreen.addEventListener('click', (e) => {
+                e.preventDefault();
+                labSvgEx.classList.toggle('no_display');
+                labSvgCon.classList.toggle('no_display');
+                labI.classList.toggle('bi-arrows-angle-expand');
+                labI.classList.toggle('bi-arrows-angle-contract');
+                labPanel.classList.toggle('panel-fullscreen');
+                labPanel.classList.toggle('pdg-top-70');
+                topNavBar.classList.toggle('no_display');
+            });
+
+            // add click event for course menu items and logic to repopulate the other menus
+            const populateLabMenuActiveCourse = () => {
+                let count = 1;
+                // removing current lab menu elements. Source: from: https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+                while (lMenu.lastChild) {
+                    lMenu.removeChild(lMenu.lastChild);
+                }
+
+                // based on source: https://stackoverflow.com/questions/62438853/how-to-get-a-specific-class-from-a-classlist-array-in-a-clean-way
+                // let classId = Array.from(activeClassElement.classList).filter(className => !isNaN(className))[0];
+                // const course = courseList.filter(course => course.id == classId)[0];
+                activeCourseJS.publicLabs.forEach( lab => {
+                    const liElement = document.createElement("li");
+                    const aElement = document.createElement("a");
+                    aElement.classList.add("dropdown-item");
+                    aElement.classList.add(lab.id);
+                    aElement.textContent = lab.number + '-' +lab.title;
+                    if(count <= 1) {
+                        aElement.classList.add('active');
+                        activeLabElement = aElement;
+                        let courseId = Array.from(activeClassElement.classList).filter(className => !isNaN(className))[0];
+                        activeLabJS = activeCourseJS.publicLabs.filter(labJS => labJS.id == lab.id)[0];
+                        count++;
+                    }
+                    liElement.append(aElement);
+                    lMenu.append(liElement);
+                });
+            };
+            const populateVmMenuActiveCourse = () => {
+                let count = 1;
+                // removing current VM menu elements. Source: from: https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+                while (vmMenu.lastChild) {
+                    vmMenu.removeChild(vmMenu.lastChild);
+                }
+
+                activeCourseJS.publicVms.forEach( vm => {
+                    const liElement = document.createElement("li");
+                    const aElement = document.createElement("a");
+                    aElement.classList.add("dropdown-item");
+                    aElement.classList.add(vm.vmID);
+                    if(count <= 1) {
+                        aElement.classList.add('active');
+                        activeVMElement = aElement;
+                        count++;
+                        activeVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.vmID == vm.vmID)[0];
+                    }
+                    aElement.textContent = vm.name;
+                    liElement.append(aElement);
+                    vmMenu.append(liElement);
+
+                    //
+                    // <ul className="dropdown-menu text-small shadow vm-menu" aria-labelledby="dropdown">
+                    //     <li th:each="vm : ${listCourse[0].publicVms}"><a className="dropdown-item" href="#"
+                    //                                                      th:classappend="${vm.vmID}"
+                    //                                                      th:text="${{vm.name}}"></a>
+                    //     </li>
+                    //
+                    // </ul>
+                });
+
+            };
+
+            const populateOtherMenusWithActiveCourse = () => {
+                populateLabMenuActiveCourse();
+                populateVmMenuActiveCourse();
+                addEventListenerToMenuItems(lMenu,'Labs');
+                addEventListenerToMenuItems(vmMenu,'VMs');
+                populateLabSectionWithActiveLab();
+                populateVMSectionWithActiveVM();
+
+            };
+
+            function addEventListenerToMenuItems(menu, typeOfMenu){
+                const aElements = menu.querySelectorAll('a');
+                // aElements[0].classList.add('active');
+
+                if(typeOfMenu == 'Courses') {
+                    aElements.forEach( aElement => {
+                        aElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if(activeClassElement){
+                                activeClassElement.classList.remove('active');
+                            }
+                            activeClassElement = e.target;
+                            activeClassElement.classList.add('active');
+                            let courseId = Array.from(activeClassElement.classList).filter(className => !isNaN(className))[0];
+                            activeCourseJS = courseList.filter(course => course.id == courseId)[0];
+                            populateOtherMenusWithActiveCourse();
+                        });
+                    });
+                } else if(typeOfMenu == 'Labs') {
+                    aElements.forEach(aElement => {
+                        aElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if (activeLabElement) {
+                                activeLabElement.classList.remove('active');
+                            }
+                            activeLabElement = e.target;
+                            activeLabElement.classList.add('active');
+                            let labId = Array.from(activeLabElement.classList).filter(className => !isNaN(className))[0];
+                            activeLabJS = activeCourseJS.publicLabs.filter(lab => lab.id == labId)[0];
+                            populateLabSectionWithActiveLab();
+                        });
+                    });
+                }  else if(typeOfMenu == 'VMs') {
+                    aElements.forEach(aElement => {
+                        aElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if(activeVMElement){
+                                activeVMElement.classList.remove('active');
+                            }
+                            activeVMElement = e.target;
+                            activeVMElement.classList.add('active');
+                            let vmId = Array.from(activeVMElement.classList).filter(className => !isNaN(className))[0];
+                            activeVmJS = activeCourseJS.publicVms.filter(vm => vm.vmID == vmId)[0];
+
+                            populateVMSectionWithActiveVM();
+                        });
+                    });
+                }
+            }
+
+            function populateLabSectionWithActiveLab(){
+                labHeader.textContent = activeLabJS["title"];
+                labDesc.textContent = activeLabJS["description"];
+                if(activeLabJS["image"])  {
+                    labImg.setAttribute('src', activeLabJS["image"]);
+                    labImgContainer.classList.remove("no_display");
+                } else{
+                    labImgContainer.classList.add("no_display");
+                }
+                if(activeLabJS["link"])  {
+                    labVideo.setAttribute('src', activeLabJS["link"]);
+                    labVideoContainer.classList.remove("no_display");
+                }else{
+                    labVideoContainer.classList.add("no_display");
+                }
+            }
+
+
+            function populateVMSectionWithActiveVM(){
+
+            }
+
+            // const courses = document.querySelectorAll(".course-link")
+            // courses.forEach( course => {
+            //     course.addEventListener('click', (e) => {
+            //         e.preventDefault();
+            //         activeClassElement.classList.remove('active');
+            //         activeClassElement = e.target;
+            //         activeClassElement.classList.add('active');
+            //         populateOtherMenusWithActiveCourse();
+            //     });
+            //
+            // });
+            addEventListenerToMenuItems(cMenu,'Courses');
+            addEventListenerToMenuItems(lMenu,'Labs');
+            addEventListenerToMenuItems(vmMenu,'VMs');
+
+        };
+    </script>
+
+
 </body>
 </html>
