@@ -46,10 +46,11 @@ public class SecSecurityConfig {
                         .requestMatchers("/photos/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/videos/**").permitAll()
-                        .requestMatchers("/n3","/new-design").permitAll()
+                        .requestMatchers("/n3").permitAll()
                         .requestMatchers("/powerStartVM","/powerOffVM","/getConsoleTicket").permitAll()
 
 //                        .requestMatchers("/","/index","/index.html").permitAll()
+                        .requestMatchers("/console-ticket/**").hasAnyAuthority("STUDENT","INSTRUCTOR")
                         .requestMatchers("/","/index","/index.html").hasAnyAuthority("STUDENT","INSTRUCTOR")
                         .requestMatchers("/new-design").hasAnyAuthority("STUDENT","INSTRUCTOR")
 

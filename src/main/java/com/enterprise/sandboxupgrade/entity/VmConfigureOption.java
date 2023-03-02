@@ -2,8 +2,10 @@ package com.enterprise.sandboxupgrade.entity;
 
 import lombok.Data;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Table(name = "vmconfigureoptions")
 public @Data
 class VmConfigureOption {

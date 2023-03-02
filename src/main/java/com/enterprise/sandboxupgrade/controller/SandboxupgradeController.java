@@ -1,9 +1,17 @@
 package com.enterprise.sandboxupgrade.controller;
 import com.enterprise.sandboxupgrade.entity.*;
 import com.enterprise.sandboxupgrade.service.*;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonString;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 //Based on content from UC's Enterprise Development course
 @Controller
@@ -52,7 +62,7 @@ public class SandboxupgradeController {
      * @throws Exception
      */
 //    @GetMapping(value={"","/","/index","/index.html","/home","/home.html"})
-    @GetMapping(value={"","/","/index","/index.html"})
+    @GetMapping(value={"/index","/index.html"})
     public String viewMainPage(Model model) throws Exception {
         getStarted();
 //        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
@@ -83,7 +93,8 @@ public class SandboxupgradeController {
     }
 
     private void getStarted() throws Exception{
-        if(!isStarted) orchestratorService.getStarted();
+//        if(!isStarted) orchestratorService.getStarted();
+        orchestratorService.getStarted();
         isStarted = true;
     }
 
@@ -174,14 +185,17 @@ public class SandboxupgradeController {
         return "redirect:/";
     }
 
-    @GetMapping("/new-design")
+    @GetMapping(value={"","/","/new-design"})
     public String newDesign(Model model) throws Exception {
         getStarted();
-        model.addAttribute("listCourse", orchestratorService.getUserCourses());
+        List<PublicCourse> courses = orchestratorService.getUserCourses();
+        String firstVm = courses.get(0).publicVms.get(0).VMWareName;
+        model.addAttribute("listCourse", courses);
         model.addAttribute("usertype", orchestratorService.getUserType());
         model.addAttribute("userEmail", orchestratorService.getUserEmail());
 
-        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+//        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
         return "new-design";
     }
 
@@ -189,6 +203,22 @@ public class SandboxupgradeController {
     public String n3(Model model) throws Exception {
         getStarted();
         return "n3";
+    }
+
+
+    @PostMapping("/console-ticket/{courseId}/{vmId}")
+    public ResponseEntity getSelectedVmTicket(@PathVariable("courseId") int courseId,
+                                              @PathVariable("vmId") int vmId) throws Exception {
+        getStarted();
+        PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
+                collect(Collectors.toList()).get(0);
+        String firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
+                collect(Collectors.toList()).get(0).VMWareName;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String selectedVmTicket = "{\"ticket\":\""+vmWareService.generateTicket(firstVm).substring(6) + "\"}";
+        return new ResponseEntity(selectedVmTicket, headers, HttpStatus.OK);
     }
 
 

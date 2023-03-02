@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@DynamicUpdate
 @Table(name = "students")
 public @Data
 class Student{

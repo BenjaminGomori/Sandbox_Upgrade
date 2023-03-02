@@ -3,10 +3,12 @@ package com.enterprise.sandboxupgrade.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
 @Entity
+@DynamicUpdate
 @Table(name = "roles")
 public @Data
 class Role {

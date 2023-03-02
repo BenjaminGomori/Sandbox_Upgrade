@@ -2,12 +2,14 @@ package com.enterprise.sandboxupgrade.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@DynamicUpdate
 @Table(name = "labs")
 public @Data
 class Lab{

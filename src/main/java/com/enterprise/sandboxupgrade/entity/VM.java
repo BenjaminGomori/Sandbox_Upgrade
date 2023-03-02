@@ -3,8 +3,10 @@ package com.enterprise.sandboxupgrade.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Table(name = "vms")
 public @Data
 class VM extends PublicVM{
