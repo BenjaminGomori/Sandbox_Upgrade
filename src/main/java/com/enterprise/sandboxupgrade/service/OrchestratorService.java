@@ -130,6 +130,8 @@ public class OrchestratorService implements IOrchestratorService {
                     PublicVM.name = vm.getName();
                     PublicVM.vmID = vm.getVmID();
                     PublicVM.VMWareNumber = vm.getVMWareNumber();
+                    PublicVM.student = vm.getStudent();
+                    PublicVM.instructor = vm.getInstructor();
                     publicCourse.publicVms.add(PublicVM);
                 }
 
@@ -167,7 +169,39 @@ public class OrchestratorService implements IOrchestratorService {
 
         // is student logged in
         if(searchStudentCourseMap.containsKey(userEmail)){
-            return publicStudentCourseMap.get(searchStudentCourseMap.get(userEmail));
+            List<PublicCourse> publicCourses = publicStudentCourseMap.get(searchStudentCourseMap.get(userEmail));
+            // create a copy this object
+            List<PublicCourse> filteredCourses = new ArrayList<PublicCourse>(publicCourses.size());
+            publicCourses.forEach(c->{
+                PublicCourse course = new PublicCourse();
+                course.id = c.id;
+                course.name = c.name;
+                course.number = c.number;
+                course.year = c.year;
+                course.section = c.section;
+                course.semester = c.semester;
+                course.description = c.description;
+                course.uniqueName = c.uniqueName;
+                course.publicLabs = c.publicLabs;
+
+                List<PublicVM> vms = new ArrayList<PublicVM>();
+                //filter vm by user id
+                c.publicVms.forEach(vm->{
+                    if(userType.equals("student")){
+                        if(vm.student.username.equals(userEmail)){
+                            vms.add(vm);
+                        }
+                    }else if(userType.equals("instructor")) {
+                        if(vm.instructor.username.equals(userEmail)){
+                            vms.add(vm);
+                        }
+                    }
+                });
+
+                course.publicVms = vms;
+                filteredCourses.add(course);
+            });
+            return filteredCourses;
         }
         return null ;
     }
@@ -203,18 +237,6 @@ public class OrchestratorService implements IOrchestratorService {
         }
         return instructor ;
     }
-
-//    @Override
-//    public void setUserType(String username) {
-//        if(this.emailInstructorMap.containsKey(username)){
-//            userType =  "instructor";
-//        }
-//        else if(this.emailStudentMap.containsKey(username)){
-//            userType = "student";
-//        }  else{
-//            userType = "";
-//        }
-//    }
 
     @Override
     public String getUserType() {
