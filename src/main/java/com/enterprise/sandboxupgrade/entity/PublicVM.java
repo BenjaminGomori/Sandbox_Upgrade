@@ -20,6 +20,11 @@ public class PublicVM {
     @Column
     @JsonBackReference
     public Instructor instructor;
+    @Column
+    public int studentId;
+    @Column
+    public int instructorId;
+
     @Override
     public String toString() {
         return  "Name: "+this.name  + "; VMWareNumber: " + this.VMWareNumber + "; PublicNumber: " +this.publicNumber;

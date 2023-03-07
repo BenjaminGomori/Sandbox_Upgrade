@@ -19,6 +19,7 @@ public class OrchestratorService implements IOrchestratorService {
 
     private String userType = "";
     private String userEmail = "";
+    private int userId = 0;
 
     // not sharable (with user) - original data
     private List<Course> courses;
@@ -134,6 +135,8 @@ public class OrchestratorService implements IOrchestratorService {
                     PublicVM.VMWareNumber = vm.getVMWareNumber();
                     PublicVM.student = vm.getStudent();
                     PublicVM.instructor = vm.getInstructor();
+                    PublicVM.studentId = vm.getStudent().studentID;
+                    PublicVM.instructorId = vm.getInstructor().instructorID;
                     publicCourse.publicVms.add(PublicVM);
                 }
 
@@ -189,6 +192,8 @@ public class OrchestratorService implements IOrchestratorService {
                     PublicVM.VMWareNumber = vm.getVMWareNumber();
                     PublicVM.student = vm.getStudent();
                     PublicVM.instructor = vm.getInstructor();
+                    PublicVM.studentId = vm.getStudent().studentID;
+                    PublicVM.instructorId = vm.getInstructor().instructorID;
                     publicCourse.publicVms.add(PublicVM);
                 }
 
@@ -236,46 +241,9 @@ public class OrchestratorService implements IOrchestratorService {
                 course.publicLabs = c.publicLabs;
 
                 List<PublicVM> vms = new ArrayList<PublicVM>();
-                //filter vm by user id
+                //filter vm by user id - student only has access their vms (for each of the courses)
                 c.publicVms.forEach(vm->{
-//                    if(userType.equals("student")){
-                        if(vm.student.username.equals(userEmail)){
-                            vms.add(vm);
-                        }
-//                    }else if(userType.equals("instructor")) {
-//                        if(vm.instructor.username.equals(userEmail)){
-//                            vms.add(vm);
-//                        }
-//                    }
-                });
-
-                course.publicVms = vms;
-                filteredCourses.add(course);
-            });
-            return filteredCourses;
-        }
-
-        // is instructor logged in
-        if(searchInstructorCourseMap.containsKey(userEmail)){
-            List<PublicCourse> publicCourses = publicInstructorCourseMap.get(searchInstructorCourseMap.get(userEmail));
-            // create a copy this object
-            List<PublicCourse> filteredCourses = new ArrayList<PublicCourse>(publicCourses.size());
-            publicCourses.forEach(c->{
-                PublicCourse course = new PublicCourse();
-                course.id = c.id;
-                course.name = c.name;
-                course.number = c.number;
-                course.year = c.year;
-                course.section = c.section;
-                course.semester = c.semester;
-                course.description = c.description;
-                course.uniqueName = c.uniqueName;
-                course.publicLabs = c.publicLabs;
-
-                List<PublicVM> vms = new ArrayList<PublicVM>();
-                //filter vm by user id
-                c.publicVms.forEach(vm->{
-                    if(vm.instructor.username.equals(userEmail)){
+                    if(vm.student.username.equals(userEmail)){
                         vms.add(vm);
                     }
                 });
@@ -286,8 +254,14 @@ public class OrchestratorService implements IOrchestratorService {
             return filteredCourses;
         }
 
+        // is instructor logged in - he needs access to all vms including their students (for each course )
+        if(searchInstructorCourseMap.containsKey(userEmail)){
+            return publicInstructorCourseMap.get(searchInstructorCourseMap.get(userEmail));
+        }
+
         return null ;
     }
+
 
     @Override
     public List<PublicVM> getUserVMs(String userId){
@@ -305,6 +279,7 @@ public class OrchestratorService implements IOrchestratorService {
             Student student = emailStudentMap.get(email);
             userType = "student";
             userEmail = email;
+            userId = emailStudentMap.get(email).studentID;
             return student;
         }
         return null ;
@@ -317,6 +292,7 @@ public class OrchestratorService implements IOrchestratorService {
             instructor = emailInstructorMap.get(username);
             userEmail = username;
             userType = "instructor";
+            userId = emailInstructorMap.get(username).instructorID;
         }
         return instructor ;
     }
@@ -329,5 +305,10 @@ public class OrchestratorService implements IOrchestratorService {
     @Override
     public String getUserEmail() {
         return userEmail;
+    }
+
+    @Override
+    public int getUserId() {
+        return userId;
     }
 }

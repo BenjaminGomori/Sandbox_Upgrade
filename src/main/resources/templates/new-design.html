@@ -263,11 +263,6 @@
             if(ticket) {
                 //position vm properly inside div
                 const webmks = document.querySelector('#mainCanvas');
-                // webmks.style.position= "static";
-                // webmks.style.position= "relative";
-                // webmks.style.position= "display:inline-block";
-                // webmks.style.padding= "0px !important";
-                // webmks.style.margin= "0px !important";
                 webmks.setAttribute('style', 'position:relative !important');
                 webmks.setAttribute('style', 'display:inline-block !important');
                 webmks.setAttribute('style', 'padding:0px !important');
@@ -278,16 +273,20 @@
                 webmks.setAttribute('style', 'top:null')
                 webmks.setAttribute('style', 'left:null')
                 webmks.setAttribute('style', 'position:null')
-                // webmks.setAttribute('style', 'max-width:85% !important');
-                // webmks.setAttribute('style', 'width:85% !important');
                 webmks.setAttribute('style', 'max-height:85% !important');
-                // webmks.style.top= "null !important";
-                // webmks.style.left= "null !important";
-                // webmks.style.height= "null !important";
-                // webmks.style.width= "85% !important";
-                // // webmks.style.maxHeight= "85% !important";
-                // webmks.style.maxWidth= "85% !important";
-                // webmks.style.transform = "scale(1) !important";
+
+
+                let userId = [[${userId}]];
+                console.log("userId: " +userId);
+                // //For full screen
+                // webmks.setAttribute('style', 'position:fixed !important');
+                // webmks.setAttribute('style', 'z-index:100 !important');
+                // webmks.setAttribute('style', 'left:0 !important');
+                // webmks.setAttribute('style', 'top:0 !important');
+                // webmks.setAttribute('style', 'width:100vw !important');
+                // webmks.setAttribute('style', 'height:100vh !important');
+
+
             }
 
             console.log([[${listCourse}]]);
@@ -339,13 +338,14 @@
 
             VMToggleFullScreen.addEventListener('click', (e) => {
                 e.preventDefault();
-                VMsvgEx.classList.toggle('no_display');
-                VMsvgCon.classList.toggle('no_display');
-                VMI.classList.toggle('bi-arrows-angle-expand');
-                VMI.classList.toggle('bi-arrows-angle-contract');
-                VMPanel.classList.toggle('panel-fullscreen');
-                VMPanel.classList.toggle('pdg-top-70');
-                topNavBar.classList.toggle('no_display');
+                // VMsvgEx.classList.toggle('no_display');
+                // VMsvgCon.classList.toggle('no_display');
+                // VMI.classList.toggle('bi-arrows-angle-expand');
+                // VMI.classList.toggle('bi-arrows-angle-contract');
+                // VMPanel.classList.toggle('panel-fullscreen');
+                // VMPanel.classList.toggle('pdg-top-70');
+                // topNavBar.classList.toggle('no_display');
+                wmks.enterFullScreen();
             });
 
             //Add Toggle Lab fullscreen functionality

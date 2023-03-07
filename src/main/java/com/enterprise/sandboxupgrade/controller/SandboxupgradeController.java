@@ -192,11 +192,15 @@ public class SandboxupgradeController {
         String firstVm = courses.get(0).publicVms.get(0).VMWareName;
         model.addAttribute("listCourse", courses);
         model.addAttribute("usertype", orchestratorService.getUserType());
+        model.addAttribute("userId", orchestratorService.getUserId());
         model.addAttribute("userEmail", orchestratorService.getUserEmail());
 
 //        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
         model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
-        return "new-design";
+        if(orchestratorService.getUserType().equals("student")){
+            return "new-design";
+        }
+        return "instructor-main";
     }
 
     @GetMapping("/n3")

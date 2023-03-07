@@ -12,4 +12,5 @@ public interface IOrchestratorService {
     public Instructor findInstructorByUsername(String username);
     public String getUserType();
     public String getUserEmail();
+    public int getUserId();
 }
