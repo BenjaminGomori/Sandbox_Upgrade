@@ -9,16 +9,16 @@
     <link rel="stylesheet" th:href="@{/css/login/login.css}" type="text/css">
 </head>
 <body>
-    <!-- From https://startbootstrap.com/snippets/login    -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                <div class="card border-0 shadow rounded-3 my-5">
-                    <div class="card-body p-4 p-sm-5">
-                        <h2 class="card-title text-center mb-5">Sign In</h2>
+<!-- From https://startbootstrap.com/snippets/login    -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+                <div class="card-body p-4 p-sm-5">
+                    <h2 class="card-title text-center mb-5">Sign In</h2>
 
-                         <!--   <form action="#"  th:object="${lab}" th:action="@{/saveLab}" enctype="multipart/form-data"  method="POST">-->
-                        <form action="#"  th:action="@{/login}" method="POST">
+                    <!--   <form action="#"  th:object="${lab}" th:action="@{/saveLab}" enctype="multipart/form-data"  method="POST">-->
+                    <form action="#" th:action="@{/login}" method="POST">
 
                             <div class="form-floating mb-3">
                                 <input autofocus name="username" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="instructor@mail.uc.edu">
@@ -29,16 +29,18 @@
                                 <label for="floatingPassword">Password</label>
                             </div>
 
-                            <hr class="my-4">
-                            <div class="d-grid">
-                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign
-                                    in</button>
-                            </div>
-                        </form>
-                    </div>
+                        <hr class="my-4">
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign
+                                in
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div th:replace="fragments/footerUI :: footer"></div>
 </body>
 </html>

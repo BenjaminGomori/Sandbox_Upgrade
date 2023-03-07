@@ -53,21 +53,29 @@
                     </div>
                 </div>
             </div>
+            <div class="collapser_triangle_image_left no_display">
+                <img th:src="@{/images/un_collapse.png}" alt="">
+            </div>
+        </div>
+
 
             <!-- this grid class is from the split library -->
             <div class="grid" style="height:100vh; margin:0">
                 <div id="wmksContainer" style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
 
-                    <h2 style="display: inline-block; font-size: 3rem;">Virtual Machine</h2>
-                    <div class="no_display" th:each="course : ${listCourse}" th:classappend="course_+${course.id} +_vms">
-                        <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
-                            <option th:each="vm : ${course.publicVms}" th:value="${vm.publicNumber}" th:text="${vm.name}"></option>
-                        </select>
-                    </div>
+            <h2 style="display: inline-block; font-size: 3rem;">Virtual Machine</h2>
+            <div class="no_display" th:each="course : ${listCourse}" th:classappend="course_+${course.id} +_vms">
+                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
+                    <option th:each="vm : ${course.publicVms}" th:value="${vm.publicNumber}"
+                            th:text="${vm.name}"></option>
+                </select>
+            </div>
 
-                    <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vm_configuration">
-                        <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}" th:text="${vmOptions.getOption()}"></option>
-                    </select>
+            <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vm_configuration">
+                <option th:each="vmOptions : ${listVMconfigureOptions}" th:value="${vmOptions.getNumber()}"
+                        th:text="${vmOptions.getOption()}"></option>
+            </select>
+
 
 <!--                    <script>-->
 <!--                        var wmks = WMKS.createWMKS("wmksContainer",{})-->
@@ -81,44 +89,55 @@
 <!--                    </script>-->
                 </div>
 
-                <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
+            </script>
+        </div>
 
-                <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
+        <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
 
-                    <div class="course_labs no_display" th:classappend="course_labs_ + ${course.id}" th:each="course : ${listCourse}" th:value="${course.id}"}>
-                        <select style="background-color: #78d8fa;" claa
-                                ss="dropdown" id="dropDownList_labs">
-                            <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}" th:text="'Lab - '+ ${lab.number}"></option>
-                        </select>
-                        <div style="height:inherit;overflow-y:auto">
-                            <div class="no_display" style="height:inherit; position: relative;" th:each="lab : ${course.publicLabs}" th:classappend="lab_ + ${lab.number}">
-                                <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem" th:text="${lab.title}"></h2>
-                                <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
-                                </hr>
-<!--                                <div class="embed-responsive embed-responsive-16by9" style="width:100%;">-->
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    </br>
-                                    </br>
-<!--                                    <iframe style="width: 75%; height: 42%; object-fit: contain;" class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>-->
-                                    <iframe class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>
-                                </div>
-                                <div>
-                                    </br>
-                                    </br>
-                                    <img th:src="@{${'/photos/'+lab.image}}" style="width: 75%; object-fit: contain;"/>
-                                    </br>
-                                    </br>
-                                </div>
+        <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
 
-                                <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;" th:text="${lab.description}"></p>
-
-                            </div>
+            <div class="course_labs no_display" th:classappend="course_labs_ + ${course.id}"
+                 th:each="course : ${listCourse}" th:value="${course.id}" }>
+                <select style="background-color: #78d8fa;" claa
+                        ss="dropdown" id="dropDownList_labs">
+                    <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}"
+                            th:text="'Lab - '+ ${lab.number}"></option>
+                </select>
+                <div style="height:inherit;overflow-y:auto">
+                    <div class="no_display" style="height:inherit; position: relative;"
+                         th:each="lab : ${course.publicLabs}" th:classappend="lab_ + ${lab.number}">
+                        <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem"
+                            th:text="${lab.title}"></h2>
+                        <!--                <h2 class="lab_header" style="display: inline-block;margin-right: 1rem" th:text="${lab.getTitle()}"></h2>-->
+                        </hr>
+                        <!--                                <div class="embed-responsive embed-responsive-16by9" style="width:100%;">-->
+                        <div class="embed-responsive embed-responsive-16by9">
+                            </br>
+                            </br>
+                            <!--                                    <iframe style="width: 75%; height: 42%; object-fit: contain;" class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}" allowfullscreen></iframe>-->
+                            <iframe class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}"
+                                    allowfullscreen></iframe>
                         </div>
-                    </div>
+                        <div>
+                            </br>
+                            </br>
+                            <img th:src="@{${'/photos/'+lab.image}}" style="width: 75%; object-fit: contain;"/>
+                            </br>
+                            </br>
+                        </div>
 
+                        <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"
+                           th:text="${lab.description}"></p>
+
+                    </div>
                 </div>
             </div>
+
         </div>
+    </div>
+</div>
+
+
 
 <!--    <script>-->
 <!--        // <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js">-->
@@ -167,7 +186,6 @@
 <!--    </script>-->
 
 
-
 <!--<script>-->
 <!--    var coursesJS = [];-->
 <!--</script>-->
@@ -205,11 +223,8 @@
             webmks.style.height= "null !important";
             webmks.style.width= "100% !important";
         };
-    </script>
 
-
-
-
+</script>
 
 
 <script type="text/javascript" th:inline="javascript">
@@ -408,5 +423,7 @@
     /*]]>*/
     </script>
 
-    </body>
+</script>
+<div th:replace="fragments/footerUI :: footer"></div>
+</body>
 </html>
