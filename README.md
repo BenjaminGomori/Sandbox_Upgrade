@@ -10,7 +10,7 @@ Thus, the first goal is to channel all VM communication to go through vCenter.
 ### B: Enable Uploading and Accessing of Lab Materials for Instructors and Students
 
 Currently, students need to view lab materials via another system such as Canvas.</br>
-The project aims to add pages and backend capabilities to enable instructors to upload the different models' lab content including text, videos, and images.</br>
-The project will also provide students to view the lab materials side by side with the VM in the same web tab.</br></br>
+The project aims to add pages and backend capabilities to enable instructors to upload the different course lab materials including text, videos, and images.</br>
+The project will also enable  students to view lab materials side by side with their VM in the same web page.</br></br>
 
 ### Additionally the project aims to improve overall user experience by creating a new front-end design.
