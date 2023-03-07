@@ -1,11 +1,16 @@
 package com.enterprise.sandboxupgrade.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
+
 import java.util.List;
 
 @Entity
+@DynamicUpdate
 @Table(name = "Courses")
 public @Data
 class Course{
@@ -30,19 +35,24 @@ class Course{
 
     @ManyToOne
     @JoinColumn(name="yearID", nullable=false)
+    @JsonBackReference
     private Year year;
 
     @ManyToOne
     @JoinColumn(name="semesterID", nullable=false)
+    @JsonBackReference
     private Semester semester;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
+    @JsonManagedReference
     private List<VM> VMs;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
+    @JsonManagedReference
     private List<Lab> labs;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinTable(
             name = "coursestudent",
             joinColumns = @JoinColumn(name = "courseID"),
@@ -50,7 +60,8 @@ class Course{
     )
     private List<Student> students;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinTable(
             name = "courseinstructor",
             joinColumns = @JoinColumn(name = "courseID"),

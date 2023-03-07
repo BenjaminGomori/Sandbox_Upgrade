@@ -36,7 +36,8 @@ public class VMWareService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String VCENTER_URL = "https://10.127.68.17/";
+//    private final String VCENTER_URL = "https://10.127.68.17/";
+    private final String VCENTER_URL = "https://10.127.68.15/";
     private String VCENTER_USERNAME = "administrator@vsphere.local";
     private String VCENTER_PASSWORD = "SeniorDesign22!";
     private String vcenterSessionId ="";
@@ -140,20 +141,21 @@ public class VMWareService {
 
 
     public String generateTicket(String vmId) throws JsonProcessingException {
-        String BASE_URL = VCENTER_URL+ "api/vcenter/vm/";
+        String BASE_URL = VCENTER_URL+ "rest/vcenter/vm/";
         HttpHeaders headers = new HttpHeaders();
         String sessionId =  getSessionId();
         headers.set("vmware-api-session-id", sessionId);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Map<String, Object> requestBody = new HashMap<>();
-//        requestBody.put("spec", Collections.singletonMap("type", "VMRC"));
-        requestBody.put("type", "VMRC");
+        requestBody.put("spec", Collections.singletonMap("type", "WEBMKS"));
+//        requestBody.put("type", "WEBMKS");
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
         ResponseEntity<Map> response = restTemplate.exchange(BASE_URL + vmId + "/console/tickets", HttpMethod.POST, request, Map.class);
 
         Map<String, Object> responseBody = response.getBody();
-        return (String) responseBody.get("value");
+        Map<String, Object> ticket = (Map<String, Object>) responseBody.get("value");
+        return (String) ticket.get("ticket");
     }
 }

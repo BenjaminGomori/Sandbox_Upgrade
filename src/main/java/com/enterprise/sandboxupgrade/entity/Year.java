@@ -1,23 +1,27 @@
 package com.enterprise.sandboxupgrade.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
 @Entity
+@DynamicUpdate
 @Table(name = "years")
 public @Data
 class Year {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int yearID;
+    public int yearID;
 
     @Column(name = "year")
-    private int number;
+    public int number;
 
-    @OneToMany(mappedBy = "year")
-    private List<Course> courses;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "year")
+    @JsonManagedReference
+    public List<Course> courses;
 
     @Override
     public String toString() {

@@ -1,9 +1,17 @@
 package com.enterprise.sandboxupgrade.controller;
 import com.enterprise.sandboxupgrade.entity.*;
 import com.enterprise.sandboxupgrade.service.*;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonString;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 //Based on content from UC's Enterprise Development course
 @Controller
@@ -52,18 +62,20 @@ public class SandboxupgradeController {
      * @throws Exception
      */
 //    @GetMapping(value={"","/","/index","/index.html","/home","/home.html"})
-    @GetMapping(value={"","/","/index","/index.html"})
+    @GetMapping(value={"/index","/index.html"})
     public String viewMainPage(Model model) throws Exception {
         getStarted();
 //        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
-        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses());
 //        model.addAttribute("listSemester", semesterService.fetchAll());
         model.addAttribute("listVMs", vmService.fetchAll());
         model.addAttribute("listVMconfigureOptions", VmConfigurationService.fetchAll());
         model.addAttribute("listLabs", labService.fetchAll());
 
-        model.addAttribute("usertype", orchestratorService.getUserType("jonesm@mail.uc.edu"));
-//        model.addAttribute("usertype", "instructor");
+
+//        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+
+        model.addAttribute("usertype", orchestratorService.getUserType());
         return "index";
     }
 
@@ -72,7 +84,7 @@ public class SandboxupgradeController {
     public String viewCoursesPage(Model model) throws Exception {
         getStarted();
 //        model.addAttribute("listCourse", orchestratorService.getUserCourses("jonesm@mail.uc.edu"));
-        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses());
 //        model.addAttribute("listSemester", semesterService.fetchAll());
         model.addAttribute("listVMs", vmService.fetchAll());
         model.addAttribute("listVMconfigureOptions", VmConfigurationService.fetchAll());
@@ -81,7 +93,8 @@ public class SandboxupgradeController {
     }
 
     private void getStarted() throws Exception{
-        if(!isStarted) orchestratorService.getStarted();
+//        if(!isStarted) orchestratorService.getStarted();
+        orchestratorService.getStarted();
         isStarted = true;
     }
 
@@ -91,8 +104,8 @@ public class SandboxupgradeController {
         Lab lab = new Lab();
         model.addAttribute("lab", lab);
         model.addAttribute("course", new PublicCourse());
-        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
-        model.addAttribute("usertype", orchestratorService.getUserType("jonesm@mail.uc.edu"));
+        model.addAttribute("listCourse", orchestratorService.getUserCourses());
+        model.addAttribute("usertype", orchestratorService.getUserType());
 
         return "create-lab";
     }
@@ -113,7 +126,7 @@ public class SandboxupgradeController {
         byte[] bytes = imageFile.getBytes();
         Path path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
         Files.write(path, bytes);
-        path = Paths.get(imageFile.getOriginalFilename());
+        path = Paths.get("photos/"+imageFile.getOriginalFilename());
         lab.setImage(path.toString());
         lab.setDueDate(new Date());
 //        lab.setCourse(new Course());
@@ -122,7 +135,7 @@ public class SandboxupgradeController {
         bytes = videoFile.getBytes();
         path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
         Files.write(path, bytes);
-        path = Paths.get(videoFile.getOriginalFilename());
+        path = Paths.get("videos/"+imageFile.getOriginalFilename());
         lab.setLink(path.toString());
 
         // todo 1. correct courseID so submitted by user
@@ -154,24 +167,74 @@ public class SandboxupgradeController {
     @GetMapping("/powerOffVM")
     public String powerOffVM(Model model) throws Exception {
         getStarted();
-        vmWareService.powerOffVM("vm-14");
+        vmWareService.powerOffVM("vm-38");
         return "redirect:/";
     }
 
     @GetMapping("/powerStartVM")
     public String powerStartVM(Model model) throws Exception {
         getStarted();
-        vmWareService.powerOnVM("vm-14");
+        vmWareService.powerOnVM("vm-38");
         return "redirect:/";
     }
 
     @GetMapping("/getConsoleTicket")
     public String getConsoleTicket(Model model) throws Exception {
         getStarted();
-        vmWareService.generateTicket("vm-14");
+        String ticket = vmWareService.generateTicket("vm-38");
         return "redirect:/";
     }
 
+    @GetMapping(value={"","/","/new-design"})
+    public String newDesign(Model model) throws Exception {
+        getStarted();
+        List<PublicCourse> courses = orchestratorService.getUserCourses();
+        String firstVm = courses.get(0).publicVms.get(0).VMWareName;
+        model.addAttribute("listCourse", courses);
+        model.addAttribute("usertype", orchestratorService.getUserType());
+        model.addAttribute("userId", orchestratorService.getUserId());
+        model.addAttribute("userEmail", orchestratorService.getUserEmail());
+
+//        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
+        if(orchestratorService.getUserType().equals("student")){
+            return "new-design";
+        }
+        return "instructor-main";
+    }
+
+    @GetMapping("/n3")
+    public String n3(Model model) throws Exception {
+        getStarted();
+        return "n3";
+    }
+
+
+    @PostMapping("/console-ticket/{courseId}/{vmId}")
+    public ResponseEntity getSelectedVmTicket(@PathVariable("courseId") int courseId,
+                                              @PathVariable("vmId") int vmId) throws Exception {
+        getStarted();
+        PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
+                collect(Collectors.toList()).get(0);
+        String firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
+                collect(Collectors.toList()).get(0).VMWareName;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String selectedVmTicket = "{\"ticket\":\""+vmWareService.generateTicket(firstVm).substring(6) + "\"}";
+        return new ResponseEntity(selectedVmTicket, headers, HttpStatus.OK);
+    }
+
+
+//    @GetMapping("/new-design")
+//    public String getNewDesign(Model model) throws Exception {
+//        getStarted();
+//        model.addAttribute("listCourse", orchestratorService.getUserCourses("petersa@mail.uc.edu"));
+////        model.addAttribute("listSemester", semesterService.fetchAll());
+//        model.addAttribute("listVMs", vmService.fetchAll());
+//
+//        return "index";
+//    }
 
     //    @PostMapping("/save")
 //    public String save(@ModelAttribute("event") Event event) throws Exception {

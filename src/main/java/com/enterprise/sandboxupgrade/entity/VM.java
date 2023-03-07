@@ -1,39 +1,48 @@
 package com.enterprise.sandboxupgrade.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Table(name = "vms")
 public @Data
 class VM extends PublicVM{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int vmID;
+    public int vmID;
 
     @Column(name = "Name")
-    private String Name;
+    public String Name;
 
     @Column(name = "VMWarenumber")
-    private int VMWareNumber;
+    public int VMWareNumber;
 //
     @Column(name = "Publicnumber")
-    private int PublicNumber;
+    public int PublicNumber;
+
+    @Column(name = "VMWrename")
+    public String VMWareName;
 
 //    @Column(name = "osID")
 //    private int osID;
 
     @ManyToOne
     @JoinColumn(name="courseID", nullable=false)
-    private Course course;
+    @JsonBackReference
+    public Course course;
 
     @ManyToOne
     @JoinColumn(name="studentID", nullable=false)
-    private Student student;
+    @JsonBackReference
+    public Student student;
 
     @ManyToOne
     @JoinColumn(name="instructorID", nullable=false)
-    private Instructor instructor;
+    @JsonBackReference
+    public Instructor instructor;
 
     @Override
     public String toString() {

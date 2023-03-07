@@ -2,21 +2,23 @@ package com.enterprise.sandboxupgrade.entity;
 
 import lombok.Data;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Table(name = "vmconfigureoptions")
 public @Data
 class VmConfigureOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    public int id;
 
     @Column(name = "number")
-    private int number;
+    public int number;
 
     @Column(name = "configureoption")
-    private String option;
+    public String option;
 
 
 //    private Map<Integer, String> options = new HashMap<>();

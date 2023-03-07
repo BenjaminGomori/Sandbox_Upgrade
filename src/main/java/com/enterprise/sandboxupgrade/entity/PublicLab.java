@@ -1,5 +1,6 @@
 package com.enterprise.sandboxupgrade.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,6 +9,8 @@ import java.util.Date;
 
 public @Data
  class PublicLab {
+    @Column(name = "id")
+    public int id;
     @Column(name = "number")
     public int number;
     @Column(name = "title")
@@ -22,6 +25,7 @@ public @Data
    @Column(name = "duedate")
     public Date dueDate;
     @Column(name = "course")
+    @JsonBackReference
     public PublicCourse publicCourse;
     @Override
     public String toString() {
