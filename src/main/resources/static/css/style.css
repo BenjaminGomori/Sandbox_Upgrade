@@ -57,3 +57,9 @@
     color:#aaa;
     margin-bottom:0;
 }
+
+.fixed-to-bottom{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
