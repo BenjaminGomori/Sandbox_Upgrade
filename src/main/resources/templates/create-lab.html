@@ -38,24 +38,6 @@
       </div>
   </div>
 
-  <!--based on examples from https://getbootstrap.com/docs/4.0/components/forms/-->
-    <div class="container">
-      <div class="justify-content-center">
-        <div>
-
-
-</head>
-<body>
-
-<div class="sticky-top" th:switch="${usertype}">
-    <div th:case="'student'">
-        <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
-    </div>
-    <div th:case="'instructor'">
-        <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>
-    </div>
-</div>
-
 <!--based on examples from https://getbootstrap.com/docs/4.0/components/forms/-->
 <div class="container">
     <div class="justify-content-center">
@@ -145,6 +127,11 @@
         </div>
     </div>
 </div>
-<div th:replace="fragments/footerUI :: footer"></div>
-</body>
+  <div th:replace="fragments/footerUI :: footer"></div>
+
+  <script>
+      let footer = document.querySelector(".footer-basic");
+      footer.classList.remove('fixed-to-bottom');
+  </script>
+  </body>
 </html>
