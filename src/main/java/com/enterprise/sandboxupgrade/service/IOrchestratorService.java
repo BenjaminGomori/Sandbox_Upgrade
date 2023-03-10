@@ -13,4 +13,5 @@ public interface IOrchestratorService {
     public String getUserType();
     public String getUserEmail();
     public int getUserId();
+    public User getUser();
 }

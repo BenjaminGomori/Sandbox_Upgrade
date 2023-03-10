@@ -24,6 +24,10 @@ public class PublicVM {
     public int studentId;
     @Column
     public int instructorId;
+    @Column
+    public String username;
+    @Column
+    public String email;
 
     @Override
     public String toString() {

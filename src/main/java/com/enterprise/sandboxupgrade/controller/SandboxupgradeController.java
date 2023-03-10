@@ -149,12 +149,10 @@ public class SandboxupgradeController {
         return "redirect:/";
     }
 
-
-
-
     @GetMapping("/login")
     public String login(Model model) throws Exception {
         getStarted();
+        // TODO check if user is not logged in
         return "login";
     }
 
@@ -188,20 +186,45 @@ public class SandboxupgradeController {
     @GetMapping(value={"","/","/new-design"})
     public String newDesign(Model model) throws Exception {
         getStarted();
+//        List<PublicCourse> courses = orchestratorService.getUserCourses();
+//        String firstVm = courses.get(0).publicVms.get(0).VMWareName;
+//        model.addAttribute("listCourse", courses);
+////        model.addAttribute("usertype", orchestratorService.getUserType());
+////        model.addAttribute("userId", orchestratorService.getUserId());
+////        model.addAttribute("userEmail", orchestratorService.getUserEmail());
+//        model.addAttribute("user", orchestratorService.getUser());
+//
+////        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+//        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
+        if(orchestratorService.getUserType().equals("student")){
+            return "redirect:/student";
+        }
+        return "redirect:/instructor";
+    }
+
+    @GetMapping("/instructor")
+    public String instructor(Model model) throws Exception {
+        getStarted();
         List<PublicCourse> courses = orchestratorService.getUserCourses();
         String firstVm = courses.get(0).publicVms.get(0).VMWareName;
         model.addAttribute("listCourse", courses);
-        model.addAttribute("usertype", orchestratorService.getUserType());
-        model.addAttribute("userId", orchestratorService.getUserId());
-        model.addAttribute("userEmail", orchestratorService.getUserEmail());
-
-//        model.addAttribute("ticket", vmWareService.generateTicket("vm-38"));
+        model.addAttribute("user", orchestratorService.getUser());
         model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
-        if(orchestratorService.getUserType().equals("student")){
-            return "new-design";
-        }
         return "instructor-main";
     }
+
+    @GetMapping("/student")
+    public String student(Model model) throws Exception {
+        getStarted();
+        List<PublicCourse> courses = orchestratorService.getUserCourses();
+        String firstVm = courses.get(0).publicVms.get(0).VMWareName;
+        model.addAttribute("listCourse", courses);
+        model.addAttribute("user", orchestratorService.getUser());
+        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
+        return "student";
+    }
+
+
 
     @GetMapping("/n3")
     public String n3(Model model) throws Exception {

@@ -42,7 +42,7 @@
     <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
 </head>
 
-<body>
+<body style="color:#d1c6c6;">
     <div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false" style="background-color: rgb(248 247 247);">
         <div class="offcanvas-header">
             <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas"></h6>
@@ -101,7 +101,7 @@
                         <i class="bi bi-person-circle"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">User</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdown">
-                        <li><a class="dropdown-item disabled" href="#" th:text="${userEmail}"></a></li>
+                        <li><a class="dropdown-item disabled" href="#" th:text="${user.email}"></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -122,7 +122,7 @@
 <!--                    </ul>-->
 <!--                </li>-->
             </ul>
-            <div th:replace="fragments/footerUI :: footer"></div>
+            <div th:replace="~{fragments/footerUI :: footer}"></div>
 
         </div>
     </div>
@@ -143,7 +143,7 @@
 <!--        </div>-->
 <!--    </div>-->
 
-    <div class="sticky-top" th:switch="${usertype}" style="position: absolute; width:100vw;">
+    <div class="sticky-top" th:switch="${user.type}" style="position: absolute; width:100vw;">
         <div th:case="'student'">
             <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
         </div>
@@ -168,7 +168,7 @@
                 <div class="col-lg-6 h-100" style="position:relative; text-align: center; background-color: #b7b8bd; padding: 0px 2px">
 
                     <!-- from: https://codepen.io/lukezak/pen/rVZMgv (full screen toggle) -->
-                    <div class="container panel-vm pdg-top-70 panel-default h-100" style="text-align: center; background-color: #ffffff;">
+                    <div class="container panel-vm pdg-top-70 panel-default h-100" style="text-align: center; background-color: #030303;">
                         <div class="panel-heading">
                             <ul class="list-inline panel-actions">
                                 <li>
@@ -199,7 +199,7 @@
                 <div class="col-lg-6 h-100 " style="text-align: center;  background-color: #b7b8bd; padding: 0px 5px">
 
                     <!-- from: https://codepen.io/lukezak/pen/rVZMgv (full screen toggle) -->
-                    <div class="container panel-lab pdg-top-70 panel-default h-100" style="background-color: #ffffff;">
+                    <div class="container panel-lab pdg-top-70 panel-default h-100" style="background-color: #030303;">
                         <div class="panel-heading">
                             <ul class="list-inline panel-actions">
                                 <li>
@@ -278,7 +278,7 @@
                 webmks.setAttribute('style', 'max-height:85% !important');
 
 
-                let userId = [[${userId}]];
+                let userId = [[${user.id}]];
                 console.log("userId: " +userId);
                 // //For full screen
                 // webmks.setAttribute('style', 'position:fixed !important');

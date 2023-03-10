@@ -39,8 +39,6 @@ public class SecSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
 //                        .requestMatchers("/resources/**").permitAll()
 
-                        .requestMatchers("/C:/Users/yehud/IdeaProjects/capstone/Sandbox_Upgrade/src/main/resources/static/photos/**").permitAll()
-                        .requestMatchers("/C:/Users/yehud/IdeaProjects/capstone/Sandbox_Upgrade/src/main/resources/static/videos/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/photos/**").permitAll()
@@ -53,6 +51,8 @@ public class SecSecurityConfig {
                         .requestMatchers("/console-ticket/**").hasAnyAuthority("STUDENT","INSTRUCTOR")
                         .requestMatchers("/","/index","/index.html").hasAnyAuthority("STUDENT","INSTRUCTOR")
                         .requestMatchers("/new-design").hasAnyAuthority("STUDENT","INSTRUCTOR")
+                        .requestMatchers("/student").hasAnyAuthority("STUDENT")
+                        .requestMatchers("/instructor").hasAnyAuthority("INSTRUCTOR")
 
 //                    .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/create-lab").hasAuthority("INSTRUCTOR")

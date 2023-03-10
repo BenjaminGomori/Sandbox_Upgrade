@@ -29,8 +29,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-
-
     <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" type="text/css">
     <!--        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">-->
 
@@ -43,13 +41,8 @@
 </head>
 
 <body style="color:#d1c6c6;">
-<!--<body>-->
 <div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false" style="background-color: rgb(248 247 247);color:#212529;">
-    <!--    <div class="offcanvas-header" style="background-color: #222324 ">#FF0000-->
-<!--    <div class="offcanvas-header" style="background:linear-gradient(to right, #000, #cf342b)">-->
     <div class="offcanvas-header" style="background:linear-gradient(to right, #000, #cf342b)">
-
-        <!--    <div style="display:flex; align-items: center; background-color: #4b4c4d;">-->
         <div style="display:flex; position: relative;top: 0.7rem;">
             <img th:src="@{/images/logo_only.png}" style="width: 55px;height: 55px; " alt="">
             <p style="color:#ffffff; width: 131px;height: 57px;" alt="">OHIO CYBER RANGE INSTITUTE<p>
@@ -82,48 +75,17 @@
                     </svg>
                     <i class="bi bi-display"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">VMs</span>
                 </a>
-                <ul class="dropdown-menu text-small shadow vm-instructor-menu" aria-labelledby="dropdown">
+                <ul class="dropdown-menu text-small shadow vm-student-menu" aria-labelledby="dropdown">
                     <li  th:each="vm : ${listCourse[0].publicVms}"
                          th:object="${vm}"
-                         th:if="${vm.instructorId} == ${user.id}">
+                         th:if="${vm.studentId} == ${user.id}">
                         <a class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${{vm.name}}"></a>
                     </li>
 
                 </ul>
             </li>
 
-            <li class="dropdown students-vms-menu-section" style="margin-left: 1rem;">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-display" viewBox="0 0 16 16">
-                        <path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 0 0-.254.302A1.46 1.46 0 0 0 1 4.01V10c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.758.758 0 0 0 .254-.302 1.464 1.464 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.757.757 0 0 0-.302-.254A1.46 1.46 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145z"/>
-                    </svg>
-                    <i class="bi bi-display"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Students VMs</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow vm-students-menu" aria-labelledby="dropdown">
-                    <li  th:each="vm : ${listCourse[0].publicVms}"
-                         th:object="${vm}"
-                         th:if="${vm.instructorId} != ${user.id}">
-                        <!-- TODO add student name as dropdown instead-
-                                so it will look like this
-
-                                =>Students VMs (list)
-
-                                        => student 1 (list)
-                                                ==> vm1 (item)
-                                                ==> vm2
-
-                                        => student 2 (list)
-                                                ==> vm1
-                                                ==> vm2
-                        -->
-
-                        <a class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${{vm.name}}"></a>
-
-                    </li>
-
-                </ul>
-            </li>
-            <li class="dropdown labs-menu-section no_display" style="margin-left: 1rem;">
+            <li class="dropdown labs-menu-section" style="margin-left: 1rem;">
                 <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-easel2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 0a.5.5 0 0 1 .447.276L8.81 1h4.69A1.5 1.5 0 0 1 15 2.5V11h.5a.5.5 0 0 1 0 1h-2.86l.845 3.379a.5.5 0 0 1-.97.242L12.11 14H3.89l-.405 1.621a.5.5 0 0 1-.97-.242L3.36 12H.5a.5.5 0 0 1 0-1H1V2.5A1.5 1.5 0 0 1 2.5 1h4.691l.362-.724A.5.5 0 0 1 8 0ZM2 11h12V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5V11Zm9.61 1H4.39l-.25 1h7.72l-.25-1Z"/>
@@ -143,25 +105,6 @@
                     <i class="bi bi-calendar"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Calendar</span></a>
             </li>
 
-            <li class="dropdown" style="margin-top: 2rem">
-                <h4>Other Pages</h4>
-                <hr style="background-color: rgb(15 14 14);">
-                <a class="dropdown-item hover-underline" href="/create-lab" >Create Lab</a>
-            </li>
-
-            <!--                <li>-->
-            <!--                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">-->
-            <!--                        <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>-->
-            <!--                    <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">-->
-            <!--                        <li class="w-100">-->
-            <!--                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>-->
-            <!--                        </li>-->
-            <!--                        <li>-->
-            <!--                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>-->
-            <!--                        </li>-->
-            <!--                    </ul>-->
-            <!--                </li>-->
-
             <li class="dropdown" style="position:absolute; bottom: 2rem;">
                 <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -180,53 +123,22 @@
             </li>
         </ul>
 <!--        <div th:replace="~{fragments/footerUI :: footer}"></div>-->
-
     </div>
 </div>
-<!--    <div class="container-fluid">-->
-<!--        <div class="row">-->
-<!--            <div class="col min-vh-100 p-4">-->
-<!--                &lt;!&ndash; toggler &ndash;&gt;-->
-<!--                <button class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">-->
-<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">-->
-<!--                        <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>-->
-<!--                    </svg>-->
-<!--                    <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>-->
-<!--                </button>-->
-<!--                <h3>Sample Content...</h3>-->
-<!--                <p>Sriracha biodiesel taxidermy organic post-ironic, Intelligentsia salvia mustache 90's code editing brunch. Butcher polaroid VHS art party, hashtag Brooklyn deep v PBR narwhal sustainable mixtape swag wolf squid tote bag. Tote bag cronut semiotics, raw denim deep v taxidermy messenger bag. Tofu YOLO Etsy, direct trade ethical Odd Future jean shorts paleo. Forage Shoreditch tousled aesthetic irony, street art organic Bushwick artisan cliche semiotics ugh synth chillwave meditation. Shabby chic lomo plaid vinyl chambray Vice. Vice sustainable cardigan, Williamsburg master cleanse hella DIY 90's blog.</p>-->
-<!--                <p>Ethical Kickstarter PBR asymmetrical lo-fi. Dreamcatcher street art Carles, stumptown gluten-free Kickstarter artisan Wes Anderson wolf pug. Godard sustainable you probably haven't heard of them, vegan farm-to-table Williamsburg slow-carb readymade disrupt deep v. Meggings seitan Wes Anderson semiotics, cliche American Apparel whatever. Helvetica cray plaid, vegan brunch Banksy leggings +1 direct trade. Wayfarers codeply PBR selfies. Banh mi McSweeney's Shoreditch selfies, forage fingerstache food truck occupy YOLO Pitchfork fixie iPhone fanny pack art party Portland.</p> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--<div class="sticky-top" th:switch="${user.type}" style="position: absolute; width:100vw;">-->
-<!--    <div th:case="'student'">-->
-<!--        <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>-->
-<!--    </div>-->
-<!--    <div th:case="'instructor'">-->
-<!--        <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>-->
-<!--    </div>-->
-<!--</div>-->
 
 <!-- Section: Split screen -->
 <!-- from https://mdbootstrap.com/learn/mdb-foundations/mdb-ui-kit/split-screen/-->
 <section class="">
-<!--    <div class="container-fluid px-0" style="background-color: #3d5267; background:linear-gradient(to bottom, #123, #fff);">-->
-    <div class="container-fluid px-0" style="background:linear-gradient(to top, #151515, #cf342b)">
-
+    <div class="container-fluid px-0" style="background:linear-gradient(to bottom, #000000, #8d1c15)">
         <button class="btn float-start" style="line-height: .8; padding:5px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-            <p style="color:#ffffff; margin-top:3rem; font-weight: bold;">Menu</p>
-<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">-->
-<!--                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>-->
-<!--            </svg>-->
-<!--            <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>-->
-           <div style="display:inline-block;">
-               <svg style="background-color: #ffffff;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
-                   <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-               </svg>
-               <i class="bi bi-arrow-right-square"></i>
-           </div>
+            <img th:src="@{/images/logo_only.png}" style="width: 55px;height: 55px;margin-top:2rem;" alt="">
+            <p style="color:#ffffff; margin-top:1rem; font-weight: bold; font-size: 1.2rem">Menu</p>
+            <div style="display:inline-block;">
+                <svg style="background-color: #ffffff;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                </svg>
+                <i class="bi bi-arrow-right-square"></i>
+            </div>
         </button>
         <div class="row g-0 vh-100">
             <!-- First column -->
@@ -259,7 +171,6 @@
 
             </div>
 
-
             <!-- Second column -->
             <div class="col-lg-6 h-100 " style="text-align: center;  background-color: #350909; padding: 0px 5px">
 
@@ -267,37 +178,27 @@
                 <div class="container panel-lab panel-default h-100" style="background-color: #030303;">
                     <!--  toggle from https://getbootstrap.com/docs/5.1/forms/checks-radios/-->
                     <!-- Default switch -->
-                    <div class="form-check form-switch" style="text-align: left; margin:1rem; margin-bottom: 0;line-height: 1.1rem;">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Check to view Course Labs</label>
-                        <div id="full-lab-section" class="align-right upwards-2r no_display" style="margin-top: 0 !important; position: relative; top: -1.5rem">
-                            <a href="#" id="lab-fullscreen" role="button" title="Toggle fullscreen">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand svg-expand" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-contract svg-contract no_display" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zM15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707z"/>
-                                </svg>
-                                <i id="labFullScreenTogler" class="bi bi-arrows-angle-expand"></i>
-                            </a>
-                        </div>
-                        <div id="full-stu-vm-section" class="align-right upwards-2r" style="margin-top: 0 !important; position: relative; top: -1.5rem">
-                            <a href="#" id="vm-student-fullscreen" role="button" title="Toggle fullscreen">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand svg-expand" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-contract svg-contract no_display" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zM15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707z"/>
-                                </svg>
-                                <i id="studentsVmFullScreenTogler" class="bi bi-arrows-angle-expand"></i>
-                            </a>
-                        </div>
+<!--                    <div class="form-check form-switch" style="text-align: left; margin:1rem; margin-bottom: 0;line-height: 1.1rem;">-->
+<!--                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">-->
+<!--                        <label class="form-check-label" for="flexSwitchCheckChecked">Check to view Course Labs</label>-->
+<!--                    <div id="full-lab-section" class="align-right upwards-2r" style="margin-top: 0 !important; position: relative; top: -1.5rem">-->
+                        <div id="full-lab-section" class="align-right upwards-2r" style="margin-top: 0 !important; position: relative; right: 1rem;top:1rem;">
+                        <a href="#" id="lab-fullscreen" role="button" title="Toggle fullscreen">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand svg-expand" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-contract svg-contract no_display" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zM15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707z"/>
+                            </svg>
+                            <i id="labFullScreenTogler" class="bi bi-arrows-angle-expand"></i>
+                        </a>
                     </div>
-                    <div class="lab-section  no_display">
+<!--                    </div>-->
+                    <div class="lab-section">
                         <div class="panel-heading">
 
                             <ul class="list-inline panel-actions" style="margin: 0 !important;">
-                                <h2 id="lab-header" style="margin-right: 1rem"></h2>
+                                <h2 id="lab-header" style="margin-right: 1rem; margin-top: 1.7rem"></h2>
                             </ul>
                         </div>
                         <!-- Lab content -->
@@ -312,27 +213,7 @@
                         <p id="lab-desc" style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"></p>
 
                     </div>
-
-                    <div class="students-vms-section" style="height: 80vh;max-height: 80vh;">
-                        <div class="panel-heading">
-
-                            <ul class="list-inline panel-actions" style="margin: 0 !important;">
-                                <li>
-                                    <h2 id="vm-student-name-title" class="panel-title"></h2>
-<!--                                    <h3  class="panel-title" style="height: 3rem !important; margin-bottom: 0"></h3>-->
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Student VM -->
-                        <div id="wmksContainerStudent" style="height: 80vh;max-height: 80vh;"></div>
-
-
-
-                    </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -343,14 +224,14 @@
     const courseList = [[${listCourse}]]
     const ticket = [[${ticket}]];
     let wmks;
-    let wmksStudent;
+    // let wmksStudent;
     // if no console ticket don't attemt to create the VM
     if(ticket){
         //console VM
         wmks = WMKS.createWMKS("wmksContainer",{})
             .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                 if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                    console.log("Instructor VM connection state change : connected");}
+                    console.log("VM connection state change : connected");}
             });
         wmks.connect(ticket);
         sleep(1250).then(() => {
@@ -358,11 +239,11 @@
             wmks.sendKeyCodes([27]) ;
         });
         //student console
-        wmksStudent = WMKS.createWMKS("wmksContainerStudent",{})
-            .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
-                if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                    console.log("Student VM connection state change : connected");}
-            });
+        // wmksStudent = WMKS.createWMKS("wmksContainerStudent",{})
+        //     .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
+        //         if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
+        //             console.log("Student VM connection state change : connected");}
+        //     });
         // wmksStudent.connect(ticket);
         // sleep(1250).then(() => {
         //     wmksStudent.sendCAD();
@@ -374,41 +255,41 @@
     window.onload = (event) => {
         // if VM is displayed
         const webmks = document.querySelector('#mainCanvas');
-        const webmksStudent = document.querySelectorAll('#mainCanvas').item(1);
+        // const webmksStudent = document.querySelectorAll('#mainCanvas').item(1);
 
         setCanvasAttributes(webmks);
-        setCanvasAttributes(webmksStudent);
+        // setCanvasAttributes(webmksStudent);
         // if(ticket) {
-            //position vm properly inside div
-            // webmks.setAttribute('style', 'position:relative !important');
-            // webmks.setAttribute('style', 'display:inline-block !important');
-            // webmks.setAttribute('style', 'padding:0px !important');
-            // webmks.setAttribute('style', 'margin:0px !important');
-            // // webmks.setAttribute('style', 'transform:null !important');
-            // webmks.setAttribute('style', 'width:null !important')
-            // webmks.setAttribute('style', 'height:null !important')
-            // webmks.setAttribute('style', 'top:null')
-            // webmks.setAttribute('style', 'left:null')
-            // webmks.setAttribute('style', 'position:null')
-            // webmks.setAttribute('style', 'min-height:80vh !important');
-            // webmks.setAttribute('style', 'max-height:80vh !important');
-            // webmks.setAttribute('style', 'height:80vh !important');
-            // // webmks.setAttribute('style', 'scale:null !important');
-            //
-            // webmksStudent.setAttribute('style', 'position:relative !important');
-            // webmksStudent.setAttribute('style', 'display:inline-block !important');
-            // webmksStudent.setAttribute('style', 'padding:0px !important');
-            // webmksStudent.setAttribute('style', 'margin:0px !important');
-            // // webmks.setAttribute('style', 'transform:null !important');
-            // webmksStudent.setAttribute('style', 'width:null !important')
-            // webmksStudent.setAttribute('style', 'height:null !important')
-            // webmksStudent.setAttribute('style', 'top:null')
-            // webmksStudent.setAttribute('style', 'left:null')
-            // webmksStudent.setAttribute('style', 'position:null')
-            // webmksStudent.setAttribute('style', 'max-height:80vh !important');
-            // webmksStudent.setAttribute('style', 'min-height:80vh !important');
-            // webmksStudent.setAttribute('style', 'height:80vh !important');
-            // webmksStudent.setAttribute('style', 'scale:null !important');
+        //position vm properly inside div
+        // webmks.setAttribute('style', 'position:relative !important');
+        // webmks.setAttribute('style', 'display:inline-block !important');
+        // webmks.setAttribute('style', 'padding:0px !important');
+        // webmks.setAttribute('style', 'margin:0px !important');
+        // // webmks.setAttribute('style', 'transform:null !important');
+        // webmks.setAttribute('style', 'width:null !important')
+        // webmks.setAttribute('style', 'height:null !important')
+        // webmks.setAttribute('style', 'top:null')
+        // webmks.setAttribute('style', 'left:null')
+        // webmks.setAttribute('style', 'position:null')
+        // webmks.setAttribute('style', 'min-height:80vh !important');
+        // webmks.setAttribute('style', 'max-height:80vh !important');
+        // webmks.setAttribute('style', 'height:80vh !important');
+        // // webmks.setAttribute('style', 'scale:null !important');
+        //
+        // webmksStudent.setAttribute('style', 'position:relative !important');
+        // webmksStudent.setAttribute('style', 'display:inline-block !important');
+        // webmksStudent.setAttribute('style', 'padding:0px !important');
+        // webmksStudent.setAttribute('style', 'margin:0px !important');
+        // // webmks.setAttribute('style', 'transform:null !important');
+        // webmksStudent.setAttribute('style', 'width:null !important')
+        // webmksStudent.setAttribute('style', 'height:null !important')
+        // webmksStudent.setAttribute('style', 'top:null')
+        // webmksStudent.setAttribute('style', 'left:null')
+        // webmksStudent.setAttribute('style', 'position:null')
+        // webmksStudent.setAttribute('style', 'max-height:80vh !important');
+        // webmksStudent.setAttribute('style', 'min-height:80vh !important');
+        // webmksStudent.setAttribute('style', 'height:80vh !important');
+        // webmksStudent.setAttribute('style', 'scale:null !important');
 
         // }
 
@@ -418,12 +299,12 @@
         const cMenu = document.querySelector(".courses-menu");
         const labsMenuSection = document.querySelector(".labs-menu-section");
         const lMenu = document.querySelector(".labs-menu");
-        const vmInsMenu = document.querySelector(".vm-instructor-menu");
-        const studentsVMsMenuSection = document.querySelector(".students-vms-menu-section");
-        const vmStuMenu = document.querySelector(".vm-students-menu");
+        const vmInsMenu = document.querySelector(".vm-student-menu");
+        // const studentsVMsMenuSection = document.querySelector(".students-vms-menu-section");
+        // const vmStuMenu = document.querySelector(".vm-students-menu");
         // lab elements
         const labSection = document.querySelector(".lab-section");
-        const studentsVmsSection = document.querySelector(".students-vms-section");
+        // const studentsVmsSection = document.querySelector(".students-vms-section");
         const labHeader = document.querySelector("#lab-header");
         const labVideo = document.querySelector("#lab-video");
         const labImgContainer = document.querySelector("#lab-image-container");
@@ -434,23 +315,21 @@
         //set first element of each menu as active (when page first loads)
         let activeClassElement = cMenu.firstElementChild.querySelector("a");
         let activeLabElement = lMenu.firstElementChild.querySelector("a");
-        let activeInstructorVMElement = vmInsMenu.firstElementChild.querySelector("a");
-        let activeStudentVMElement = vmStuMenu.firstElementChild.querySelector("a");
+        let activeVmElement = vmInsMenu.firstElementChild.querySelector("a");
+        // let activeStudentVMElement = vmStuMenu.firstElementChild.querySelector("a");
 
         activeClassElement.classList.add("active");
         activeLabElement.classList.add("active");
-        activeInstructorVMElement.classList.add("active");
-        activeStudentVMElement.classList.add("active");
+        activeVmElement.classList.add("active");
+        activeVmElement.classList.add("active");
 
         //populate lab section with active lab data
-        let instructorId = [[${user.id}]]
-        let instructorVmsJS = courseList[0]["publicVms"].filter(vm => vm.instructorId == instructorId);
-        let studentVmsJS = courseList[0]["publicVms"].filter(vm => vm.instructorId != instructorId);
+        let studentId = [[${user.id}]]
+        let vmsJS = courseList[0]["publicVms"].filter(vm => vm.studentId == studentId);
 
         let activeCourseJS = courseList[0];
         let activeLabJS = courseList[0]["publicLabs"][0];
-        let activeInstructorVmJS = instructorVmsJS[0];
-        let activeStudentVmJS = studentVmsJS[0];
+        let activeVmJS = vmsJS[0];
 
         labHeader.textContent = 'Lab: '  + activeLabJS["title"];
         labDesc.textContent = activeLabJS["description"];
@@ -481,38 +360,38 @@
             // VMPanel.classList.toggle('panel-fullscreen');
             // VMPanel.classList.toggle('pdg-top-70');
             // topNavBar.classList.toggle('no_display');
-            console.log('wmks');
-            console.log(wmks);
-            console.log('wmksStudent');
-            console.log(wmksStudent);
-            console.log(wmks === wmksStudent);
-            console.log(wmks === wmks);
+            // console.log('wmks');
+            // console.log(wmks);
+            // // console.log('wmksStudent');
+            // // console.log(wmksStudent);
+            // // console.log(wmks === wmksStudent);
+            // console.log(wmks === wmks);
             // populateVMSectionWithActiveVM("instructor",false);
             wmks = WMKS.createWMKS("wmksContainer",{})
                 .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                     if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                        console.log("Instructor VM connection state change : connected");}
+                        console.log("VM connection state change : connected");}
                 });
             wmks.enterFullScreen();
         });
 
-        const VMStudentToggleFullScreen = document.querySelector("#vm-student-fullscreen");
+        // const VMStudentToggleFullScreen = document.querySelector("#vm-student-fullscreen");
 
-        VMStudentToggleFullScreen.addEventListener('click', (e) => {
-            e.preventDefault();
-            // populateVMSectionWithActiveVM("instructor",false);
-            wmksStudent = WMKS.createWMKS("wmksContainerStudent",{})
-                .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
-                    if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                        console.log("Instructor VM connection state change : connected");}
-                });
-            wmksStudent.enterFullScreen();
-            sleep(1250).then(() => {
-                wmksStudent.sendCAD();
-                wmksStudent.sendKeyCodes([27]) ;
-
-            });
-        });
+        // VMStudentToggleFullScreen.addEventListener('click', (e) => {
+        //     e.preventDefault();
+        //     // populateVMSectionWithActiveVM("instructor",false);
+        //     wmksStudent = WMKS.createWMKS("wmksContainerStudent",{})
+        //         .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
+        //             if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
+        //                 console.log("Instructor VM connection state change : connected");}
+        //         });
+        //     wmksStudent.enterFullScreen();
+        //     sleep(1250).then(() => {
+        //         wmksStudent.sendCAD();
+        //         wmksStudent.sendKeyCodes([27]) ;
+        //
+        //     });
+        // });
 
         //Add Toggle Lab fullscreen functionality
         const labToggleFullScreen = document.querySelector("#lab-fullscreen");
@@ -558,15 +437,14 @@
             });
         };
         const populateVmMenusActiveCourse = () => {
-            let itemInInstructorVmMenu = 1;
-            let itemInStudentVmMenu = 1;
+            let itemInVmMenu = 1;
             // removing current VM menu elements. Source: from: https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
             while (vmInsMenu.lastChild) {
                 vmInsMenu.removeChild(vmInsMenu.lastChild);
             }
-            while (vmStuMenu.lastChild) {
-                vmStuMenu.removeChild(vmStuMenu.lastChild);
-            }
+            // while (vmStuMenu.lastChild) {
+            //     vmStuMenu.removeChild(vmStuMenu.lastChild);
+            // }
 
             activeCourseJS.publicVms.forEach( vm => {
                 const liElement = document.createElement("li");
@@ -575,23 +453,14 @@
                 aElement.classList.add(vm.vmID);
                 aElement.textContent = vm.name;
                 liElement.append(aElement);
-                if(itemInInstructorVmMenu <= 1 && vm.instructorId == instructorId) {
+                if(itemInVmMenu <= 1 && vm.studentId == studentId) {
                     aElement.classList.add('active');
-                    activeInstructorVMElement = aElement;
-                    itemInInstructorVmMenu++;
-                    activeInstructorVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.instructorId == instructorId).filter(vmJS => vmJS.vmID == vm.vmID)[0];
-                } else if (itemInStudentVmMenu <=1  && vm.instructorId != instructorId){
-                    aElement.classList.add('active');
-                    activeStudentVMElement = aElement;
-                    itemInStudentVmMenu++;
-                    activeStudentVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.instructorId != instructorId).filter(vmJS => vmJS.vmID == vm.vmID)[0];
+                    activeVmElement = aElement;
+                    itemInVmMenu++;
+                    activeVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.studentId == studentId).filter(vmJS => vmJS.vmID == vm.vmID)[0];
                 }
 
-                if(vm.instructorId == instructorId) vmInsMenu.append(liElement);
-                else vmStuMenu.append(liElement);
-
-
-
+                if(vm.studentId == studentId) vmInsMenu.append(liElement);
             });
         };
 
@@ -600,10 +469,10 @@
             populateVmMenusActiveCourse();
             addEventListenerToMenuItems(lMenu,'Labs');
             addEventListenerToMenuItems(vmInsMenu,'VMs');
-            addEventListenerToMenuItems(vmStuMenu,'StudentsVMs');
+            // addEventListenerToMenuItems(vmStuMenu,'StudentsVMs');
             populateLabSectionWithActiveLab();
-            populateVMSectionWithActiveVM("instructor", false);
-            populateVMSectionWithActiveVM("student", false);
+            populateVMSectionWithActiveVM("", false);
+            // populateVMSectionWithActiveVM("student", false);
             //from https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
             // sleep time expects milliseconds
             // function sleep (time) {
@@ -653,40 +522,40 @@
                 aElements.forEach(aElement => {
                     aElement.addEventListener('click', (e) => {
                         e.preventDefault();
-                        if(activeInstructorVMElement){
-                            activeInstructorVMElement.classList.remove('active');
+                        if(activeVmElement){
+                            activeVmElement.classList.remove('active');
                         }
-                        activeInstructorVMElement = e.target;
-                        activeInstructorVMElement.classList.add('active');
-                        let vmId = Array.from(activeInstructorVMElement.classList).filter(className => !isNaN(className))[0];
-                        activeInstructorVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId == instructorId).filter(vm => vm.vmID == vmId)[0];
+                        activeVmElement = e.target;
+                        activeVmElement.classList.add('active');
+                        let vmId = Array.from(activeVmElement.classList).filter(className => !isNaN(className))[0];
+                        activeVmJS = activeCourseJS.publicVms.filter(vm => vm.studentId == studentId).filter(vm => vm.vmID == vmId)[0];
 
-                        populateVMSectionWithActiveVM("instructor", false);
+                        populateVMSectionWithActiveVM("", false);
                     });
                 });
             }
 
-            else if(typeOfMenu == 'StudentsVMs') {
-                aElements.forEach(aElement => {
-                    aElement.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        if(activeStudentVMElement){
-                            activeStudentVMElement.classList.remove('active');
-                        }
-                        activeStudentVMElement = e.target;
-                        activeStudentVMElement.classList.add('active');
-                        let vmId = Array.from(activeStudentVMElement.classList).filter(className => !isNaN(className))[0];
-                        activeStudentVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId != instructorId).filter(vm => vm.vmID == vmId)[0];
-
-                        // TODO populate studentVm Section
-                        populateVMSectionWithActiveVM("student", false);
-                    });
-                });
-            }
+            // else if(typeOfMenu == 'StudentsVMs') {
+            //     aElements.forEach(aElement => {
+            //         aElement.addEventListener('click', (e) => {
+            //             e.preventDefault();
+            //             if(activeStudentVMElement){
+            //                 activeStudentVMElement.classList.remove('active');
+            //             }
+            //             activeStudentVMElement = e.target;
+            //             activeStudentVMElement.classList.add('active');
+            //             let vmId = Array.from(activeStudentVMElement.classList).filter(className => !isNaN(className))[0];
+            //             activeStudentVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId != instructorId).filter(vm => vm.vmID == vmId)[0];
+            //
+            //             // TODO populate studentVm Section
+            //             populateVMSectionWithActiveVM("student", false);
+            //         });
+            //     });
+            // }
         }
 
         function populateLabSectionWithActiveLab(){
-            labHeader.textContent =  'Lab: ' + activeLabJS["title"];
+            labHeader.textContent = 'Lab: '  +activeLabJS["title"];
             labDesc.textContent = activeLabJS["description"];
             if(activeLabJS["image"])  {
                 labImg.setAttribute('src', activeLabJS["image"]);
@@ -707,24 +576,22 @@
             //source,fetch call: https://www.geeksforgeeks.org/how-to-make-ajax-call-from-javascript/
             let url = "";
             let vmContainer;
-            if(vmType == 'instructor'){
-                url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeInstructorVmJS.vmID ;
-                console.log("reload instructor");
-                console.log(url);
-                vmContainer = wmks;
-            }
-            else{
-                let studentTitle = document.querySelector("#vm-student-name-title");
-                studentTitle.textContent = 'Student VM (' + activeStudentVmJS.email + ', ' + activeStudentVmJS.username+')' ;
-                url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeStudentVmJS.vmID ;
-                vmContainer = wmksStudent;
-                console.log("reload student");
-            }
+            url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeVmJS.vmID ;
+            console.log("reload VM");
+            console.log(url);
+            vmContainer = wmks;
+            // else{
+            //     let studentTitle = document.querySelector("#vm-student-name-title");
+            //     studentTitle.textContent = 'Student VM (' + activeStudentVmJS.email + ', ' + activeStudentVmJS.username+')' ;
+            //     url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeStudentVmJS.vmID ;
+            //     vmContainer = wmksStudent;
+            //     console.log("reload student");
+            // }
             const newCanvases = document.querySelectorAll('#mainCanvas');
-            console.log('2 canvases')
-            console.log(newCanvases)
+            // console.log('2 canvases')
+            // console.log(newCanvases)
             setCanvasAttributes(newCanvases.item(0));
-            setCanvasAttributes(newCanvases.item(1));
+            // setCanvasAttributes(newCanvases.item(1));
 
 
             // Making our request
@@ -753,32 +620,29 @@
         addEventListenerToMenuItems(cMenu,'Courses');
         addEventListenerToMenuItems(lMenu,'Labs');
         addEventListenerToMenuItems(vmInsMenu,'VMs');
-        addEventListenerToMenuItems(vmStuMenu,'StudentsVMs');
+        // addEventListenerToMenuItems(vmStuMenu,'StudentsVMs');
 
         const toggleLabel = document.querySelector(".form-check-label");
         const toggleLabsVsStudentVms = document.querySelector(".form-check-input");
 
-        toggleLabsVsStudentVms.addEventListener('click', (e) => {
-            labsMenuSection.classList.toggle("no_display");
-            labSection.classList.toggle("no_display");
-            studentsVMsMenuSection.classList.toggle("no_display");
-            // studentsVmsSection.classList.toggle("no_display");
-
-            studentsVmsSection.classList.toggle("no_display");
-
-            document.querySelector("#full-lab-section").classList.toggle("no_display");
-            document.querySelector("#full-stu-vm-section").classList.toggle("no_display");
-
-            if(labSection.classList.contains("no_display")){
-                toggleLabel.textContent = "Check to view Course Labs";
-                // webmksStudent.updateScreen()
-            } else{
-                toggleLabel.textContent = "Uncheck to view Students VMs";
-            }
-        });
-        populateVMSectionWithActiveVM("student", false);
-        webmksStudent.setAttribute('style', 'height:80vh !important');
-        webmksStudent.setAttribute('style', 'scale: none !important');
+        // toggleLabsVsStudentVms.addEventListener('click', (e) => {
+        //     // labsMenuSection.classList.toggle("no_display");
+        //     // labSection.classList.toggle("no_display");
+        //     // studentsVMsMenuSection.classList.toggle("no_display");
+        //     // studentsVmsSection.classList.toggle("no_display");
+        //
+        //     // studentsVmsSection.classList.toggle("no_display");
+        //
+        //     document.querySelector("#full-lab-section").classList.toggle("no_display");
+        //     document.querySelector("#full-stu-vm-section").classList.toggle("no_display");
+        //
+        //     if(labSection.classList.contains("no_display")){
+        //         toggleLabel.textContent = "Check to view Course Labs";
+        //         // webmksStudent.updateScreen()
+        //     } else{
+        //         toggleLabel.textContent = "Uncheck to view Students VMs";
+        //     }
+        // });
     };
 
 

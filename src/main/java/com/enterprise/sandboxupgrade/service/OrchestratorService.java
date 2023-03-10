@@ -17,9 +17,10 @@ public class OrchestratorService implements IOrchestratorService {
     @Autowired
     IRoleService roleService;
 
-    private String userType = "";
-    private String userEmail = "";
-    private int userId = 0;
+//    private String userType = "";
+//    private String userEmail = "";
+//    private int userId = 0;
+    private User user = new User();
 
     // not sharable (with user) - original data
     private List<Course> courses;
@@ -137,6 +138,18 @@ public class OrchestratorService implements IOrchestratorService {
                     PublicVM.instructor = vm.getInstructor();
                     PublicVM.studentId = vm.getStudent().studentID;
                     PublicVM.instructorId = vm.getInstructor().instructorID;
+
+                    // id of 1 means that this is a instructor VM
+                    if(PublicVM.studentId == 1){
+                        PublicVM.username = vm.getInstructor().getFullName();
+                        PublicVM.email = vm.getInstructor().getUsername();
+                    }
+                    // id of 1 means that this is a student VM
+                    else if(PublicVM.instructorId == 1){
+                        PublicVM.username = vm.getStudent().getName();
+                        PublicVM.email = vm.getStudent().getUsername();
+                    }
+
                     publicCourse.publicVms.add(PublicVM);
                 }
 
@@ -194,6 +207,16 @@ public class OrchestratorService implements IOrchestratorService {
                     PublicVM.instructor = vm.getInstructor();
                     PublicVM.studentId = vm.getStudent().studentID;
                     PublicVM.instructorId = vm.getInstructor().instructorID;
+                    // id of 1 means that this is a instructor VM
+                    if(PublicVM.studentId == 1){
+                        PublicVM.username = vm.getInstructor().getFullName();
+                        PublicVM.email = vm.getInstructor().getUsername();
+                    }
+                    // id of 1 means that this is a student VM
+                    else if(PublicVM.instructorId == 1){
+                        PublicVM.username = vm.getStudent().getName();
+                        PublicVM.email = vm.getStudent().getUsername();
+                    }
                     publicCourse.publicVms.add(PublicVM);
                 }
 
@@ -224,8 +247,8 @@ public class OrchestratorService implements IOrchestratorService {
     public List<PublicCourse> getUserCourses(){
 
         // is student logged in
-        if(searchStudentCourseMap.containsKey(userEmail)){
-            List<PublicCourse> publicCourses = publicStudentCourseMap.get(searchStudentCourseMap.get(userEmail));
+        if(searchStudentCourseMap.containsKey(user.email)){
+            List<PublicCourse> publicCourses = publicStudentCourseMap.get(searchStudentCourseMap.get(user.email));
             // create a copy this object
             List<PublicCourse> filteredCourses = new ArrayList<PublicCourse>(publicCourses.size());
             publicCourses.forEach(c->{
@@ -243,7 +266,7 @@ public class OrchestratorService implements IOrchestratorService {
                 List<PublicVM> vms = new ArrayList<PublicVM>();
                 //filter vm by user id - student only has access their vms (for each of the courses)
                 c.publicVms.forEach(vm->{
-                    if(vm.student.username.equals(userEmail)){
+                    if(vm.student.username.equals(user.email)){
                         vms.add(vm);
                     }
                 });
@@ -255,8 +278,8 @@ public class OrchestratorService implements IOrchestratorService {
         }
 
         // is instructor logged in - he needs access to all vms including their students (for each course )
-        if(searchInstructorCourseMap.containsKey(userEmail)){
-            return publicInstructorCourseMap.get(searchInstructorCourseMap.get(userEmail));
+        if(searchInstructorCourseMap.containsKey(user.email)){
+            return publicInstructorCourseMap.get(searchInstructorCourseMap.get(user.email));
         }
 
         return null ;
@@ -277,38 +300,55 @@ public class OrchestratorService implements IOrchestratorService {
     public Student findStudentByUsername(String email){
         if(this.emailStudentMap.containsKey(email)){
             Student student = emailStudentMap.get(email);
-            userType = "student";
-            userEmail = email;
-            userId = emailStudentMap.get(email).studentID;
+//            userType = "student";
+//            userEmail = email;
+//            userId = emailStudentMap.get(email).studentID;
+
+            user.type = "student";
+            user.email = email;
+            user.id = emailStudentMap.get(email).studentID;
+            user.name = emailStudentMap.get(email).name;
+
             return student;
         }
         return null ;
     }
 
     @Override
-    public Instructor findInstructorByUsername(String username) {
+    public Instructor findInstructorByUsername(String email) {
         Instructor instructor = null;
-        if(this.emailInstructorMap.containsKey(username)){
-            instructor = emailInstructorMap.get(username);
-            userEmail = username;
-            userType = "instructor";
-            userId = emailInstructorMap.get(username).instructorID;
+        if(this.emailInstructorMap.containsKey(email)){
+            instructor = emailInstructorMap.get(email);
+//            userEmail = username;
+//            userType = "instructor";
+//            userId = emailInstructorMap.get(username).instructorID;
+
+            user.type = "instructor";
+            user.email = email;
+            user.id = emailInstructorMap.get(email).instructorID;
+            user.name = emailInstructorMap.get(email).fullName;
+
         }
         return instructor ;
     }
 
     @Override
     public String getUserType() {
-        return userType;
+        return user.type;
     }
 
     @Override
     public String getUserEmail() {
-        return userEmail;
+        return user.email;
     }
 
     @Override
     public int getUserId() {
-        return userId;
+        return user.id;
+    }
+
+    @Override
+    public User getUser() {
+        return user;
     }
 }
