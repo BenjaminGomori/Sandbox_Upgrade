@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -233,15 +234,32 @@ public class SandboxupgradeController {
     }
 
 
-    @PostMapping("/console-ticket/{courseId}/{vmId}")
-    public ResponseEntity getSelectedVmTicket(@PathVariable("courseId") int courseId,
+    @PostMapping("/console-ticket/{userType}/{userEmail}/{courseId}/{vmId}")
+    public ResponseEntity getSelectedVmTicket(@PathVariable("userType") String userType,
+                                              @PathVariable("userEmail") String userEmail,
+                                              @PathVariable("courseId") int courseId,
                                               @PathVariable("vmId") int vmId) throws Exception {
         getStarted();
         PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
                 collect(Collectors.toList()).get(0);
-        String firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
-                collect(Collectors.toList()).get(0).VMWareName;
+        String firstVm  = "";
+        if(userType.equals("instructor")) {
+            firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
+                    collect(Collectors.toList()).get(0).VMWareName;
+        }else if(userType.equals("student")) {
+            List<PublicVM> stuVms = new ArrayList<PublicVM>();
 
+            for (PublicUser student : course.publicStudentVmsMap.keySet()){
+                if(student.username.equals(userEmail)){
+                    stuVms = course.publicStudentVmsMap.get(student);
+                    break;
+                }
+            }
+            if(stuVms.size() > 0){
+                firstVm = stuVms.stream().filter(vm -> vm.vmID == vmId).
+                        collect(Collectors.toList()).get(0).VMWareName;
+            }
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String selectedVmTicket = "{\"ticket\":\""+vmWareService.generateTicket(firstVm).substring(6) + "\"}";

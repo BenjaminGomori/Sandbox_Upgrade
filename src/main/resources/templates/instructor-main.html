@@ -84,9 +84,9 @@
                 </a>
                 <ul class="dropdown-menu text-small shadow vm-instructor-menu" aria-labelledby="dropdown">
                     <li  th:each="vm : ${listCourse[0].publicVms}"
-                         th:object="${vm}"
-                         th:if="${vm.instructorId} == ${user.id}">
-                        <a class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${{vm.name}}"></a>
+<!--                         th:object="${vm}"-->
+<!--                         th:if="${vm.instructorId} == ${user.id}">-->
+                        <a class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
                     </li>
 
                 </ul>
@@ -99,27 +99,27 @@
                     </svg>
                     <i class="bi bi-display"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Students VMs</span>
                 </a>
-                <ul class="dropdown-menu text-small shadow vm-students-menu" aria-labelledby="dropdown">
-                    <li  th:each="vm : ${listCourse[0].publicVms}"
-                         th:object="${vm}"
-                         th:if="${vm.instructorId} != ${user.id}">
-                        <!-- TODO add student name as dropdown instead-
-                                so it will look like this
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
 
-                                =>Students VMs (list)
 
-                                        => student 1 (list)
-                                                ==> vm1 (item)
-                                                ==> vm2
-
-                                        => student 2 (list)
-                                                ==> vm1
-                                                ==> vm2
-                        -->
-
-                        <a class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${{vm.name}}"></a>
-
+                    <li th:each="studentVmsMap : ${listCourse[0].publicStudentVmsMap}" class="dropdown all-students-vms-menu">
+                        <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                            <i class="bi bi-person-circle"></i>
+                            <span style="color:black;" class="ms-1 d-none d-sm-inline" th:text="${studentVmsMap.key.username}"}></span>
+                        </a>
+                        <!--                        <ul class="dropdown-menu text-small shadow vm-students-menu" aria-labelledby="dropdown">-->
+                        <ul class="a-student-vms-menu">
+                            <li  th:each="vm : ${studentVmsMap.value}">
+                                <a  href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
+                            </li>
+                        </ul>
                     </li>
+
+
 
                 </ul>
             </li>
@@ -130,7 +130,7 @@
                     </svg>
                     <i class="bi bi-easel2"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Labs</span> </a>
                 <ul class="dropdown-menu text-small shadow labs-menu" aria-labelledby="dropdown">
-                    <li  th:each="lab : ${listCourse[0].publicLabs}"><a class="dropdown-item" href="#" th:classappend="${lab.id}" th:text="${lab.number} + ' - ' + ${{lab.title}}"></a></li>
+                    <li  th:each="lab : ${listCourse[0].publicLabs}"><a class="dropdown-item" href="#" th:classappend="${lab.id}" th:text="${lab.number} + ' - ' + ${lab.title}"></a></li>
                 </ul>
             </li>
 
@@ -420,7 +420,7 @@
         const lMenu = document.querySelector(".labs-menu");
         const vmInsMenu = document.querySelector(".vm-instructor-menu");
         const studentsVMsMenuSection = document.querySelector(".students-vms-menu-section");
-        const vmStuMenu = document.querySelector(".vm-students-menu");
+        const vmStuMenu = document.querySelector(".all-students-vms-menu");
         // lab elements
         const labSection = document.querySelector(".lab-section");
         const studentsVmsSection = document.querySelector(".students-vms-section");
@@ -435,8 +435,8 @@
         let activeClassElement = cMenu.firstElementChild.querySelector("a");
         let activeLabElement = lMenu.firstElementChild.querySelector("a");
         let activeInstructorVMElement = vmInsMenu.firstElementChild.querySelector("a");
-        let activeStudentVMElement = vmStuMenu.firstElementChild.querySelector("a");
 
+        let activeStudentVMElement = vmStuMenu.querySelector("ul");
         activeClassElement.classList.add("active");
         activeLabElement.classList.add("active");
         activeInstructorVMElement.classList.add("active");
@@ -445,12 +445,17 @@
         //populate lab section with active lab data
         let instructorId = [[${user.id}]]
         let instructorVmsJS = courseList[0]["publicVms"].filter(vm => vm.instructorId == instructorId);
-        let studentVmsJS = courseList[0]["publicVms"].filter(vm => vm.instructorId != instructorId);
+        let studentVmsJS = courseList[0]["publicStudentVmsMap"];
 
         let activeCourseJS = courseList[0];
         let activeLabJS = courseList[0]["publicLabs"][0];
         let activeInstructorVmJS = instructorVmsJS[0];
-        let activeStudentVmJS = studentVmsJS[0];
+
+        console.log('++++++++++++++++++++');
+        console.log( Object.entries(studentVmsJS)[0][1][0]);
+        console.log('++++++++++++++++++++');
+
+        let activeStudentVmJS = Object.entries(studentVmsJS)[0][1][0];
 
         labHeader.textContent = 'Lab: '  + activeLabJS["title"];
         labDesc.textContent = activeLabJS["description"];
@@ -557,15 +562,12 @@
                 lMenu.append(liElement);
             });
         };
+
         const populateVmMenusActiveCourse = () => {
             let itemInInstructorVmMenu = 1;
-            let itemInStudentVmMenu = 1;
             // removing current VM menu elements. Source: from: https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
             while (vmInsMenu.lastChild) {
                 vmInsMenu.removeChild(vmInsMenu.lastChild);
-            }
-            while (vmStuMenu.lastChild) {
-                vmStuMenu.removeChild(vmStuMenu.lastChild);
             }
 
             activeCourseJS.publicVms.forEach( vm => {
@@ -580,30 +582,97 @@
                     activeInstructorVMElement = aElement;
                     itemInInstructorVmMenu++;
                     activeInstructorVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.instructorId == instructorId).filter(vmJS => vmJS.vmID == vm.vmID)[0];
-                } else if (itemInStudentVmMenu <=1  && vm.instructorId != instructorId){
-                    aElement.classList.add('active');
-                    activeStudentVMElement = aElement;
-                    itemInStudentVmMenu++;
-                    activeStudentVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.instructorId != instructorId).filter(vmJS => vmJS.vmID == vm.vmID)[0];
                 }
 
                 if(vm.instructorId == instructorId) vmInsMenu.append(liElement);
-                else vmStuMenu.append(liElement);
-
-
-
             });
         };
+
+
+
+
+
+        const populateStudentsVmMenusActiveCourse = () => {
+            let itemInStudentVmsMenu = 1;
+            // removing current VM menu elements. Source: from: https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+            const ULs =   vmStuMenu.querySelectorAll('ul');
+            ULs.forEach(function (currentValue, currentIndex, listObj) {
+                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                console.log(currentValue);
+                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                while (currentValue.lastChild) {
+                    console.log('inside loop')
+                    currentValue.removeChild(currentValue.lastChild);
+                }
+                vmStuMenu.removeChild(currentValue);
+            }, "myThisArg");
+
+            // <ul className="a-student-vms-menu">
+            //     <li th:each="vm : ${studentVmsMap.value}">
+            //         <a href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
+            //     </li>
+            // </ul>
+
+            console.log('lksldfksdslkfjsldkf');
+            console.log(typeof activeCourseJS);
+            console.log(activeCourseJS['publicStudentVmsMap']);
+            console.log(typeof activeCourseJS['publicStudentVmsMap']);
+            console.log('lksldfksdslkfjsldkf');
+
+            // for (const property in activeCourseJS.publicStudentVmsMap) {
+            //     console.log(`${property}: ${object[property]}`);
+            // }
+
+            // activeCourseJS.publicStudentVmsMap.forEach((valueVmList, keyStudent) => {
+            for (const stu in activeCourseJS['publicStudentVmsMap']) {
+                const ulElement = document.createElement("ul");
+                const liElement = document.createElement("li");
+
+                console.log(stu);
+                console.log(activeCourseJS[stu]);
+
+                activeCourseJS[property].forEach( vm => {
+                    const aElement = document.createElement("a");
+                    aElement.classList.add("dropdown-item");
+                    aElement.classList.add(vm.vmID);
+                    aElement.textContent = vm.name;
+                    liElement.append(aElement);
+                    if(itemInStudentVmsMenu <= 1 && !vm.instructorId == instructorId) {
+                        aElement.classList.add('active');
+                        activeInstructorVMElement = aElement;
+                        itemInStudentVmsMenu++;
+                        // activeInstructorVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.instructorId == instructorId).filter(vmJS => vmJS.vmID == vm.vmID)[0];
+                        let selectedStudent = new Map([...studentVmsJS].filter(([student, vmList])=>student.username ===vm.username))[0].key();
+                        activeStudentVmJS = studentVmsJS[selectedStudent].filter(studentVm => studentVm.vmID == vm.vmID)[0];
+                    }
+                    ulElement.append(liElement);
+
+                });
+                vmStuMenu.append(ulElement);
+
+            };
+        };
+
+
+
+
+
+
+
+
 
         const populateOtherMenusWithActiveCourse = () => {
             populateLabMenuActiveCourse();
             populateVmMenusActiveCourse();
+            populateStudentsVmMenusActiveCourse();
             addEventListenerToMenuItems(lMenu,'Labs');
             addEventListenerToMenuItems(vmInsMenu,'VMs');
             addEventListenerToMenuItems(vmStuMenu,'StudentsVMs');
             populateLabSectionWithActiveLab();
             populateVMSectionWithActiveVM("instructor", false);
-            populateVMSectionWithActiveVM("student", false);
+            sleep(1250).then(() => {
+                populateVMSectionWithActiveVM("student", false);
+            });
             //from https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
             // sleep time expects milliseconds
             // function sleep (time) {
@@ -618,7 +687,7 @@
         };
 
         function addEventListenerToMenuItems(menu, typeOfMenu){
-            const aElements = menu.querySelectorAll('a');
+            let aElements = menu.querySelectorAll('a');
             // aElements[0].classList.add('active');
 
             if(typeOfMenu == 'Courses') {
@@ -667,6 +736,7 @@
             }
 
             else if(typeOfMenu == 'StudentsVMs') {
+                aElements = menu.querySelector('ul').querySelectorAll('a');
                 aElements.forEach(aElement => {
                     aElement.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -676,7 +746,12 @@
                         activeStudentVMElement = e.target;
                         activeStudentVMElement.classList.add('active');
                         let vmId = Array.from(activeStudentVMElement.classList).filter(className => !isNaN(className))[0];
-                        activeStudentVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId != instructorId).filter(vm => vm.vmID == vmId)[0];
+
+                        // activeStudentVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId != instructorId).filter(vm => vm.vmID == vmId)[0];
+                        let selectedStudent = new Map([...activeCourseJS['publicStudentVmsMap']].filter(([student, vmList])=>student.username ===vm.username))[0];
+                        activeStudentVmJS = activeCourseJS['publicStudentVmsMap'][selectedStudent].filter(studentVm => studentVm.vmID == vm.vmID)[0];
+
+
 
                         // TODO populate studentVm Section
                         populateVMSectionWithActiveVM("student", false);
@@ -708,7 +783,7 @@
             let url = "";
             let vmContainer;
             if(vmType == 'instructor'){
-                url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeInstructorVmJS.vmID ;
+                url = 'http://localhost:8080/console-ticket/instructor/na/'+activeCourseJS.id+'/' +activeInstructorVmJS.vmID ;
                 console.log("reload instructor");
                 console.log(url);
                 vmContainer = wmks;
@@ -716,7 +791,10 @@
             else{
                 let studentTitle = document.querySelector("#vm-student-name-title");
                 studentTitle.textContent = 'Student VM (' + activeStudentVmJS.email + ', ' + activeStudentVmJS.username+')' ;
-                url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeStudentVmJS.vmID ;
+                console.log('??????????');
+                console.log(activeStudentVmJS);
+                console.log('??????????');
+                url = 'http://localhost:8080/console-ticket/student/'+activeStudentVmJS.email+'/' +activeCourseJS.id+'/' +activeStudentVmJS.vmID ;
                 vmContainer = wmksStudent;
                 console.log("reload student");
             }
@@ -726,7 +804,9 @@
             setCanvasAttributes(newCanvases.item(0));
             setCanvasAttributes(newCanvases.item(1));
 
-
+            console.log('++++');
+            console.log(url);
+            console.log('++++');
             // Making our request
             fetch(url, { method: 'POST' })
                 .then(Result => Result.json())
@@ -775,6 +855,9 @@
             } else{
                 toggleLabel.textContent = "Uncheck to view Students VMs";
             }
+        });
+        sleep(1250).then(() => {
+            populateVMSectionWithActiveVM("student", false);
         });
         populateVMSectionWithActiveVM("student", false);
         webmksStudent.setAttribute('style', 'height:80vh !important');

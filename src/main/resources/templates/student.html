@@ -325,6 +325,7 @@
 
         //populate lab section with active lab data
         let studentId = [[${user.id}]]
+        let studentEmail = [[${user.email}]]
         let vmsJS = courseList[0]["publicVms"].filter(vm => vm.studentId == studentId);
 
         let activeCourseJS = courseList[0];
@@ -576,7 +577,8 @@
             //source,fetch call: https://www.geeksforgeeks.org/how-to-make-ajax-call-from-javascript/
             let url = "";
             let vmContainer;
-            url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeVmJS.vmID ;
+            // url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeVmJS.vmID ;
+            url = 'http://localhost:8080/console-ticket/student/'+studentEmail+'/'+activeCourseJS.id+'/' +activeVmJS.vmID ;
             console.log("reload VM");
             console.log(url);
             vmContainer = wmks;

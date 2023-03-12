@@ -14,4 +14,5 @@ public interface IOrchestratorService {
     public String getUserEmail();
     public int getUserId();
     public User getUser();
+    public PublicUser getStudentByEmail(String email);
 }

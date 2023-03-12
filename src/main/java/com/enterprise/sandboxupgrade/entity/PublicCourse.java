@@ -4,6 +4,7 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 public @Data
 class PublicCourse {
@@ -31,6 +32,10 @@ class PublicCourse {
     @Column
     //@OneToMany(mappedBy = "course")
     public List<PublicVM> publicVms;
+
+    @Column
+    // this is for instructors to access students vms
+    public Map<PublicUser,  List<PublicVM>> publicStudentVmsMap;
 
     @Override
     public String toString() {
