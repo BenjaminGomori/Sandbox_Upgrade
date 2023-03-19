@@ -243,10 +243,10 @@ public class SandboxupgradeController {
         PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
                 collect(Collectors.toList()).get(0);
         String firstVm  = "";
-        if(userType.equals("instructor")) {
+        if(userType.equals("instructor") || userType.equals("student")) {
             firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
                     collect(Collectors.toList()).get(0).VMWareName;
-        }else if(userType.equals("student")) {
+        }else if(userType.equals("students")) { // this for instructor to access their students vms (for the course)
             List<PublicVM> stuVms = new ArrayList<PublicVM>();
 
             for (PublicUser student : course.publicStudentVmsMap.keySet()){

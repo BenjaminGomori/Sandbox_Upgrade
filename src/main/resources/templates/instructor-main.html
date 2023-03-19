@@ -114,7 +114,7 @@
                         <!--                        <ul class="dropdown-menu text-small shadow vm-students-menu" aria-labelledby="dropdown">-->
                         <ul class="a-student-vms-menu">
                             <li  th:each="vm : ${studentVmsMap.value}">
-                                <a  href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
+                                <a  class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
                             </li>
                         </ul>
                     </li>
@@ -213,20 +213,33 @@
 <!-- from https://mdbootstrap.com/learn/mdb-foundations/mdb-ui-kit/split-screen/-->
 <section class="">
 <!--    <div class="container-fluid px-0" style="background-color: #3d5267; background:linear-gradient(to bottom, #123, #fff);">-->
-    <div class="container-fluid px-0" style="background:linear-gradient(to top, #151515, #cf342b)">
+
+
+    <!--    <div class="container-fluid px-0" style="background:linear-gradient(to top, #151515, #cf342b)">-->
+<!--        <button class="btn float-start" style="line-height: .8; padding:5px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">-->
+<!--            <p style="color:#ffffff; margin-top:3rem; font-weight: bold;">Menu</p>-->
+<!--&lt;!&ndash;            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">&ndash;&gt;-->
+<!--&lt;!&ndash;                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            </svg>&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>&ndash;&gt;-->
+<!--           <div style="display:inline-block;">-->
+<!--               <svg style="background-color: #ffffff;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">-->
+<!--                   <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>-->
+<!--               </svg>-->
+<!--               <i class="bi bi-arrow-right-square"></i>-->
+<!--           </div>-->
+<!--        </button>-->
+        <div class="container-fluid px-0" style="background:linear-gradient(to bottom, #000000, #8d1c15)">
 
         <button class="btn float-start" style="line-height: .8; padding:5px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-            <p style="color:#ffffff; margin-top:3rem; font-weight: bold;">Menu</p>
-<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">-->
-<!--                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>-->
-<!--            </svg>-->
-<!--            <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>-->
-           <div style="display:inline-block;">
-               <svg style="background-color: #ffffff;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
-                   <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-               </svg>
-               <i class="bi bi-arrow-right-square"></i>
-           </div>
+            <img th:src="@{/images/logo_only.png}" style="width: 55px;height: 55px;margin-top:2rem;" alt="">
+            <p style="color:#ffffff; margin-top:1rem; font-weight: bold; font-size: 1.2rem">Menu</p>
+            <div style="display:inline-block;">
+                <svg style="background-color: #ffffff;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                </svg>
+                <i class="bi bi-arrow-right-square"></i>
+            </div>
         </button>
         <div class="row g-0 vh-100">
             <!-- First column -->
@@ -436,7 +449,7 @@
         let activeLabElement = lMenu.firstElementChild.querySelector("a");
         let activeInstructorVMElement = vmInsMenu.firstElementChild.querySelector("a");
 
-        let activeStudentVMElement = vmStuMenu.querySelector("ul");
+        let activeStudentVMElement = vmStuMenu.querySelector("ul").querySelector("a");
         activeClassElement.classList.add("active");
         activeLabElement.classList.add("active");
         activeInstructorVMElement.classList.add("active");
@@ -445,17 +458,20 @@
         //populate lab section with active lab data
         let instructorId = [[${user.id}]]
         let instructorVmsJS = courseList[0]["publicVms"].filter(vm => vm.instructorId == instructorId);
-        let studentVmsJS = courseList[0]["publicStudentVmsMap"];
+        let allStudentsVmsJS = courseList[0]["publicStudentVmsMap"];
+        let activeStudentsVmsJS;
+        for (const stu in allStudentsVmsJS) {
+            activeStudentsVmsJS = allStudentsVmsJS[stu];
+            console.log('activeStudentsVmsJS');
+            console.log(activeStudentsVmsJS);
+            break;
+        }
 
         let activeCourseJS = courseList[0];
         let activeLabJS = courseList[0]["publicLabs"][0];
         let activeInstructorVmJS = instructorVmsJS[0];
 
-        console.log('++++++++++++++++++++');
-        console.log( Object.entries(studentVmsJS)[0][1][0]);
-        console.log('++++++++++++++++++++');
-
-        let activeStudentVmJS = Object.entries(studentVmsJS)[0][1][0];
+        let activeStudentVmJS = Object.entries(allStudentsVmsJS)[0][1][0];
 
         labHeader.textContent = 'Lab: '  + activeLabJS["title"];
         labDesc.textContent = activeLabJS["description"];
@@ -486,12 +502,6 @@
             // VMPanel.classList.toggle('panel-fullscreen');
             // VMPanel.classList.toggle('pdg-top-70');
             // topNavBar.classList.toggle('no_display');
-            console.log('wmks');
-            console.log(wmks);
-            console.log('wmksStudent');
-            console.log(wmksStudent);
-            console.log(wmks === wmksStudent);
-            console.log(wmks === wmks);
             // populateVMSectionWithActiveVM("instructor",false);
             wmks = WMKS.createWMKS("wmksContainer",{})
                 .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
@@ -596,10 +606,10 @@
             let itemInStudentVmsMenu = 1;
             // removing current VM menu elements. Source: from: https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
             const ULs =   vmStuMenu.querySelectorAll('ul');
+            console.log('!!!!!!!!!!!!!Student Menu!!!!!!!!!!!!!!!!!!!!!');
+            console.log(vmStuMenu);
+
             ULs.forEach(function (currentValue, currentIndex, listObj) {
-                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                console.log(currentValue);
-                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                 while (currentValue.lastChild) {
                     console.log('inside loop')
                     currentValue.removeChild(currentValue.lastChild);
@@ -607,43 +617,57 @@
                 vmStuMenu.removeChild(currentValue);
             }, "myThisArg");
 
-            // <ul className="a-student-vms-menu">
-            //     <li th:each="vm : ${studentVmsMap.value}">
-            //         <a href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
-            //     </li>
-            // </ul>
-
-            console.log('lksldfksdslkfjsldkf');
-            console.log(typeof activeCourseJS);
-            console.log(activeCourseJS['publicStudentVmsMap']);
-            console.log(typeof activeCourseJS['publicStudentVmsMap']);
-            console.log('lksldfksdslkfjsldkf');
-
-            // for (const property in activeCourseJS.publicStudentVmsMap) {
-            //     console.log(`${property}: ${object[property]}`);
-            // }
-
             // activeCourseJS.publicStudentVmsMap.forEach((valueVmList, keyStudent) => {
             for (const stu in activeCourseJS['publicStudentVmsMap']) {
                 const ulElement = document.createElement("ul");
                 const liElement = document.createElement("li");
-
+                console.log('===stu===');
                 console.log(stu);
-                console.log(activeCourseJS[stu]);
 
-                activeCourseJS[property].forEach( vm => {
+                activeCourseJS['publicStudentVmsMap'][stu].forEach( vm => {
+                    console.log("{Ha????");
+                    console.log(vm);
+
                     const aElement = document.createElement("a");
                     aElement.classList.add("dropdown-item");
                     aElement.classList.add(vm.vmID);
                     aElement.textContent = vm.name;
                     liElement.append(aElement);
-                    if(itemInStudentVmsMenu <= 1 && !vm.instructorId == instructorId) {
+                    if(itemInStudentVmsMenu <= 1) {
                         aElement.classList.add('active');
                         activeInstructorVMElement = aElement;
                         itemInStudentVmsMenu++;
                         // activeInstructorVmJS = activeCourseJS.publicVms.filter(vmJS => vmJS.instructorId == instructorId).filter(vmJS => vmJS.vmID == vm.vmID)[0];
-                        let selectedStudent = new Map([...studentVmsJS].filter(([student, vmList])=>student.username ===vm.username))[0].key();
-                        activeStudentVmJS = studentVmsJS[selectedStudent].filter(studentVm => studentVm.vmID == vm.vmID)[0];
+                        console.log("{{{{{{activeStudentVmJS}}}}}}");
+                        console.log('before');
+                        console.log('activeStudentVmJS');
+                        console.log(activeStudentVmJS);
+                        console.log('allStudentsVmsJS');
+                        console.log(allStudentsVmsJS);
+                        // let selectedStudent = new Map([...allStudentsVmsJS].filter(([student, vmList])=>student.username ===vm.username))[0].key();
+                        // activeStudentVmJS = allStudentsVmsJS[stu].filter(studentVm => studentVm.vmID == vm.vmID)[0];
+
+                        activeStudentVmJS = vm;
+
+                        // for (const stu in allStudentsVmsJS) {
+                        //     let studentVms = allStudentsVmsJS[stu];
+                        //     if(studentVms.find(vm => vm.vmID === );){}
+                        //
+                        //     activeStudentsVmsJS = allStudentsVmsJS[stu];
+                        //     console.log('activeStudentsVmsJS');
+                        //     console.log(activeStudentsVmsJS);
+                        //     break;
+                        // }
+
+                        console.log('before');
+                        console.log('activeStudentVmJS');
+                        console.log(activeStudentVmJS);
+                        console.log('allStudentsVmsJS');
+                        console.log(allStudentsVmsJS);
+                        // console.log('selected student');
+                        // console.log(selectedStudent);
+                        console.log("{{{{{{activeStudentVmJS}}}}}}");
+
                     }
                     ulElement.append(liElement);
 
@@ -737,19 +761,27 @@
 
             else if(typeOfMenu == 'StudentsVMs') {
                 aElements = menu.querySelector('ul').querySelectorAll('a');
+
                 aElements.forEach(aElement => {
                     aElement.addEventListener('click', (e) => {
                         e.preventDefault();
                         if(activeStudentVMElement){
+                            console.log('activeStudentVMElement');
+                            console.log(activeStudentVMElement);
                             activeStudentVMElement.classList.remove('active');
                         }
                         activeStudentVMElement = e.target;
                         activeStudentVMElement.classList.add('active');
-                        let vmId = Array.from(activeStudentVMElement.classList).filter(className => !isNaN(className))[0];
 
+                        let vmId = Array.from(activeStudentVMElement.classList).filter(className => !isNaN(className))[0];
+                        console.log('activeStudentVMElement');
+                        console.log(activeStudentVMElement);
+                        console.log(vmId);
+                        console.log('activeCourseJS');
+                        console.log(activeCourseJS);
                         // activeStudentVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId != instructorId).filter(vm => vm.vmID == vmId)[0];
-                        let selectedStudent = new Map([...activeCourseJS['publicStudentVmsMap']].filter(([student, vmList])=>student.username ===vm.username))[0];
-                        activeStudentVmJS = activeCourseJS['publicStudentVmsMap'][selectedStudent].filter(studentVm => studentVm.vmID == vm.vmID)[0];
+                        // let selectedStudent = new Map([...activeCourseJS['publicStudentVmsMap']].filter(([student, vmList])=>student.username ===vm.username))[0];
+                        activeStudentVmJS = activeStudentsVmsJS.filter(studentVm => studentVm.vmID == vm.vmID)[0];
 
 
 
@@ -784,29 +816,30 @@
             let vmContainer;
             if(vmType == 'instructor'){
                 url = 'http://localhost:8080/console-ticket/instructor/na/'+activeCourseJS.id+'/' +activeInstructorVmJS.vmID ;
-                console.log("reload instructor");
-                console.log(url);
+                // console.log("reload instructor");
+                // console.log(url);
                 vmContainer = wmks;
             }
             else{
                 let studentTitle = document.querySelector("#vm-student-name-title");
                 studentTitle.textContent = 'Student VM (' + activeStudentVmJS.email + ', ' + activeStudentVmJS.username+')' ;
-                console.log('??????????');
-                console.log(activeStudentVmJS);
-                console.log('??????????');
-                url = 'http://localhost:8080/console-ticket/student/'+activeStudentVmJS.email+'/' +activeCourseJS.id+'/' +activeStudentVmJS.vmID ;
+                // console.log('??????????');
+                // console.log(activeStudentVmJS);
+                // console.log('??????????');
+                url = 'http://localhost:8080/console-ticket/students/'+activeStudentVmJS.email+'/' +activeCourseJS.id+'/' +activeStudentVmJS.vmID ;
                 vmContainer = wmksStudent;
-                console.log("reload student");
+                // console.log("reload student");
+                // console.log(url);
             }
             const newCanvases = document.querySelectorAll('#mainCanvas');
-            console.log('2 canvases')
-            console.log(newCanvases)
+            // console.log('2 canvases')
+            // console.log(newCanvases)
             setCanvasAttributes(newCanvases.item(0));
             setCanvasAttributes(newCanvases.item(1));
 
-            console.log('++++');
+            // console.log('++++');
             console.log(url);
-            console.log('++++');
+            // console.log('++++');
             // Making our request
             fetch(url, { method: 'POST' })
                 .then(Result => Result.json())
@@ -856,17 +889,21 @@
                 toggleLabel.textContent = "Uncheck to view Students VMs";
             }
         });
-        sleep(1250).then(() => {
-            populateVMSectionWithActiveVM("student", false);
-        });
+        // sleep(1250).then(() => {
+        //     populateVMSectionWithActiveVM("student", false);
+        // });
         populateVMSectionWithActiveVM("student", false);
         webmksStudent.setAttribute('style', 'height:80vh !important');
         webmksStudent.setAttribute('style', 'scale: none !important');
+
+
+        console.log('111111111 vmStuMenu');
+        console.log(vmStuMenu);
     };
 
 
     function setCanvasAttributes(element){
-        console.log(element);
+        // console.log(element);
         element.setAttribute('style', 'position:absolute !important');
         element.setAttribute('style', 'display:inline-block !important');
         element.setAttribute('style', 'padding:0px !important');
@@ -885,6 +922,7 @@
     function sleep (time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
+
 </script>
 
 
