@@ -53,6 +53,8 @@ public class SecSecurityConfig {
                         .requestMatchers("/new-design").hasAnyAuthority("STUDENT","INSTRUCTOR")
                         .requestMatchers("/student").hasAnyAuthority("STUDENT")
                         .requestMatchers("/instructor").hasAnyAuthority("INSTRUCTOR")
+                        .requestMatchers("/powerOnTheVM/**").hasAnyAuthority("STUDENT","INSTRUCTOR")
+                        .requestMatchers("/powerOffTheVM/**").hasAnyAuthority("STUDENT","INSTRUCTOR")
 
 //                    .requestMatchers("/","/index","/index.html").permitAll()
                         .requestMatchers("/create-lab").hasAuthority("INSTRUCTOR")

@@ -63,26 +63,26 @@
                 <hr style="background-color: rgb(15 14 14);">
             </li>
             <li class="nav-item">
-                <a href="#" class=" nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class=" nav-link dropdown-toggle  text-truncate" id="dropdown-courses" data-bs-toggle="dropdown" aria-expanded="false">
                     <!--                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">-->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-book" viewBox="0 0 16 16">
                         <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
                     </svg>
                     <i class="bi bi-book"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Courses</span>
                 </a>
-                <ul class="dropdown-menu text-small shadow courses-menu" aria-labelledby="dropdown" >
+                <ul class="dropdown-menu text-small shadow courses-menu" aria-labelledby="dropdown-courses" >
                     <!--                    <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">-->
                     <li th:each="course : ${listCourse}"><a class="dropdown-item course-link" href="#" th:classappend="${course.id}" th:text="${course.number} + ' - ' + ${course.name}"></a></li>
                 </ul>
             </li>
             <li class="dropdown" style="margin-left: 1rem;">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown-vms" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-display" viewBox="0 0 16 16">
                         <path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 0 0-.254.302A1.46 1.46 0 0 0 1 4.01V10c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.758.758 0 0 0 .254-.302 1.464 1.464 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.757.757 0 0 0-.302-.254A1.46 1.46 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145z"/>
                     </svg>
                     <i class="bi bi-display"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">VMs</span>
                 </a>
-                <ul class="dropdown-menu text-small shadow vm-instructor-menu" aria-labelledby="dropdown">
+                <ul class="dropdown-menu text-small shadow vm-instructor-menu" aria-labelledby="dropdown-vms">
                     <li  th:each="vm : ${listCourse[0].publicVms}"
 <!--                         th:object="${vm}"-->
 <!--                         th:if="${vm.instructorId} == ${user.id}">-->
@@ -93,24 +93,24 @@
             </li>
 
             <li class="dropdown students-vms-menu-section" style="margin-left: 1rem;">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown-stu-vms" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-display" viewBox="0 0 16 16">
                         <path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 0 0-.254.302A1.46 1.46 0 0 0 1 4.01V10c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.758.758 0 0 0 .254-.302 1.464 1.464 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.757.757 0 0 0-.302-.254A1.46 1.46 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145z"/>
                     </svg>
                     <i class="bi bi-display"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Students VMs</span>
                 </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
+                <ul class="all-students-vms-menu dropdown-menu text-small shadow" aria-labelledby="dropdown-stu-vms">
 
 
-                    <li th:each="studentVmsMap : ${listCourse[0].publicStudentVmsMap}" class="dropdown all-students-vms-menu">
-                        <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li th:each="studentVmsMap : ${listCourse[0].publicStudentVmsMap}">
+                        <div style="pointer-events: none;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
                             <i class="bi bi-person-circle"></i>
                             <span style="color:black;" class="ms-1 d-none d-sm-inline" th:text="${studentVmsMap.key.username}"}></span>
-                        </a>
+                        </div>
                         <!--                        <ul class="dropdown-menu text-small shadow vm-students-menu" aria-labelledby="dropdown">-->
                         <ul class="a-student-vms-menu">
                             <li  th:each="vm : ${studentVmsMap.value}">
@@ -124,12 +124,12 @@
                 </ul>
             </li>
             <li class="dropdown labs-menu-section no_display" style="margin-left: 1rem;">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown-labs" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-easel2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 0a.5.5 0 0 1 .447.276L8.81 1h4.69A1.5 1.5 0 0 1 15 2.5V11h.5a.5.5 0 0 1 0 1h-2.86l.845 3.379a.5.5 0 0 1-.97.242L12.11 14H3.89l-.405 1.621a.5.5 0 0 1-.97-.242L3.36 12H.5a.5.5 0 0 1 0-1H1V2.5A1.5 1.5 0 0 1 2.5 1h4.691l.362-.724A.5.5 0 0 1 8 0ZM2 11h12V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5V11Zm9.61 1H4.39l-.25 1h7.72l-.25-1Z"/>
                     </svg>
                     <i class="bi bi-easel2"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Labs</span> </a>
-                <ul class="dropdown-menu text-small shadow labs-menu" aria-labelledby="dropdown">
+                <ul class="dropdown-menu text-small shadow labs-menu" aria-labelledby="dropdown-labs">
                     <li  th:each="lab : ${listCourse[0].publicLabs}"><a class="dropdown-item" href="#" th:classappend="${lab.id}" th:text="${lab.number} + ' - ' + ${lab.title}"></a></li>
                 </ul>
             </li>
@@ -260,13 +260,34 @@
                             </a>
                         </div>
                         <ul class="list-inline panel-actions" style="margin: 0 !important;">
+<!--                            <li style="padding-top:1.7rem; padding-bottom: 0.5rem; margin-bottom: 0">-->
                             <li>
-                                <h2 class="panel-title" style="padding-top:1.7rem; padding-bottom: 0.5rem; margin-bottom: 0">Virtual Machine</h2>
+                                <h2 class="panel-title" style="display: inline-block;padding-top:1.7rem; padding-bottom: 0.5rem; margin-bottom: 0">Virtual Machine</h2>
+                                <a style="display: inline; position: relative;bottom:0.3rem" href="#" class="nav-link dropdown-toggle text-truncate gear-icon" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-gear" viewBox="0 0 16 16">
+                                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+                                    </svg>
+                                    <i class="bi bi-gear"></i>
+                                </a>
+                                <ul class="dropdown-menu text-small vm-conf-menu" aria-labelledby="dropdown">
+                                    <li>
+                                        <a class="dropdown-item power-on" href="#">Power On</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item power-off" href="#" >Power Off</a>
+                                    </li>
+
+                                </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="panel-body" style="height: 80vh;max-height: 80vh;">
-                        <div id="wmksContainer" style="height: 80vh;max-height: 80vh;"></div>
+                        <div id="wmksContainer" style="height: 80vh;max-height: 80vh;" class="vm-powered-on"></div>
+                        <div class="vm-powered-off no_display" style="height: 80vh;max-height: 80vh; background-color: white;">
+                            <p>VM is powered off.</p>
+                            <p>To view - turn power on.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -365,11 +386,12 @@
                 if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
                     console.log("Instructor VM connection state change : connected");}
             });
-        wmks.connect(ticket);
-        sleep(1250).then(() => {
-            wmks.sendCAD();
-            wmks.sendKeyCodes([27]) ;
-        });
+
+        // wmks.connect(ticket);
+        // sleep(1250).then(() => {
+        //     wmks.sendCAD();
+        //     wmks.sendKeyCodes([27]) ;
+        // });
         //student console
         wmksStudent = WMKS.createWMKS("wmksContainerStudent",{})
             .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
@@ -444,12 +466,19 @@
         const labImg = document.querySelector("#lab-image");
         const labDesc = document.querySelector("#lab-desc");
 
+        const vmDisplayed = document.querySelector(".vm-powered-on");
+        const vmNotDisplayed = document.querySelector(".vm-powered-off");
+
+
+        let vmPowerOn = document.querySelector(".power-on")
+        let vmPowerOff = document.querySelector(".power-off")
+
         //set first element of each menu as active (when page first loads)
         let activeClassElement = cMenu.firstElementChild.querySelector("a");
         let activeLabElement = lMenu.firstElementChild.querySelector("a");
         let activeInstructorVMElement = vmInsMenu.firstElementChild.querySelector("a");
 
-        let activeStudentVMElement = vmStuMenu.querySelector("ul").querySelector("a");
+        let activeStudentVMElement = vmStuMenu.querySelector("li").querySelector("ul").querySelector("a");
         activeClassElement.classList.add("active");
         activeLabElement.classList.add("active");
         activeInstructorVMElement.classList.add("active");
@@ -458,20 +487,46 @@
         //populate lab section with active lab data
         let instructorId = [[${user.id}]]
         let instructorVmsJS = courseList[0]["publicVms"].filter(vm => vm.instructorId == instructorId);
-        let allStudentsVmsJS = courseList[0]["publicStudentVmsMap"];
+        // let allStudentsVmsJS = courseList[0]["publicStudentVmsMap"];
+        let allStudentsVmsJS =[];
         let activeStudentsVmsJS;
-        for (const stu in allStudentsVmsJS) {
-            activeStudentsVmsJS = allStudentsVmsJS[stu];
+        for (const stu in courseList[0]["publicStudentVmsMap"]) {
+            activeStudentsVmsJS = courseList[0]["publicStudentVmsMap"][stu][0];
             console.log('activeStudentsVmsJS');
             console.log(activeStudentsVmsJS);
             break;
         }
 
+        courseList.forEach(c =>{
+            console.log('Adding course');
+            console.log(c);
+            console.log(c["publicStudentVmsMap"]);
+
+            for (const stu in c["publicStudentVmsMap"]) {
+                console.log('inside!!!');
+                console.log(stu);
+                console.log(c["publicStudentVmsMap"][stu]);
+                allStudentsVmsJS.push(c["publicStudentVmsMap"][stu][0]);
+            }
+        });
+        console.log('allStudentsVmsJS after adding');
+        console.log(allStudentsVmsJS);
+        console.log('activeStudentsVmsJS');
+        console.log(activeStudentsVmsJS);
+
         let activeCourseJS = courseList[0];
         let activeLabJS = courseList[0]["publicLabs"][0];
         let activeInstructorVmJS = instructorVmsJS[0];
 
-        let activeStudentVmJS = Object.entries(allStudentsVmsJS)[0][1][0];
+        // let activeStudentVmJS = Object.entries(allStudentsVmsJS)[0];
+        // console.log( Object.entries(allStudentsVmsJS));
+        // console.log( Object.entries(allStudentsVmsJS)[0]);
+        // console.log( Object.entries(allStudentsVmsJS)[0][1]);
+        // console.log( Object.entries(allStudentsVmsJS)[0][1][0]);
+
+        let activeStudentVmJS = allStudentsVmsJS[0];
+        console.log(activeStudentVmJS);
+
 
         labHeader.textContent = 'Lab: '  + activeLabJS["title"];
         labDesc.textContent = activeLabJS["description"];
@@ -760,35 +815,51 @@
             }
 
             else if(typeOfMenu == 'StudentsVMs') {
-                aElements = menu.querySelector('ul').querySelectorAll('a');
+                let ulElements = menu.querySelectorAll('ul');
+                console.log('StudentsVMs Eevent Listeners!@!#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#');
+                console.log('StudentsVMs menu Element');
+                console.log(menu);
 
-                aElements.forEach(aElement => {
-                    aElement.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        if(activeStudentVMElement){
+                ulElements.forEach(ulElement => {
+                    aElements = ulElement.querySelectorAll('a');
+                    console.log('Adding a Student Menu !@!#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#');
+
+                    aElements.forEach(aElement => {
+                        console.log('Adding VM link !@!#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#');
+
+                        aElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if(activeStudentVMElement){
+                                console.log('activeStudentVMElement');
+                                console.log(activeStudentVMElement);
+                                activeStudentVMElement.classList.remove('active');
+                            }
+                            activeStudentVMElement = e.target;
+                            activeStudentVMElement.classList.add('active');
+
+                            let vmId = Array.from(activeStudentVMElement.classList).filter(className => !isNaN(className))[0];
+
+                            // activeStudentVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId != instructorId).filter(vm => vm.vmID == vmId)[0];
+                            // let selectedStudent = new Map([...activeCourseJS['publicStudentVmsMap']].filter(([student, vmList])=>student.username ===vm.username))[0];
+                            activeStudentVmJS = allStudentsVmsJS.filter(studentVm => studentVm.vmID == vmId)[0];
+
+                            console.log('inside vevent Listener!@!#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#!@#');
                             console.log('activeStudentVMElement');
-                            console.log(activeStudentVMElement);
-                            activeStudentVMElement.classList.remove('active');
-                        }
-                        activeStudentVMElement = e.target;
-                        activeStudentVMElement.classList.add('active');
+                            console.log('allStudentsVmsJS');
+                            console.log(allStudentsVmsJS);
+                            console.log('activeStudentVmJS');
+                            console.log(activeStudentVmJS);
+                            console.log('vmStuMenu');
+                            console.log(vmStuMenu);
+                            console.log('vmid');
+                            console.log(vmId);
 
-                        let vmId = Array.from(activeStudentVMElement.classList).filter(className => !isNaN(className))[0];
-                        console.log('activeStudentVMElement');
-                        console.log(activeStudentVMElement);
-                        console.log(vmId);
-                        console.log('activeCourseJS');
-                        console.log(activeCourseJS);
-                        // activeStudentVmJS = activeCourseJS.publicVms.filter(vm => vm.instructorId != instructorId).filter(vm => vm.vmID == vmId)[0];
-                        // let selectedStudent = new Map([...activeCourseJS['publicStudentVmsMap']].filter(([student, vmList])=>student.username ===vm.username))[0];
-                        activeStudentVmJS = activeStudentsVmsJS.filter(studentVm => studentVm.vmID == vm.vmID)[0];
-
-
-
-                        // TODO populate studentVm Section
-                        populateVMSectionWithActiveVM("student", false);
+                            // TODO populate studentVm Section
+                            populateVMSectionWithActiveVM("student", false);
+                        });
                     });
                 });
+
             }
         }
 
@@ -841,12 +912,28 @@
             console.log(url);
             // console.log('++++');
             // Making our request
-            fetch(url, { method: 'POST' })
+            fetch(url,{ method: 'POST' })
                 .then(Result => Result.json())
-                .then(ticket => {
-                    let newTicket = "wss://"+ticket.ticket;
-                    console.log(newTicket);
-                    vmContainer.connect(newTicket);
+                .then(res => {
+                    console.log('01010101101010101010010110101010101001');
+                    console.log(res);
+                    console.log(res.powerState);
+                    console.log(res.powerState == 'on');
+                    if(res.powerState == 'on'){
+                        vmDisplayed.classList.remove('no_display');
+                        vmNotDisplayed.classList.add('no_display');
+                        let newTicket = "wss://"+res.ticket;
+                        console.log(newTicket);
+                        vmContainer.connect(newTicket);
+                        sleep(1250).then(() => {
+                            vmContainer.sendCAD();
+                            vmContainer.sendKeyCodes([27]) ;
+                        });
+                    } else {
+                        vmNotDisplayed.classList.remove('no_display');
+                        vmDisplayed.classList.add('no_display');
+                    }
+
                     // if(callBoth){
                     //     populateVMSectionWithActiveVM("student", false)
                     // }
@@ -855,10 +942,7 @@
                     //from https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
                     // sleep time expects milliseconds
                     // Usage!
-                    sleep(1250).then(() => {
-                        vmContainer.sendCAD();
-                        vmContainer.sendKeyCodes([27]) ;
-                    });
+
                 })
                 .catch(errorMsg => { console.log(errorMsg); });
         }
@@ -889,16 +973,49 @@
                 toggleLabel.textContent = "Uncheck to view Students VMs";
             }
         });
-        // sleep(1250).then(() => {
-        //     populateVMSectionWithActiveVM("student", false);
-        // });
-        populateVMSectionWithActiveVM("student", false);
+        sleep(1250).then(() => {
+            populateVMSectionWithActiveVM("student", false);
+        });
+        // populateVMSectionWithActiveVM("student", false);
         webmksStudent.setAttribute('style', 'height:80vh !important');
         webmksStudent.setAttribute('style', 'scale: none !important');
 
 
         console.log('111111111 vmStuMenu');
         console.log(vmStuMenu);
+
+
+
+
+        vmPowerOn.addEventListener('click', (e) => {
+            let url = "";
+            let vmContainer;
+            url = 'http://localhost:8080/powerOnTheVM/'+activeInstructorVmJS.vmID ;
+
+            fetch(url,{ method: 'POST' })
+                .then(Result => Result.json())
+                .then(Result => Result.json())
+                .then(ticket => {
+                    let newTicket = "wss://"+ticket.ticket;
+                    console.log(newTicket);
+                })
+                .catch(errorMsg => { console.log(errorMsg); });
+        });
+
+        vmPowerOff.addEventListener('click', (e) => {
+            let url = "";
+            let vmContainer;
+            url = 'http://localhost:8080/powerOffTheVM/' + activeInstructorVmJS.vmID ;
+
+            fetch(url,{ method: 'POST' })
+                .then(Result => Result.json())
+                .then(vmPowerState => {
+                    console.log(vmPowerState);
+                })
+                .catch(errorMsg => { console.log(errorMsg); });
+        });
+
+        populateVMSectionWithActiveVM("instructor", false);
     };
 
 

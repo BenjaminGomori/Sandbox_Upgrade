@@ -196,3 +196,7 @@ img {
     text-decoration: underline !important;
     cursor: pointer;
 }
+
+.gear-icon::after{
+    display: none !important;
+}

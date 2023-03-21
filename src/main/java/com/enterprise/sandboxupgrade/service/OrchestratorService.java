@@ -46,6 +46,10 @@ public class OrchestratorService implements IOrchestratorService {
     private Map<String, Student> emailStudentMap;
     private Map<String, Instructor> emailInstructorMap;
 
+    // vm mapping between public id shared with front end and real vm name
+    private Map<Integer, String> vmPublicIdAndVMWareNameMap;
+
+
     @Override
     public void getStarted() throws Exception {
         // Get all courses
@@ -55,8 +59,8 @@ public class OrchestratorService implements IOrchestratorService {
         // Will be provided to frontend
         createUserPublicCoursesAndVMsMap();
         populateCourseByIdMap();
-
         fetchAllRoles();
+        populateVmPublicIdAndVMWareNameMap();
     }
 
     private void fetchAllRoles() throws Exception {
@@ -247,6 +251,20 @@ public class OrchestratorService implements IOrchestratorService {
             searchInstructorMap.put(ins.getUsername(),publicStudent);
             emailInstructorMap.put(ins.getUsername(),ins);
         };
+    }
+
+    private void populateVmPublicIdAndVMWareNameMap(){
+        vmPublicIdAndVMWareNameMap = new HashMap<Integer, String>();
+        courses.forEach(c->{
+            c.getVMs().forEach(vm->{
+                vmPublicIdAndVMWareNameMap.put(vm.getVmID(), vm.getVMWareName());
+            });
+        });
+    }
+
+    @Override
+    public String getVmRealName(int vmId){
+        return vmPublicIdAndVMWareNameMap.get(vmId);
     }
 
     private PublicCourse castToPublicCourse(Course course){

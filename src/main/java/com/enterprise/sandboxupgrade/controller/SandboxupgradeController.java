@@ -177,12 +177,12 @@ public class SandboxupgradeController {
         return "redirect:/";
     }
 
-    @GetMapping("/getConsoleTicket")
-    public String getConsoleTicket(Model model) throws Exception {
-        getStarted();
-        String ticket = vmWareService.generateTicket("vm-38");
-        return "redirect:/";
-    }
+//    @GetMapping("/getConsoleTicket")
+//    public String getConsoleTicket(Model model) throws Exception {
+//        getStarted();
+//        String ticket = vmWareService.generateTicket("vm-38");
+//        return "redirect:/";
+//    }
 
     @GetMapping(value={"","/","/new-design"})
     public String newDesign(Model model) throws Exception {
@@ -227,11 +227,11 @@ public class SandboxupgradeController {
 
 
 
-    @GetMapping("/n3")
-    public String n3(Model model) throws Exception {
-        getStarted();
-        return "n3";
-    }
+//    @GetMapping("/n3")
+//    public String n3(Model model) throws Exception {
+//        getStarted();
+//        return "n3";
+//    }
 
 
     @PostMapping("/console-ticket/{userType}/{userEmail}/{courseId}/{vmId}")
@@ -240,30 +240,65 @@ public class SandboxupgradeController {
                                               @PathVariable("courseId") int courseId,
                                               @PathVariable("vmId") int vmId) throws Exception {
         getStarted();
-        PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
-                collect(Collectors.toList()).get(0);
+        String realVmName = orchestratorService.getVmRealName(vmId);
         String firstVm  = "";
-        if(userType.equals("instructor") || userType.equals("student")) {
-            firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
-                    collect(Collectors.toList()).get(0).VMWareName;
-        }else if(userType.equals("students")) { // this for instructor to access their students vms (for the course)
-            List<PublicVM> stuVms = new ArrayList<PublicVM>();
+        String ticket = "";
+        String powerState = "off";
 
-            for (PublicUser student : course.publicStudentVmsMap.keySet()){
-                if(student.username.equals(userEmail)){
-                    stuVms = course.publicStudentVmsMap.get(student);
-                    break;
+        if(vmWareService.isVmPowerOn(realVmName)){
+            powerState = "on";
+            PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
+                    collect(Collectors.toList()).get(0);
+            if(userType.equals("instructor") || userType.equals("student")) {
+                firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
+                        collect(Collectors.toList()).get(0).VMWareName;
+            }else if(userType.equals("students")) { // this for instructor to access their students vms (for the course)
+                List<PublicVM> stuVms = new ArrayList<PublicVM>();
+
+                for (PublicUser student : course.publicStudentVmsMap.keySet()){
+                    if(student.username.equals(userEmail)){
+                        stuVms = course.publicStudentVmsMap.get(student);
+                        break;
+                    }
+                }
+                if(stuVms.size() > 0){
+                    firstVm = stuVms.stream().filter(vm -> vm.vmID == vmId).
+                            collect(Collectors.toList()).get(0).VMWareName;
                 }
             }
-            if(stuVms.size() > 0){
-                firstVm = stuVms.stream().filter(vm -> vm.vmID == vmId).
-                        collect(Collectors.toList()).get(0).VMWareName;
-            }
+            ticket = vmWareService.generateTicket(firstVm).substring(6);
+        }
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String selectedVmTicket = "{\"ticket\":\""+ ticket+ "\",\"powerState\":\""+ powerState+"\"}";
+        return new ResponseEntity(selectedVmTicket, headers, HttpStatus.OK);
+    }
+
+
+
+    @PostMapping("/powerOffTheVM/{vmId}")
+    public ResponseEntity powerOffTheVM(@PathVariable("vmId") Integer vmId) throws Exception {
+        String vmRealName = orchestratorService.getVmRealName(vmId);
+        if(vmWareService.isVmPowerOn(vmRealName)){
+            vmWareService.powerOffVM(vmRealName);
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String selectedVmTicket = "{\"ticket\":\""+vmWareService.generateTicket(firstVm).substring(6) + "\"}";
-        return new ResponseEntity(selectedVmTicket, headers, HttpStatus.OK);
+        return new ResponseEntity("", headers, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/powerOnTheVM/{vmId}")
+    public ResponseEntity powerOnTheVM(@PathVariable("vmId") Integer vmId) throws Exception {
+        String vmRealName = orchestratorService.getVmRealName(vmId);
+        if(vmWareService.isVmPowerOff(vmRealName)){
+            vmWareService.powerOnVM(vmRealName);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity("", headers, HttpStatus.OK);
     }
 
 
