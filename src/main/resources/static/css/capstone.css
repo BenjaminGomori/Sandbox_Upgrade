@@ -113,7 +113,7 @@ img {
 }
 
 .no_display {
-    display: none;
+    display: none !important;
 }
 
 .course_labs {
