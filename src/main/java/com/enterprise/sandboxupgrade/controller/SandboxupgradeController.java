@@ -210,7 +210,7 @@ public class SandboxupgradeController {
         String firstVm = courses.get(0).publicVms.get(0).VMWareName;
         model.addAttribute("listCourse", courses);
         model.addAttribute("user", orchestratorService.getUser());
-        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
+//        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
         return "instructor-main";
     }
 
@@ -221,7 +221,7 @@ public class SandboxupgradeController {
         String firstVm = courses.get(0).publicVms.get(0).VMWareName;
         model.addAttribute("listCourse", courses);
         model.addAttribute("user", orchestratorService.getUser());
-        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
+//        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
         return "student";
     }
 
@@ -281,24 +281,30 @@ public class SandboxupgradeController {
     @PostMapping("/powerOffTheVM/{vmId}")
     public ResponseEntity powerOffTheVM(@PathVariable("vmId") Integer vmId) throws Exception {
         String vmRealName = orchestratorService.getVmRealName(vmId);
+        String message = "{\"message\":\"Powered off - Not successful\"}";
         if(vmWareService.isVmPowerOn(vmRealName)){
             vmWareService.powerOffVM(vmRealName);
+            message = "{\"message\":\"Successfully powered off\"}";
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity("", headers, HttpStatus.OK);
+        return new ResponseEntity(message, headers, HttpStatus.OK);
     }
 
 
     @PostMapping("/powerOnTheVM/{vmId}")
     public ResponseEntity powerOnTheVM(@PathVariable("vmId") Integer vmId) throws Exception {
         String vmRealName = orchestratorService.getVmRealName(vmId);
+        String message = "{\"message\":\"Powered on - Not successful\"}";
+
         if(vmWareService.isVmPowerOff(vmRealName)){
             vmWareService.powerOnVM(vmRealName);
+            message = "{\"message\":\"Successfully powered on\"}";
+
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity("", headers, HttpStatus.OK);
+        return new ResponseEntity(message, headers, HttpStatus.OK);
     }
 
 

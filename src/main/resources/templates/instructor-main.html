@@ -284,7 +284,7 @@
                     </div>
                     <div class="panel-body" style="height: 80vh;max-height: 80vh;">
                         <div id="wmksContainer" style="height: 80vh;max-height: 80vh;" class="vm-powered-on"></div>
-                        <div class="vm-powered-off no_display" style="height: 80vh;max-height: 80vh; background-color: white;">
+                        <div class="vm-powered-off no_display" style="height: 80vh;max-height: 80vh; background-color: white; color:black;">
                             <p>VM is powered off.</p>
                             <p>To view - turn power on.</p>
                         </div>
@@ -358,8 +358,11 @@
                             </ul>
                         </div>
                         <!-- Student VM -->
-                        <div id="wmksContainerStudent" style="height: 80vh;max-height: 80vh;"></div>
-
+                        <div id="wmksContainerStudent" style="height: 80vh;max-height: 80vh;"  class="student-vm-powered-on"></div>
+                        <div class="student-vm-powered-off no_display" style="height: 80vh;max-height: 80vh; background-color: white; color:black;">
+                            <p>VM is powered off.</p>
+                            <p>To view - turn power on.</p>
+                        </div>
 
 
                     </div>
@@ -379,7 +382,7 @@
     let wmks;
     let wmksStudent;
     // if no console ticket don't attemt to create the VM
-    if(ticket){
+    // if(ticket){
         //console VM
         wmks = WMKS.createWMKS("wmksContainer",{})
             .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
@@ -404,7 +407,7 @@
         //      wmksStudent.sendKeyCodes([27]) ;
 
         // });
-    }
+    // }
 
     window.onload = (event) => {
         // if VM is displayed
@@ -468,10 +471,12 @@
 
         const vmDisplayed = document.querySelector(".vm-powered-on");
         const vmNotDisplayed = document.querySelector(".vm-powered-off");
+        const studentVmDisplayed = document.querySelector(".student-vm-powered-on");
+        const studentVmNotDisplayed = document.querySelector(".student-vm-powered-off");
 
 
-        let vmPowerOn = document.querySelector(".power-on")
-        let vmPowerOff = document.querySelector(".power-off")
+        let vmPowerOn = document.querySelector(".power-on");
+        let vmPowerOff = document.querySelector(".power-off");
 
         //set first element of each menu as active (when page first loads)
         let activeClassElement = cMenu.firstElementChild.querySelector("a");
@@ -919,9 +924,8 @@
                     console.log(res);
                     console.log(res.powerState);
                     console.log(res.powerState == 'on');
+
                     if(res.powerState == 'on'){
-                        vmDisplayed.classList.remove('no_display');
-                        vmNotDisplayed.classList.add('no_display');
                         let newTicket = "wss://"+res.ticket;
                         console.log(newTicket);
                         vmContainer.connect(newTicket);
@@ -929,9 +933,22 @@
                             vmContainer.sendCAD();
                             vmContainer.sendKeyCodes([27]) ;
                         });
-                    } else {
+                    }
+
+
+                    if(res.powerState == 'on' && vmType == 'instructor'){
+                        vmDisplayed.classList.remove('no_display');
+                        vmNotDisplayed.classList.add('no_display');
+                    }else if(vmType == 'instructor'){
                         vmNotDisplayed.classList.remove('no_display');
                         vmDisplayed.classList.add('no_display');
+                    } else if(res.powerState == 'on' && vmType == 'student'){
+                        studentVmDisplayed.classList.remove('no_display');
+                        studentVmNotDisplayed.classList.add('no_display');
+                    } else if(vmType == 'student'){
+                        studentVmNotDisplayed.classList.remove('no_display');
+                        studentVmDisplayed.classList.add('no_display');
+
                     }
 
                     // if(callBoth){
@@ -973,9 +990,7 @@
                 toggleLabel.textContent = "Uncheck to view Students VMs";
             }
         });
-        sleep(1250).then(() => {
-            populateVMSectionWithActiveVM("student", false);
-        });
+
         // populateVMSectionWithActiveVM("student", false);
         webmksStudent.setAttribute('style', 'height:80vh !important');
         webmksStudent.setAttribute('style', 'scale: none !important');
@@ -994,10 +1009,11 @@
 
             fetch(url,{ method: 'POST' })
                 .then(Result => Result.json())
-                .then(Result => Result.json())
-                .then(ticket => {
-                    let newTicket = "wss://"+ticket.ticket;
-                    console.log(newTicket);
+                .then(res => {
+                    // let newTicket = "wss://"+ticket.ticket;
+                    console.log(res);
+                    populateVMSectionWithActiveVM("instructor", false);
+
                 })
                 .catch(errorMsg => { console.log(errorMsg); });
         });
@@ -1009,13 +1025,18 @@
 
             fetch(url,{ method: 'POST' })
                 .then(Result => Result.json())
-                .then(vmPowerState => {
-                    console.log(vmPowerState);
+                .then(res => {
+                    console.log(res);
+                    populateVMSectionWithActiveVM("instructor", false);
+
                 })
                 .catch(errorMsg => { console.log(errorMsg); });
         });
 
         populateVMSectionWithActiveVM("instructor", false);
+        sleep(1250).then(() => {
+            populateVMSectionWithActiveVM("student", false);
+        });
     };
 
 
