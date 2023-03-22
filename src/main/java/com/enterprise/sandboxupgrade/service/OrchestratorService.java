@@ -40,11 +40,15 @@ public class OrchestratorService implements IOrchestratorService {
 
     // Useful for searching which student relates to which courses
     // String - User Email only (the nested map will be shared and has Public user as key which includes name && email)
-    private Map<String, PublicUser> searchStudentCourseMap;
-    private Map<String, PublicUser> searchInstructorCourseMap;
+    private Map<String, PublicUser> searchStudentMap;
+    private Map<String, PublicUser> searchInstructorMap;
 
     private Map<String, Student> emailStudentMap;
     private Map<String, Instructor> emailInstructorMap;
+
+    // vm mapping between public id shared with front end and real vm name
+    private Map<Integer, String> vmPublicIdAndVMWareNameMap;
+
 
     @Override
     public void getStarted() throws Exception {
@@ -55,8 +59,8 @@ public class OrchestratorService implements IOrchestratorService {
         // Will be provided to frontend
         createUserPublicCoursesAndVMsMap();
         populateCourseByIdMap();
-
         fetchAllRoles();
+        populateVmPublicIdAndVMWareNameMap();
     }
 
     private void fetchAllRoles() throws Exception {
@@ -94,8 +98,8 @@ public class OrchestratorService implements IOrchestratorService {
 //        List<PublicCourse> userPublicCourses = new ArrayList<PublicCourse>();
 
 
-        searchStudentCourseMap = new HashMap<String, PublicUser>();
-        searchInstructorCourseMap = new HashMap<String, PublicUser>();
+        searchStudentMap = new HashMap<String, PublicUser>();
+        searchInstructorMap = new HashMap<String, PublicUser>();
         emailStudentMap = new HashMap<String, Student>();
         emailInstructorMap = new HashMap<String, Instructor>();
 
@@ -140,12 +144,14 @@ public class OrchestratorService implements IOrchestratorService {
                     PublicVM.instructorId = vm.getInstructor().instructorID;
 
                     // id of 1 means that this is a instructor VM
-                    if(PublicVM.studentId == 1){
-                        PublicVM.username = vm.getInstructor().getFullName();
-                        PublicVM.email = vm.getInstructor().getUsername();
-                    }
+                    // TODO commented out on 03/10
+//                    if(PublicVM.studentId == 1){
+//                        PublicVM.username = vm.getInstructor().getFullName();
+//                        PublicVM.email = vm.getInstructor().getUsername();
+//                    }
                     // id of 1 means that this is a student VM
-                    else if(PublicVM.instructorId == 1){
+//                    else if(PublicVM.instructorId == 1){
+                     if(PublicVM.instructorId == 1){
                         PublicVM.username = vm.getStudent().getName();
                         PublicVM.email = vm.getStudent().getUsername();
                     }
@@ -162,7 +168,7 @@ public class OrchestratorService implements IOrchestratorService {
             publicStudent.username = s.getUsername();
 
             publicStudentCourseMap.put(publicStudent,userPublicCourses);
-            searchStudentCourseMap.put(s.getUsername(),publicStudent);
+            searchStudentMap.put(s.getUsername(),publicStudent);
             emailStudentMap.put(s.getUsername(),s);
         };
 
@@ -196,6 +202,8 @@ public class OrchestratorService implements IOrchestratorService {
                 }
 
                 publicCourse.publicVms = new ArrayList<PublicVM>();
+                publicCourse.publicStudentVmsMap = new HashMap<PublicUser, List<PublicVM>>(students.size());
+
                 for(VM vm : c.getVMs()) {
                     PublicVM PublicVM = new PublicVM();
                     PublicVM.VMWareName = vm.getVMWareName();
@@ -211,13 +219,24 @@ public class OrchestratorService implements IOrchestratorService {
                     if(PublicVM.studentId == 1){
                         PublicVM.username = vm.getInstructor().getFullName();
                         PublicVM.email = vm.getInstructor().getUsername();
+                        // adds it to the instructor's vms
+                        publicCourse.publicVms.add(PublicVM);
                     }
                     // id of 1 means that this is a student VM
                     else if(PublicVM.instructorId == 1){
                         PublicVM.username = vm.getStudent().getName();
                         PublicVM.email = vm.getStudent().getUsername();
+
+                        // adds it to the students vms
+                        if (!publicCourse.publicStudentVmsMap.containsKey(searchStudentMap.get(vm.getStudent().getUsername()))){
+//                            PublicUser student = new PublicUser(emailStudentMap.get(vm.getStudent().getUsername()));
+                            publicCourse.publicStudentVmsMap.put(searchStudentMap.get(vm.getStudent().getUsername()),new ArrayList<PublicVM>());
+                            publicCourse.publicStudentVmsMap.get(searchStudentMap.get(vm.getStudent().getUsername())).add(PublicVM);
+                        }else{
+                            publicCourse.publicStudentVmsMap.get(searchStudentMap.get(vm.getStudent().getUsername())).add(PublicVM);
+                        }
+
                     }
-                    publicCourse.publicVms.add(PublicVM);
                 }
 
                 userPublicCourses.add(publicCourse);
@@ -229,9 +248,23 @@ public class OrchestratorService implements IOrchestratorService {
             publicStudent.username = ins.getUsername();
 
             publicInstructorCourseMap.put(publicStudent,userPublicCourses);
-            searchInstructorCourseMap.put(ins.getUsername(),publicStudent);
+            searchInstructorMap.put(ins.getUsername(),publicStudent);
             emailInstructorMap.put(ins.getUsername(),ins);
         };
+    }
+
+    private void populateVmPublicIdAndVMWareNameMap(){
+        vmPublicIdAndVMWareNameMap = new HashMap<Integer, String>();
+        courses.forEach(c->{
+            c.getVMs().forEach(vm->{
+                vmPublicIdAndVMWareNameMap.put(vm.getVmID(), vm.getVMWareName());
+            });
+        });
+    }
+
+    @Override
+    public String getVmRealName(int vmId){
+        return vmPublicIdAndVMWareNameMap.get(vmId);
     }
 
     private PublicCourse castToPublicCourse(Course course){
@@ -247,8 +280,8 @@ public class OrchestratorService implements IOrchestratorService {
     public List<PublicCourse> getUserCourses(){
 
         // is student logged in
-        if(searchStudentCourseMap.containsKey(user.email)){
-            List<PublicCourse> publicCourses = publicStudentCourseMap.get(searchStudentCourseMap.get(user.email));
+        if(searchStudentMap.containsKey(user.email)){
+            List<PublicCourse> publicCourses = publicStudentCourseMap.get(searchStudentMap.get(user.email));
             // create a copy this object
             List<PublicCourse> filteredCourses = new ArrayList<PublicCourse>(publicCourses.size());
             publicCourses.forEach(c->{
@@ -278,8 +311,8 @@ public class OrchestratorService implements IOrchestratorService {
         }
 
         // is instructor logged in - he needs access to all vms including their students (for each course )
-        if(searchInstructorCourseMap.containsKey(user.email)){
-            return publicInstructorCourseMap.get(searchInstructorCourseMap.get(user.email));
+        if(searchInstructorMap.containsKey(user.email)){
+            return publicInstructorCourseMap.get(searchInstructorMap.get(user.email));
         }
 
         return null ;
@@ -351,4 +384,15 @@ public class OrchestratorService implements IOrchestratorService {
     public User getUser() {
         return user;
     }
+
+    @Override
+    public PublicUser getStudentByEmail(String email) {
+        return searchStudentMap.get(email);
+    }
+
+//    void createStudentsVmsForInstructors(){
+//        Map<Student, PublicVM> studentVmMap = new HashMap<Student, PublicVM>();
+//
+//
+//    }
 }

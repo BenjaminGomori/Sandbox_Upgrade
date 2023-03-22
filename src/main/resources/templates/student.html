@@ -159,13 +159,41 @@
                             </a>
                         </div>
                         <ul class="list-inline panel-actions" style="margin: 0 !important;">
-                            <li>
-                                <h2 class="panel-title" style="padding-top:1.7rem; padding-bottom: 0.5rem; margin-bottom: 0">Virtual Machine</h2>
+                            <li style="color:#d1c6c6;">
+                                <h2 class="panel-title" style="display: inline;padding-top:1.7rem; padding-bottom: 0.5rem; margin-bottom: 0">Virtual Machine</h2>
+                                <a style="display: inline-block; position: relative;bottom:-0.5rem" href="#" class="nav-link dropdown-toggle text-truncate gear-icon" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-gear" viewBox="0 0 16 16">
+                                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+                                    </svg>
+                                    <i class="bi bi-gear"></i>
+                                </a>
+                                <ul class="dropdown-menu text-small shadow vm-conf-menu" aria-labelledby="dropdown">
+                                    <li>
+                                        <a class="dropdown-item power-on" href="#">Power On</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item power-off" href="#" >Power Off</a>
+                                    </li>
+
+                                </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="panel-body" style="height: 80vh;max-height: 80vh;">
-                        <div id="wmksContainer" style="height: 80vh;max-height: 80vh;"></div>
+                        <div id="wmksContainer" style="height: 80vh;max-height: 80vh;" class="vm-powered-on"></div>
+                        <div class="vm-powered-off no_display" style="height: 80vh;max-height: 80vh; background-color: white; color:black; display: grid;justify-content: center; align-items: center; font-size: 2rem">
+                            <div>
+                                <p>VM is powered off.</p>
+                                <p>To view - turn power on
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-gear" viewBox="0 0 16 16">
+                                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+                                    </svg>
+                                    <i class="bi bi-gear"></i>.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -194,7 +222,7 @@
                         </a>
                     </div>
 <!--                    </div>-->
-                    <div class="lab-section">
+                    <div class="lab-section" style="color:#d1c6c6;">
                         <div class="panel-heading">
 
                             <ul class="list-inline panel-actions" style="margin: 0 !important;">
@@ -210,7 +238,7 @@
                             <img id="lab-image" style="min-height: 0px; object-fit: contain; max-height: 300px;min-width:0px;max-width: 300px;"/>
                         </div>
 
-                        <p id="lab-desc" style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"></p>
+                        <p id="lab-desc" style="font-size: 1.5rem; max-height:inherit;padding: 1rem;padding-left: 2rem; text-align: left"></p>
 
                     </div>
                 </div>
@@ -226,18 +254,22 @@
     let wmks;
     // let wmksStudent;
     // if no console ticket don't attemt to create the VM
-    if(ticket){
+    // if(ticket){
         //console VM
         wmks = WMKS.createWMKS("wmksContainer",{})
             .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                 if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
                     console.log("VM connection state change : connected");}
             });
-        wmks.connect(ticket);
-        sleep(1250).then(() => {
-            wmks.sendCAD();
-            wmks.sendKeyCodes([27]) ;
-        });
+
+
+        // wmks.connect(ticket);
+        // sleep(1250).then(() => {
+        //     wmks.sendCAD();
+        //     wmks.sendKeyCodes([27]) ;
+        // });
+
+
         //student console
         // wmksStudent = WMKS.createWMKS("wmksContainerStudent",{})
         //     .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
@@ -250,7 +282,7 @@
         //      wmksStudent.sendKeyCodes([27]) ;
 
         // });
-    }
+    // }
 
     window.onload = (event) => {
         // if VM is displayed
@@ -318,6 +350,13 @@
         let activeVmElement = vmInsMenu.firstElementChild.querySelector("a");
         // let activeStudentVMElement = vmStuMenu.firstElementChild.querySelector("a");
 
+        const vmDisplayed = document.querySelector(".vm-powered-on");
+        const vmNotDisplayed = document.querySelector(".vm-powered-off");
+
+        let vmPowerOn = document.querySelector(".power-on");
+        let vmPowerOff = document.querySelector(".power-off");
+
+
         activeClassElement.classList.add("active");
         activeLabElement.classList.add("active");
         activeVmElement.classList.add("active");
@@ -325,13 +364,14 @@
 
         //populate lab section with active lab data
         let studentId = [[${user.id}]]
+        let studentEmail = [[${user.email}]]
         let vmsJS = courseList[0]["publicVms"].filter(vm => vm.studentId == studentId);
 
         let activeCourseJS = courseList[0];
         let activeLabJS = courseList[0]["publicLabs"][0];
         let activeVmJS = vmsJS[0];
 
-        labHeader.textContent = 'Lab: '  + activeLabJS["title"];
+        labHeader.textContent = 'Lab ' + activeLabJS["number"] + ': '  + activeLabJS["title"];
         labDesc.textContent = activeLabJS["description"];
         // TODO bring this back...
         if(activeLabJS["image"])  {
@@ -555,7 +595,7 @@
         }
 
         function populateLabSectionWithActiveLab(){
-            labHeader.textContent = 'Lab: '  +activeLabJS["title"];
+            labHeader.textContent = 'Lab ' + activeLabJS["number"] + ': '  + activeLabJS["title"];
             labDesc.textContent = activeLabJS["description"];
             if(activeLabJS["image"])  {
                 labImg.setAttribute('src', activeLabJS["image"]);
@@ -576,7 +616,8 @@
             //source,fetch call: https://www.geeksforgeeks.org/how-to-make-ajax-call-from-javascript/
             let url = "";
             let vmContainer;
-            url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeVmJS.vmID ;
+            // url = 'http://localhost:8080/console-ticket/'+activeCourseJS.id+'/' +activeVmJS.vmID ;
+            url = 'http://localhost:8080/console-ticket/student/'+studentEmail+'/'+activeCourseJS.id+'/' +activeVmJS.vmID ;
             console.log("reload VM");
             console.log(url);
             vmContainer = wmks;
@@ -597,10 +638,10 @@
             // Making our request
             fetch(url, { method: 'POST' })
                 .then(Result => Result.json())
-                .then(ticket => {
-                    let newTicket = "wss://"+ticket.ticket;
-                    console.log(newTicket);
-                    vmContainer.connect(newTicket);
+                .then(res => {
+                    // let newTicket = "wss://"+res.ticket;
+                    // console.log(newTicket);
+                    // vmContainer.connect(newTicket);
                     // if(callBoth){
                     //     populateVMSectionWithActiveVM("student", false)
                     // }
@@ -609,10 +650,27 @@
                     //from https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
                     // sleep time expects milliseconds
                     // Usage!
-                    sleep(1250).then(() => {
-                        vmContainer.sendCAD();
-                        vmContainer.sendKeyCodes([27]) ;
-                    });
+                    // sleep(1250).then(() => {
+                    //     vmContainer.sendCAD();
+                    //     vmContainer.sendKeyCodes([27]) ;
+                    // });
+
+
+                    if(res.powerState == 'on'){
+                        let newTicket = "wss://"+res.ticket;
+                        console.log(newTicket);
+                        vmContainer.connect(newTicket);
+                        sleep(1250).then(() => {
+                            vmContainer.sendCAD();
+                            vmContainer.sendKeyCodes([27]) ;
+                        });
+                        vmDisplayed.classList.remove('no_display');
+                        vmNotDisplayed.classList.add('no_display');
+                    } else {
+                        vmNotDisplayed.classList.remove('no_display');
+                        vmDisplayed.classList.add('no_display');
+                    }
+
                 })
                 .catch(errorMsg => { console.log(errorMsg); });
         }
@@ -643,6 +701,44 @@
         //         toggleLabel.textContent = "Uncheck to view Students VMs";
         //     }
         // });
+
+        vmPowerOn.addEventListener('click', (e) => {
+            let url = "";
+            let vmContainer;
+            url = 'http://localhost:8080/powerOnTheVM/'+activeVmJS.vmID ;
+
+            fetch(url,{ method: 'POST' })
+                .then(Result => Result.json())
+                .then(res => {
+                    // let newTicket = "wss://"+ticket.ticket;
+                    console.log(res);
+                    populateVMSectionWithActiveVM("", false);
+
+                })
+                .catch(errorMsg => { console.log(errorMsg); });
+        });
+
+        vmPowerOff.addEventListener('click', (e) => {
+            let url = "";
+            let vmContainer;
+            url = 'http://localhost:8080/powerOffTheVM/' + activeVmJS.vmID ;
+
+            fetch(url,{ method: 'POST' })
+                .then(Result => Result.json())
+                .then(res => {
+                    console.log(res);
+                    populateVMSectionWithActiveVM("", false);
+
+                })
+                .catch(errorMsg => { console.log(errorMsg); });
+        });
+
+
+
+
+
+        populateVMSectionWithActiveVM("", false);
+
     };
 
 

@@ -4,6 +4,8 @@ import com.enterprise.sandboxupgrade.entity.*;
 import java.util.List;
 
 public interface IOrchestratorService {
+    String getVmRealName(int vmId);
+
     List<PublicCourse> getUserCourses();
     List<PublicVM> getUserVMs(String usrerId);
     void getStarted() throws Exception;
@@ -14,4 +16,5 @@ public interface IOrchestratorService {
     public String getUserEmail();
     public int getUserId();
     public User getUser();
+    public PublicUser getStudentByEmail(String email);
 }

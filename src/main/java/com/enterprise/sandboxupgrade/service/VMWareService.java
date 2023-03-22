@@ -12,11 +12,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Base64;
 
-import org.springframework.stereotype.Component;
-
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
+
 import javax.net.ssl.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -27,7 +24,7 @@ import java.util.Map;
 
 
 @Service
-public class VMWareService {
+public class VMWareService implements IVMWareService{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VMWareService.class);
 
@@ -41,6 +38,8 @@ public class VMWareService {
     private String VCENTER_USERNAME = "administrator@vsphere.local";
     private String VCENTER_PASSWORD = "SeniorDesign22!";
     private String vcenterSessionId ="";
+    private final String VM_POWER_STATE_ON ="POWERED_ON";
+    private final String VM_POWER_STATE_OFF ="POWERED_OFF";
 
 
 
@@ -81,7 +80,7 @@ public class VMWareService {
 
 
 
-
+    @Override
     public String getSessionId() throws JsonProcessingException {
         if(vcenterSessionId != "") return vcenterSessionId;
         ObjectMapper mapper = new ObjectMapper();
@@ -98,11 +97,13 @@ public class VMWareService {
         jsonNode = mapper.readTree(response.getBody());
 //        String value = jsonNode.findValue("value").toString();
         String value = jsonNode.get("value").textValue();
+        vcenterSessionId = value;
         LOGGER.info("Session ID: " + value);
 //        return response.getHeaders().getFirst("vmware-api-session-id");
         return value;
     }
 
+    @Override
     public void powerOffVM(String vmId) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         String sessionId =  getSessionId();
@@ -121,6 +122,7 @@ public class VMWareService {
         }
     }
 
+    @Override
     public void powerOnVM(String vmId) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         String sessionId =  getSessionId();
@@ -139,7 +141,42 @@ public class VMWareService {
         }
     }
 
+    @Override
+    public String getVmPowerState(String vmId) throws JsonProcessingException {
+        HttpHeaders headers = new HttpHeaders();
+        String sessionId =  getSessionId();
+        headers.set("vmware-api-session-id", sessionId);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Map> entity = new HttpEntity<>(headers);
 
+        String url = VCENTER_URL + "rest/vcenter/vm/"+ vmId+"/power";
+
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            System.out.println("VM state was retrieved successfully!");
+        } else {
+            System.out.println("Failed to get VM power state. Error: " + response.getBody());
+        }
+
+        Map<String, Map> responseBody = response.getBody();
+        String powerState = (String) responseBody.get("value").get("state");
+
+        return powerState;
+    }
+
+    @Override
+    public boolean isVmPowerOff(String vmId) throws JsonProcessingException {
+        return VM_POWER_STATE_OFF.equals(getVmPowerState(vmId));
+    }
+
+    @Override
+    public boolean isVmPowerOn(String vmId) throws JsonProcessingException {
+        return VM_POWER_STATE_ON.equals(getVmPowerState(vmId));
+    }
+
+
+        @Override
     public String generateTicket(String vmId) throws JsonProcessingException {
         String BASE_URL = VCENTER_URL+ "rest/vcenter/vm/";
         HttpHeaders headers = new HttpHeaders();

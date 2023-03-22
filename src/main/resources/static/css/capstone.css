@@ -113,7 +113,7 @@ img {
 }
 
 .no_display {
-    display: none;
+    display: none !important;
 }
 
 .course_labs {
@@ -195,4 +195,8 @@ img {
 .hover-underline:hover{
     text-decoration: underline !important;
     cursor: pointer;
+}
+
+.gear-icon::after{
+    display: none !important;
 }

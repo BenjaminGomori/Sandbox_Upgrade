@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,7 +106,8 @@ public class SandboxupgradeController {
         model.addAttribute("lab", lab);
         model.addAttribute("course", new PublicCourse());
         model.addAttribute("listCourse", orchestratorService.getUserCourses());
-        model.addAttribute("usertype", orchestratorService.getUserType());
+//        model.addAttribute("usertype", orchestratorService.getUserType());
+        model.addAttribute("user", orchestratorService.getUser());
 
         return "create-lab";
     }
@@ -123,28 +125,36 @@ public class SandboxupgradeController {
         //Storing file on server, (and String path in database)
         Path currentPath = Paths.get(".");
         Path absolutePath = currentPath.toAbsolutePath();
-        byte[] bytes = imageFile.getBytes();
-        Path path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
-        Files.write(path, bytes);
-        path = Paths.get("photos/"+imageFile.getOriginalFilename());
-        lab.setImage(path.toString());
-        lab.setDueDate(new Date());
+        byte[] bytes;
+        Path path;
+        bytes = imageFile.getBytes();
+        if(bytes.length > 0){
+            path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
+            Files.write(path, bytes);
+            path = Paths.get("photos/"+imageFile.getOriginalFilename());
+            lab.setImage(path.toString());
+            lab.setDueDate(new Date());
 //        lab.setCourse(new Course());
+        }
+
 
         // same for video
         bytes = videoFile.getBytes();
-        path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
-        Files.write(path, bytes);
-        path = Paths.get("videos/"+imageFile.getOriginalFilename());
-        lab.setLink(path.toString());
+        if(bytes.length > 0){
+            path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
+            Files.write(path, bytes);
+            path = Paths.get("videos/"+imageFile.getOriginalFilename());
+            lab.setLink(path.toString());
+        }
+
 
         // todo 1. correct courseID so submitted by user
         // todo 2. correct Due-date so submitted by user
-        if(course.id <= 0){
-            orchestratorService.assignLabCourse(lab, 4);
-        } else {
+//        if(course.id <= 0){
+//            orchestratorService.assignLabCourse(lab, 4);
+//        } else {
             orchestratorService.assignLabCourse(lab, course.id);
-        }
+//        }
         labService.save(lab);
         return "redirect:/";
     }
@@ -176,12 +186,12 @@ public class SandboxupgradeController {
         return "redirect:/";
     }
 
-    @GetMapping("/getConsoleTicket")
-    public String getConsoleTicket(Model model) throws Exception {
-        getStarted();
-        String ticket = vmWareService.generateTicket("vm-38");
-        return "redirect:/";
-    }
+//    @GetMapping("/getConsoleTicket")
+//    public String getConsoleTicket(Model model) throws Exception {
+//        getStarted();
+//        String ticket = vmWareService.generateTicket("vm-38");
+//        return "redirect:/";
+//    }
 
     @GetMapping(value={"","/","/new-design"})
     public String newDesign(Model model) throws Exception {
@@ -209,7 +219,7 @@ public class SandboxupgradeController {
         String firstVm = courses.get(0).publicVms.get(0).VMWareName;
         model.addAttribute("listCourse", courses);
         model.addAttribute("user", orchestratorService.getUser());
-        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
+//        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
         return "instructor-main";
     }
 
@@ -220,32 +230,90 @@ public class SandboxupgradeController {
         String firstVm = courses.get(0).publicVms.get(0).VMWareName;
         model.addAttribute("listCourse", courses);
         model.addAttribute("user", orchestratorService.getUser());
-        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
+//        model.addAttribute("ticket", vmWareService.generateTicket(firstVm));
         return "student";
     }
 
 
 
-    @GetMapping("/n3")
-    public String n3(Model model) throws Exception {
-        getStarted();
-        return "n3";
-    }
+//    @GetMapping("/n3")
+//    public String n3(Model model) throws Exception {
+//        getStarted();
+//        return "n3";
+//    }
 
 
-    @PostMapping("/console-ticket/{courseId}/{vmId}")
-    public ResponseEntity getSelectedVmTicket(@PathVariable("courseId") int courseId,
+    @PostMapping("/console-ticket/{userType}/{userEmail}/{courseId}/{vmId}")
+    public ResponseEntity getSelectedVmTicket(@PathVariable("userType") String userType,
+                                              @PathVariable("userEmail") String userEmail,
+                                              @PathVariable("courseId") int courseId,
                                               @PathVariable("vmId") int vmId) throws Exception {
         getStarted();
-        PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
-                collect(Collectors.toList()).get(0);
-        String firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
-                collect(Collectors.toList()).get(0).VMWareName;
+        String realVmName = orchestratorService.getVmRealName(vmId);
+        String firstVm  = "";
+        String ticket = "";
+        String powerState = "off";
+
+        if(vmWareService.isVmPowerOn(realVmName)){
+            powerState = "on";
+            PublicCourse course = orchestratorService.getUserCourses().stream().filter(c -> c.id == courseId).
+                    collect(Collectors.toList()).get(0);
+            if(userType.equals("instructor") || userType.equals("student")) {
+                firstVm = course.publicVms.stream().filter(vm -> vm.vmID == vmId).
+                        collect(Collectors.toList()).get(0).VMWareName;
+            }else if(userType.equals("students")) { // this for instructor to access their students vms (for the course)
+                List<PublicVM> stuVms = new ArrayList<PublicVM>();
+
+                for (PublicUser student : course.publicStudentVmsMap.keySet()){
+                    if(student.username.equals(userEmail)){
+                        stuVms = course.publicStudentVmsMap.get(student);
+                        break;
+                    }
+                }
+                if(stuVms.size() > 0){
+                    firstVm = stuVms.stream().filter(vm -> vm.vmID == vmId).
+                            collect(Collectors.toList()).get(0).VMWareName;
+                }
+            }
+            ticket = vmWareService.generateTicket(firstVm).substring(6);
+        }
+
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String selectedVmTicket = "{\"ticket\":\""+vmWareService.generateTicket(firstVm).substring(6) + "\"}";
+        String selectedVmTicket = "{\"ticket\":\""+ ticket+ "\",\"powerState\":\""+ powerState+"\"}";
         return new ResponseEntity(selectedVmTicket, headers, HttpStatus.OK);
+    }
+
+
+
+    @PostMapping("/powerOffTheVM/{vmId}")
+    public ResponseEntity powerOffTheVM(@PathVariable("vmId") Integer vmId) throws Exception {
+        String vmRealName = orchestratorService.getVmRealName(vmId);
+        String message = "{\"message\":\"Powered off - Not successful\"}";
+        if(vmWareService.isVmPowerOn(vmRealName)){
+            vmWareService.powerOffVM(vmRealName);
+            message = "{\"message\":\"Successfully powered off\"}";
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity(message, headers, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/powerOnTheVM/{vmId}")
+    public ResponseEntity powerOnTheVM(@PathVariable("vmId") Integer vmId) throws Exception {
+        String vmRealName = orchestratorService.getVmRealName(vmId);
+        String message = "{\"message\":\"Powered on - Not successful\"}";
+
+        if(vmWareService.isVmPowerOff(vmRealName)){
+            vmWareService.powerOnVM(vmRealName);
+            message = "{\"message\":\"Successfully powered on\"}";
+
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity(message, headers, HttpStatus.OK);
     }
 
 
