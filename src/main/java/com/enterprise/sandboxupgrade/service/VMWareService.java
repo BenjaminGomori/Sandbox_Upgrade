@@ -97,6 +97,7 @@ public class VMWareService implements IVMWareService{
         jsonNode = mapper.readTree(response.getBody());
 //        String value = jsonNode.findValue("value").toString();
         String value = jsonNode.get("value").textValue();
+        vcenterSessionId = value;
         LOGGER.info("Session ID: " + value);
 //        return response.getHeaders().getFirst("vmware-api-session-id");
         return value;

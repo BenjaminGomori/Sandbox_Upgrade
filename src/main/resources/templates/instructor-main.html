@@ -261,7 +261,7 @@
                         </div>
                         <ul class="list-inline panel-actions" style="margin: 0 !important;">
 <!--                            <li style="padding-top:1.7rem; padding-bottom: 0.5rem; margin-bottom: 0">-->
-                            <li>
+                            <li style="color:#d1c6c6;">
                                 <h2 class="panel-title" style="display: inline-block;padding-top:1.7rem; padding-bottom: 0.5rem; margin-bottom: 0">Virtual Machine</h2>
                                 <a style="display: inline; position: relative;bottom:0.3rem" href="#" class="nav-link dropdown-toggle text-truncate gear-icon" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-gear" viewBox="0 0 16 16">
@@ -335,7 +335,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="lab-section  no_display">
+                    <div class="lab-section  no_display" style="color:#d1c6c6;">
                         <div class="panel-heading">
 
                             <ul class="list-inline panel-actions" style="margin: 0 !important;">
@@ -351,11 +351,11 @@
                             <img id="lab-image" style="min-height: 0px; object-fit: contain; max-height: 300px;min-width:0px;max-width: 300px;"/>
                         </div>
 
-                        <p id="lab-desc" style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"></p>
+                        <p id="lab-desc" style="font-size: 1.5rem; max-height:inherit;padding: 1rem;padding-left: 2rem; text-align: left"></p>
 
                     </div>
 
-                    <div class="students-vms-section" style="height: 80vh;max-height: 80vh;">
+                    <div class="students-vms-section" style="height: 80vh;max-height: 80vh;color:#d1c6c6;">
                         <div class="panel-heading">
 
                             <ul class="list-inline panel-actions" style="margin: 0 !important;">
@@ -370,7 +370,7 @@
                         <div class="student-vm-powered-off no_display" style="height: 80vh;max-height: 80vh; background-color: white; color:black; display: grid;justify-content: center; align-items: center; font-size: 2rem">
                             <div>
                                 <p>Student VM is powered off.</p>
-                                <p>Please contact studen...</p>
+                                <p>Please contact student...</p>
                             </div>
                         </div>
 
@@ -387,17 +387,29 @@
 
 <script type="text/javascript" th:inline="javascript">
     //model data from backend
-    const courseList = [[${listCourse}]]
+
+    window.onload = (event) => {
+
+        const courseList = [[${listCourse}]]
     const ticket = [[${ticket}]];
     let wmks;
     let wmksStudent;
+    let firstConnectionOnLoad = true;
     // if no console ticket don't attemt to create the VM
     // if(ticket){
         //console VM
         wmks = WMKS.createWMKS("wmksContainer",{})
             .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                 if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                    console.log("Instructor VM connection state change : connected");}
+                    console.log("Instructor VM connection state change : connected");
+                    console.log('firstConnectionOnLoad');
+                    console.log(firstConnectionOnLoad);
+                    if(firstConnectionOnLoad){
+                        console.log('!@#!@#!@#!@#!Yup It is true');
+                        firstConnectionOnLoad = false;
+                        console.log(firstConnectionOnLoad === true);
+                        populateVMSectionWithActiveVM("student", false);
+                    }}
             });
 
         // wmks.connect(ticket);
@@ -409,7 +421,8 @@
         wmksStudent = WMKS.createWMKS("wmksContainerStudent",{})
             .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                 if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                    console.log("Student VM connection state change : connected");}
+                    console.log("Student VM connection state change : connected");
+                }
             });
         // wmksStudent.connect(ticket);
         // sleep(1250).then(() => {
@@ -419,7 +432,6 @@
         // });
     // }
 
-    window.onload = (event) => {
         // if VM is displayed
         const webmks = document.querySelector('#mainCanvas');
         const webmksStudent = document.querySelectorAll('#mainCanvas').item(1);
@@ -543,7 +555,7 @@
         console.log(activeStudentVmJS);
 
 
-        labHeader.textContent = 'Lab: '  + activeLabJS["title"];
+        labHeader.textContent = 'Lab ' + activeLabJS["number"] + ': '  + activeLabJS["title"];
         labDesc.textContent = activeLabJS["description"];
         // TODO bring this back...
         if(activeLabJS["image"])  {
@@ -562,7 +574,7 @@
         const VMsvgCon = VMPanel.querySelector(".svg-contract");
         const VMI = document.querySelector("#VMFullScreenTogler");
         // const topNavBar = document.querySelector(".sticky-top");
-
+        // let firstConnectionOnLoad = true;
         VMToggleFullScreen.addEventListener('click', (e) => {
             e.preventDefault();
             // VMsvgEx.classList.toggle('no_display');
@@ -576,13 +588,14 @@
             wmks = WMKS.createWMKS("wmksContainer",{})
                 .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                     if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
-                        console.log("Instructor VM connection state change : connected");}
+                        console.log("Instructor VM connection state change : connected");
+                    }
                 });
             wmks.enterFullScreen();
         });
 
         const VMStudentToggleFullScreen = document.querySelector("#vm-student-fullscreen");
-
+        // let firstConnectionOnLoad = true;
         VMStudentToggleFullScreen.addEventListener('click', (e) => {
             e.preventDefault();
             // populateVMSectionWithActiveVM("instructor",false);
@@ -590,6 +603,13 @@
                 .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
                     if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
                         console.log("Instructor VM connection state change : connected");}
+                    // if(firstConnectionOnLoad === true){
+                    //     console.log('!@#!@#!@#!@#!Yup It is true');
+                    //     firstConnectionOnLoad = false;
+                    //     console.log(firstConnectionOnLoad === true);
+                    //     populateVMSectionWithActiveVM("student", false);
+                    //
+                    // }
                 });
             wmksStudent.enterFullScreen();
             sleep(1250).then(() => {
@@ -879,7 +899,7 @@
         }
 
         function populateLabSectionWithActiveLab(){
-            labHeader.textContent =  'Lab: ' + activeLabJS["title"];
+            labHeader.textContent = 'Lab ' + activeLabJS["number"] + ': '  + activeLabJS["title"];
             labDesc.textContent = activeLabJS["description"];
             if(activeLabJS["image"])  {
                 labImg.setAttribute('src', activeLabJS["image"]);
@@ -973,6 +993,7 @@
                 })
                 .catch(errorMsg => { console.log(errorMsg); });
         }
+        populateVMSectionWithActiveVM("instructor", false);
 
         addEventListenerToMenuItems(cMenu,'Courses');
         addEventListenerToMenuItems(lMenu,'Labs');
@@ -1043,10 +1064,13 @@
                 .catch(errorMsg => { console.log(errorMsg); });
         });
 
-        populateVMSectionWithActiveVM("instructor", false);
-        sleep(1250).then(() => {
-            populateVMSectionWithActiveVM("student", false);
-        });
+        // sleep(2500).then(() => {
+        //     populateVMSectionWithActiveVM("student", false);
+        // });
+        //
+        // $( wmks ).on( "connectionstatechange", function() {
+        //     console.log( "<p> was clicked" );
+        // });
     };
 
 

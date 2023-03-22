@@ -106,7 +106,8 @@ public class SandboxupgradeController {
         model.addAttribute("lab", lab);
         model.addAttribute("course", new PublicCourse());
         model.addAttribute("listCourse", orchestratorService.getUserCourses());
-        model.addAttribute("usertype", orchestratorService.getUserType());
+//        model.addAttribute("usertype", orchestratorService.getUserType());
+        model.addAttribute("user", orchestratorService.getUser());
 
         return "create-lab";
     }
@@ -124,28 +125,36 @@ public class SandboxupgradeController {
         //Storing file on server, (and String path in database)
         Path currentPath = Paths.get(".");
         Path absolutePath = currentPath.toAbsolutePath();
-        byte[] bytes = imageFile.getBytes();
-        Path path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
-        Files.write(path, bytes);
-        path = Paths.get("photos/"+imageFile.getOriginalFilename());
-        lab.setImage(path.toString());
-        lab.setDueDate(new Date());
+        byte[] bytes;
+        Path path;
+        bytes = imageFile.getBytes();
+        if(bytes.length > 0){
+            path = Paths.get(absolutePath + "/src/main/resources/static/photos/" + imageFile.getOriginalFilename());
+            Files.write(path, bytes);
+            path = Paths.get("photos/"+imageFile.getOriginalFilename());
+            lab.setImage(path.toString());
+            lab.setDueDate(new Date());
 //        lab.setCourse(new Course());
+        }
+
 
         // same for video
         bytes = videoFile.getBytes();
-        path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
-        Files.write(path, bytes);
-        path = Paths.get("videos/"+imageFile.getOriginalFilename());
-        lab.setLink(path.toString());
+        if(bytes.length > 0){
+            path = Paths.get(absolutePath + "/src/main/resources/static/videos/" + videoFile.getOriginalFilename());
+            Files.write(path, bytes);
+            path = Paths.get("videos/"+imageFile.getOriginalFilename());
+            lab.setLink(path.toString());
+        }
+
 
         // todo 1. correct courseID so submitted by user
         // todo 2. correct Due-date so submitted by user
-        if(course.id <= 0){
-            orchestratorService.assignLabCourse(lab, 4);
-        } else {
+//        if(course.id <= 0){
+//            orchestratorService.assignLabCourse(lab, 4);
+//        } else {
             orchestratorService.assignLabCourse(lab, course.id);
-        }
+//        }
         labService.save(lab);
         return "redirect:/";
     }
