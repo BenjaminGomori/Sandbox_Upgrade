@@ -99,9 +99,8 @@
                     </svg>
                     <i class="bi bi-display"></i><span style="color:black;" class="ms-1 d-none d-sm-inline">Students VMs</span>
                 </a>
-                <ul class="all-students-vms-menu dropdown-menu text-small shadow" aria-labelledby="dropdown-stu-vms">
 
-
+                <ul class="all-students-vms-menu dropdown-menu text-small shadow" aria-labelledby="dropdown-stu-vms" style="padding:0.5rem;">
                     <li th:each="studentVmsMap : ${listCourse[0].publicStudentVmsMap}">
                         <div style="pointer-events: none;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -112,7 +111,7 @@
                             <span style="color:black;" class="ms-1 d-none d-sm-inline" th:text="${studentVmsMap.key.username}"}></span>
                         </div>
                         <!--                        <ul class="dropdown-menu text-small shadow vm-students-menu" aria-labelledby="dropdown">-->
-                        <ul class="a-student-vms-menu">
+                        <ul class="a-student-vms-menu" style="list-style-type: none;">
                             <li  th:each="vm : ${studentVmsMap.value}">
                                 <a  class="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
                             </li>
@@ -183,6 +182,17 @@
 
     </div>
 </div>
+<!-- template to use for generating svg for student vms menu-->
+<template id="userIconForStudentVmsMenu">
+    <div style="pointer-events: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </svg>
+        <i class="bi bi-person-circle"></i>
+        <span style="color:black;" class="ms-1 d-none d-sm-inline"></span>
+    </div>
+</template>
 <!--    <div class="container-fluid">-->
 <!--        <div class="row">-->
 <!--            <div class="col min-vh-100 p-4">-->
@@ -496,6 +506,8 @@
         const studentVmDisplayed = document.querySelector(".student-vm-powered-on");
         const studentVmNotDisplayed = document.querySelector(".student-vm-powered-off");
 
+        const userIconForStudentVmsMenu =  document.querySelector("#userIconForStudentVmsMenu");
+
 
         let vmPowerOn = document.querySelector(".power-on");
         let vmPowerOff = document.querySelector(".power-off");
@@ -564,7 +576,7 @@
         }
         if(activeLabJS["link"])  {
             labVideo.setAttribute('src', activeLabJS["link"]);
-            labVideoContainer.classList.remove('labVideo')
+            labVideoContainer.classList.remove('no_display')
         }
 
         //Add Toggle VM fullscreen functionality
@@ -698,21 +710,79 @@
             const ULs =   vmStuMenu.querySelectorAll('ul');
             console.log('!!!!!!!!!!!!!Student Menu!!!!!!!!!!!!!!!!!!!!!');
             console.log(vmStuMenu);
+            console.log('ULs');
+            console.log(ULs);
 
-            ULs.forEach(function (currentValue, currentIndex, listObj) {
-                while (currentValue.lastChild) {
-                    console.log('inside loop')
-                    currentValue.removeChild(currentValue.lastChild);
-                }
-                vmStuMenu.removeChild(currentValue);
-            }, "myThisArg");
+
+            while (vmStuMenu.lastChild) {
+                vmStuMenu.removeChild(vmStuMenu.lastChild);
+            }
+
+            console.log('activeCourseJS');
+            console.log(activeCourseJS);
+
+
+            // ULs.forEach(function (currentValue, currentIndex, listObj) {
+            //     console.log('before while loop')
+            //     console.log(currentValue)
+            //     while (currentValue.lastChild) {
+            //         console.log('inside while loop')
+            //         console.log('currentValue.lastChild');
+            //         console.log(currentValue.lastChild);
+            //         currentValue.removeChild(currentValue.lastChild);
+            //     }
+            //     console.log('after while loop')
+            //     console.log(currentValue)
+            //     vmStuMenu.removeChild(currentValue);
+            // }, "myThisArg");
+
+
+
+
+
+
+            // <li th:each="studentVmsMap : ${listCourse[0].publicStudentVmsMap}">
+            //     <div style="pointer-events: none;">
+            //         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
+            //              className="bi bi-person-circle" viewBox="0 0 16 16">
+            //             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            //             <path fill-rule="evenodd"
+            //                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            //         </svg>
+            //         <i className="bi bi-person-circle"></i>
+            //         <span style="color:black;" className="ms-1 d-none d-sm-inline"
+            //               th:text="${studentVmsMap.key.username}"}>
+            //     </span>
+            // </div>
+            // <!--                        <ul class="dropdown-menu text-small shadow vm-students-menu" aria-labelledby="dropdown">-->
+            // <ul className="a-student-vms-menu" style="list-style-type: none;">
+            //     <li th:each="vm : ${studentVmsMap.value}">
+            //         <a className="dropdown-item" href="#" th:classappend="${vm.vmID}" th:text="${vm.name}"></a>
+            //     </li>
+            // </ul>
+            // </li>
+
+
+
 
             // activeCourseJS.publicStudentVmsMap.forEach((valueVmList, keyStudent) => {
             for (const stu in activeCourseJS['publicStudentVmsMap']) {
+                const topLiElement = document.createElement("li");
+                const divStudentIconForAndName = userIconForStudentVmsMenu.content.cloneNode(true);
+                const span = divStudentIconForAndName.querySelector('span');
+                let start = stu.lastIndexOf(" ");
+                start++;
+                span.textContent = stu.substring(start);
                 const ulElement = document.createElement("ul");
+                ulElement.classList.add('a-student-vms-menu');
+                ulElement.classList.add('hover-pointer');
+                ulElement.setAttribute('style', 'list-style-type: none;pointer-events: auto;')
                 const liElement = document.createElement("li");
                 console.log('===stu===');
                 console.log(stu);
+                console.log(stu.substring(start));
+
+                topLiElement.append(divStudentIconForAndName);
 
                 activeCourseJS['publicStudentVmsMap'][stu].forEach( vm => {
                     console.log("{Ha????");
@@ -762,7 +832,8 @@
                     ulElement.append(liElement);
 
                 });
-                vmStuMenu.append(ulElement);
+                topLiElement.append(ulElement);
+                vmStuMenu.append(topLiElement);
 
             };
         };
@@ -901,19 +972,22 @@
         function populateLabSectionWithActiveLab(){
             labHeader.textContent = 'Lab ' + activeLabJS["number"] + ': '  + activeLabJS["title"];
             labDesc.textContent = activeLabJS["description"];
-            if(activeLabJS["image"])  {
+            console.log(activeLabJS);
+            if(activeLabJS["image"]){
                 labImg.setAttribute('src', activeLabJS["image"]);
                 labImgContainer.classList.remove("no_display");
             } else{
                 labImgContainer.classList.add("no_display");
             }
-            if(activeLabJS["link"])  {
+            if(activeLabJS["link"]){
                 labVideo.setAttribute('src', activeLabJS["link"]);
                 labVideoContainer.classList.remove("no_display");
             }else{
                 labVideoContainer.classList.add("no_display");
             }
         }
+
+        const newCanvases = document.querySelectorAll('#mainCanvas');
 
 
         function populateVMSectionWithActiveVM(vmType, callBoth){
@@ -937,7 +1011,6 @@
                 // console.log("reload student");
                 // console.log(url);
             }
-            const newCanvases = document.querySelectorAll('#mainCanvas');
             // console.log('2 canvases')
             // console.log(newCanvases)
             setCanvasAttributes(newCanvases.item(0));
@@ -1016,6 +1089,7 @@
 
             if(labSection.classList.contains("no_display")){
                 toggleLabel.textContent = "Check to view Course Labs";
+                setCanvasAttributes(newCanvases.item(1));
                 // webmksStudent.updateScreen()
             } else{
                 toggleLabel.textContent = "Uncheck to view Students VMs";

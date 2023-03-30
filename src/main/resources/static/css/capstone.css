@@ -200,3 +200,7 @@ img {
 .gear-icon::after{
     display: none !important;
 }
+
+.hover-pointer:hover{
+    cursor: pointer;
+}
