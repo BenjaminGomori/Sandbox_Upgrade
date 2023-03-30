@@ -1,16 +1,16 @@
-# Sandbox Update
+# OCR Facelift
 
-Updating the current OCRI front and back end that UC uses to enable instructors and students to communicate with VMs. </br>
+OCR Facelift is a software solution for the Ohio Cyber Range Institute to manage user VM communications. The current, out-of-the-box, solution provided by VMWare is not customizable. The project will provide new functionalities and web pages.</br>
+
+
 ## Two Main Purposes
 ### A: Communication Through vCenter
-Currently, the system channels VM communications through vRealize. </br>
-However, vRealize is not optimal for managing large quantities of VM communication.</br>
-Thus, the first goal is to channel all VM communication to go through vCenter.
+Currently, OCRI channels user VM communications through vRealize. </br>
+However, vRealize is not optimal for managing large quantities of user VM communications.</br>
+Thus, the first goal was to channel all user VM communication through vCenter.
 
-### B: Enable Uploading and Accessing of Lab Materials for Instructors and Students
+### B: Enable Uploading and Accessing of Lab Materials
 
 Currently, students need to view lab materials via another system such as Canvas.</br>
-The project aims to add pages and backend capabilities to enable instructors to upload the different course lab materials including text, videos, and images.</br>
-The project will also enable  students to view lab materials side by side with their VM in the same web page.</br></br>
-
-### Additionally the project aims to improve overall user experience by creating a new front-end design.
+The project adds pages and backend capabilities that enable instructors to upload different course lab materials such as text, videos, and images.</br>
+Students can view lab materials side-by-side with their VM on the same web page.</br></br>
